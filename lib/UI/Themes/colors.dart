@@ -27,3 +27,8 @@ const Color green500 = Color(0xFF0EDCC3);
 const Color green600 = Color(0xFF078383);
 const Color green700 = Color(0xFF014F60);
 const Color green800 = Color(0xFF01283F);
+
+
+
+
+const Color color1100 = Color(0xFFE80A5A);
