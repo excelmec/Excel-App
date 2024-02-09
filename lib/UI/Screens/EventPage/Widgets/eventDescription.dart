@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Widget getEventDetails(
-    {EventDetails eventDetails, bool detailed, double height, double width}) {
+    {required EventDetails eventDetails, required bool detailed, required double height, required double width}) {
   List<Widget> children = [];
 
   if (eventDetails.isTeam) {
@@ -14,18 +14,14 @@ Widget getEventDetails(
         eventDetails.teamSize.toString(), height, width));
   }
 
-  if (eventDetails.prizeMoney != null ) {
-    if(eventDetails.prizeMoney != 0) 
-    children.add(detailBox(FontAwesomeIcons.trophy, "Prize pool",
-       "₹"+ eventDetails.prizeMoney.toString(), height, width));
-  }
+  if(eventDetails.prizeMoney != 0) 
+  children.add(detailBox(FontAwesomeIcons.trophy, "Prize pool",
+     "₹"+ eventDetails.prizeMoney.toString(), height, width));
 
   
-  if (eventDetails.entryFee != null ) {
-    if(eventDetails.entryFee != 0) 
-    children.add(detailBox(FontAwesomeIcons.moneyBill, "Entry Fee",
-       "₹"+ eventDetails.entryFee.toString(), height, width));
-  }
+  if(eventDetails.entryFee != 0) 
+  children.add(detailBox(FontAwesomeIcons.moneyBill, "Entry Fee",
+     "₹"+ eventDetails.entryFee.toString(), height, width));
 
   return Hero(
     tag: 'EventDescription',

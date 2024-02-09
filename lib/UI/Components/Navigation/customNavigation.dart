@@ -15,8 +15,8 @@ import './BottomNavigationBarWidget/layout.dart';
 // To hide bottom navigatiom bar, import this file and call hideBottomNav()
 // To show bottom navigatiom bar, import this file and call showBottomNav()
 
-Function hideBottomNav;
-Function showBottomNav;
+// Function hideBottomNav;
+// Function showBottomNav;
 
 class CustomNavigator extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class CustomNavigator extends StatefulWidget {
 }
 
 class CustomNavigatorState extends State<CustomNavigator> {
-  int selectedTab;
+  late int selectedTab;
   // TabItem _currentTab = TabItem.page1;
   // Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
   //   TabItem.page1: GlobalKey<NavigatorState>(),
@@ -37,20 +37,22 @@ class CustomNavigatorState extends State<CustomNavigator> {
   // ExplorePage explorePage = ExplorePage(key: Key('A'), selectedPage: 1,selectedCategory: 'talks',);
   ExplorePage explorePage = ExplorePage(
     key: Key('A'),
+    selectedPage: 1,
+    selectedCategory: '',
   );
   @protected
   void initState() {
     selectedTab = 0;
-    hideBottomNav = () {
-      setState(() {
-        bottonNavHidden = true;
-      });
-    };
-    showBottomNav = () {
-      setState(() {
-        bottonNavHidden = false;
-      });
-    };
+    // hideBottomNav => () {
+    //   setState(() {
+    //     bottonNavHidden = true;
+    //   });
+    // };
+    // showBottomNav => () {
+    //   setState(() {
+    //     bottonNavHidden = false;
+    //   });
+    // };
     super.initState();
   }
 
@@ -130,6 +132,9 @@ Widget _buildFab(BuildContext context, bottonNavHidden) {
     visible: bottonNavHidden ? false : true,
     child: AnchoredOverlay(
       showOverlay: false,
+      overlayBuilder: (BuildContext, Offset anchor) {
+        return Text("overlay");
+      },
       child: FloatingActionButton(
         backgroundColor: primaryColor,
         onPressed: () {

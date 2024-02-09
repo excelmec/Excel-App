@@ -1,6 +1,5 @@
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './BottomNavigationBarWidget/fab_bottom_app_bar.dart';
 
 enum TabItem { page1, page2, page3, page4 }
@@ -13,14 +12,14 @@ Map<TabItem, int> tabName = {
 };
 
 class BottomNavigation extends StatelessWidget {
-  BottomNavigation({this.selectedIndex, this.onSelect});
+  BottomNavigation({required this.selectedIndex, required this.onSelect});
   final int selectedIndex;
   final Function(int) onSelect;
 
   @override
   Widget build(BuildContext context) {
     return FABBottomAppBar(
-      centerItemText: '',
+      centerItemText: 'Home',
       color: Colors.grey,
       selectedColor: primaryColor,
       onTabSelected: onSelect,
@@ -30,6 +29,7 @@ class BottomNavigation extends StatelessWidget {
         FABBottomAppBarItem(iconName: "calendar", text: ''),
         FABBottomAppBarItem(iconName: "profile", text: ''),
       ],
+      backgroundColor: const Color(0xfffffff),
     );
   }
 }

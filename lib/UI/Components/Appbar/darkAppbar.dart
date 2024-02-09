@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget darkAppbar({Color color}) {
+Widget darkAppbar({required Color color}) {
   return PreferredSize(
     child: AppBar(
-      backgroundColor: color ?? Color(0xff272733),
+      backgroundColor: color,
       elevation: 0,
     ),
     preferredSize: Size.fromHeight(0),

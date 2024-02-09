@@ -5,7 +5,6 @@ import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
-import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +14,14 @@ class ChangeTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
   final Function refreshIsRegistered;
   ChangeTeamPage(
-      {@required this.eventDetails, @required this.refreshIsRegistered});
+      {required this.eventDetails, required this.refreshIsRegistered});
   @override
   _ChangeTeamPageState createState() => _ChangeTeamPageState();
 }
 
 class _ChangeTeamPageState extends State<ChangeTeamPage> {
   final _formKey = GlobalKey<FormState>();
-  int teamID;
+  late int teamID;
   bool isLoading = false;
   registerEvent() async {
     var requestBody =
@@ -54,7 +53,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
   }
 
   onSubmit() async {
-    if (!_formKey.currentState.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
     setState(() {
       isLoading = true;
     });
@@ -71,7 +70,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar("Change Team"),
+      // appBar: customappbar("Change Team"),
       body: Theme(
         data: Theme.of(context).copyWith(
           primaryColor: primaryColor,
@@ -149,7 +148,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                       });
                     },
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value!.isEmpty) {
                         return "Enter ID of the new team";
                       }
                       return null;

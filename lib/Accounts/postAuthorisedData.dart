@@ -6,13 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 // The following function Refreshes Access token/JWT
 // If it has been expired
 
-postAuthorisedData({String url, body}) async {
+postAuthorisedData({required String url, body}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString('jwt');
+  String? jwt = prefs.getString('jwt');
   var response = await http.post(Uri.parse(
     url),
     headers: {
-      HttpHeaders.authorizationHeader: "Bearer " + jwt,
+      HttpHeaders.authorizationHeader: "Bearer " + jwt!,
       "Content-Type": "application/json"
     },
     body: body,
@@ -22,12 +22,11 @@ postAuthorisedData({String url, body}) async {
   if (response.statusCode == 455 || response.statusCode == 500) {
     // Refreshes Token & gets JWT
     jwt = await refreshToken();
-    if (jwt == null) return null;
     // Retrying Request
     response = await http.post(Uri.parse(
       url),
       headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + jwt,
+        HttpHeaders.authorizationHeader: "Bearer " + jwt!,
         "Content-Type": "application/json"
       },
       body: body,

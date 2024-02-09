@@ -30,13 +30,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
-  User _user;
-  bool _isProfileUpdated;
-  AuthService authService;
-  List<Event> _favouritedEvents = [];
-  List<Event> _registeredEvents = [];
+ late User _user;
+ late bool _isProfileUpdated;
+ late AuthService authService;
+ late List<Event> _favouritedEvents = [];
+ late List<Event> _registeredEvents = [];
 
-  TabController tabController;
+  late TabController tabController;
 
   var userDetails;
   @override
@@ -74,7 +74,6 @@ class _ProfilePageState extends State<ProfilePage>
       return "Not Updated";
     } else {
       User user = await AccountServices.viewProfile();
-      if (user == null) return "error";
       return user;
     }
   }

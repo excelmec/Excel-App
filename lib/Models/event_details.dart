@@ -1,70 +1,69 @@
 class EventDetails {
-  int id;
-  String name;
-  String icon;
-  int categoryId;
-  String category;
-  int eventTypeId;
-  String eventType;
-  String about;
-  String format;
-  String rules;
-  String venue;
-  int day;
-  String datetime;
-  int entryFee;
-  int prizeMoney;
-  int eventHead1Id;
-  String eventHead1;
-  int eventHead2Id;
-  String eventHead2;
-  bool isTeam;
-  int teamSize;
-  int eventStatusId;
-  String eventStatus;
-  int numberOfRounds;
-  int currentRound;
-  bool needRegistration;
-  bool registrationOpen;
-  String registrationEndDate;
-  String button;
-  String registrationLink;
-  String rounds;
-  String registration;
+  late int id;
+  late String name;
+  late String icon;
+  late int categoryId;
+  late String category;
+  late int eventTypeId;
+  late String eventType;
+  late String about;
+  late String format;
+  late String rules;
+  late String venue;
+  late int day;
+  late String datetime;
+  late int entryFee;
+  late int prizeMoney;
+  late int eventHead1Id;
+  late String eventHead1;
+  late int eventHead2Id;
+  late String eventHead2;
+ late bool isTeam;
+  late int teamSize;
+  late int eventStatusId;
+  late String eventStatus;
+  late int numberOfRounds;
+  late int currentRound;
+  late bool needRegistration;
+  late bool registrationOpen;
+  late String registrationEndDate;
+  late String button;
+  late String registrationLink;
+  late String rounds;
+  late String registration;
   EventDetails({
-    this.id,
-    this.name,
-    this.icon,
-    this.categoryId,
-    this.category,
-    this.eventTypeId,
-    this.eventType,
-    this.about,
-    this.format,
-    this.rules,
-    this.venue,
-    this.day,
-    this.datetime,
-    this.entryFee,
-    this.prizeMoney,
-    this.eventHead1Id,
-    this.eventHead1,
-    this.eventHead2Id,
-    this.eventHead2,
-    this.isTeam,
-    this.teamSize,
-    this.eventStatusId,
-    this.eventStatus,
-    this.numberOfRounds,
-    this.currentRound,
-    this.needRegistration,
-    this.registrationOpen,
-    this.registrationEndDate,
-    this.button,
-    this.registrationLink,
-    this.rounds,
-    this.registration,
-
+    required this.id,
+    required this.name,
+    required this.icon,
+    required this.categoryId,
+    required this.category,
+    required this.eventTypeId,
+    required this.eventType,
+    required this.about,
+    required this.format,
+    required this.rules,
+    required this.venue,
+    required this.day,
+    required this.datetime,
+    required this.entryFee,
+    required this.prizeMoney,
+    required this.eventHead1Id,
+    required this.eventHead1,
+    required this.eventHead2Id,
+    required this.eventHead2,
+    required this.isTeam,
+    required this.teamSize,
+    required this.eventStatusId,
+    required this.eventStatus,
+    required this.numberOfRounds,
+    required this.currentRound,
+    required this.needRegistration,
+    required this.registrationOpen,
+    required this.registrationEndDate,
+    required this.button,
+    required this.registrationLink,
+    required this.rounds,
+    required this.registration,
   });
 
   EventDetails.fromJson(data) {
@@ -88,7 +87,7 @@ class EventDetails {
     eventHead2Id = data['eventHead2Id'];
     eventHead2 = data['eventHead2'];
     isTeam = (data['isTeam'] == true || data['isTeam'] == 1) ? true : false;
-    teamSize = data['teamSize']??1;
+    teamSize = data['teamSize'] ?? 1;
     eventStatusId = data['eventStatusId'];
     eventStatus = data['eventStatus'];
     numberOfRounds = data['numberOfRounds'];

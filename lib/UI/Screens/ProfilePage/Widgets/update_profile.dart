@@ -3,7 +3,6 @@ import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
-import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +24,18 @@ class _UpdateProfileState extends State<UpdateProfile> {
   // Form Fields
   final _formKey = GlobalKey<FormState>();
 //int _id;
-  String _name;
-  String _picture;
-  String _mobileNumber;
-  int _categoryId;
-  int _institutionId;
-  String _institutionName;
-  String _gender;
-  String _emailId;
-  List<String> _categories = <String>['College', 'School'];
-  List<String> _genders = <String>['Male', 'Female', 'Other'];
-  String notInListOptionName = "NOT IN THIS LIST";
-  String _customInstitutionName = "";
+  late String _name;
+  late String _picture;
+  late String _mobileNumber;
+  late int _categoryId;
+  late int _institutionId;
+  late String _institutionName;
+  late String _gender;
+  late String _emailId;
+  late List<String> _categories = <String>['College', 'School'];
+  late List<String> _genders = <String>['Male', 'Female', 'Other'];
+  late String notInListOptionName = "NOT IN THIS LIST";
+  late String _customInstitutionName = "";
 
 // Category id's & their values:
 // 0: College
@@ -242,10 +241,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
       builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
-    if (_gender == null || _gender == null) {
-      Navigator.of(context, rootNavigator: true).pop();
-      return "Gender not selected";
-    }
 
     // // get institutionId only if category is school or college & not in list
     if (_categoryId != 2 && _institutionName != notInListOptionName) {
@@ -314,21 +309,21 @@ class _UpdateProfileState extends State<UpdateProfile> {
     return id;
   }
 
-  // Method to get institution name
   Future<String> getInstitutionName(int institutionId) async {
-    String name;
-    if (_categoryId == 0)
+    String name = ''; // Initialize name with an empty string
+    if (_categoryId == 0) {
       collegeInstitutions.forEach((e) {
         if (institutionId == e.id) {
           name = e.name;
         }
       });
-    else if (_categoryId == 1)
+    } else if (_categoryId == 1) {
       schoolInstitutions.forEach((e) {
         if (institutionId == e.id) {
           name = e.name;
         }
       });
+    }
     return name;
   }
 
@@ -428,9 +423,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   TextFormField(
                     initialValue: _name,
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                    onSaved: (String value) {
+                    onSaved: (value) {
                       setState(() {
-                        _name = value.trim();
+                        _name = value!.trim();
                       });
                     },
                     onChanged: (String value) {
@@ -439,7 +434,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       });
                     },
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value!.isEmpty) {
                         return "Please enter your Name";
                       }
                       return null;
@@ -528,12 +523,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               style: TextStyle(color: Colors.black)),
                           onChanged: (value) {
                             setState(() {
-                              _gender = value;
+                              _gender = "male";
                             });
                           },
                           onSaved: (value) {
                             setState(() {
-                              _gender = value;
+                              _gender = 'male';
                             });
                           }),
                     ),
@@ -558,9 +553,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       FilteringTextInputFormatter.allow(RegExp("[0-9]"))
                     ],
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                    onSaved: (String value) {
+                    onSaved: (value) {
                       setState(() {
-                        _mobileNumber = value;
+                        _mobileNumber = value!;
                       });
                     },
                     onChanged: (value) {
@@ -569,7 +564,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       });
                     },
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value!.isEmpty) {
                         return "Please enter your mobile number";
                       }
                       if (value.length > 10) {
@@ -604,9 +599,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           r"{0,253}[a-zA-Z0-9])?)*$"))
                     ],
                     style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                    onSaved: (String value) {
+                    onSaved: (value) {
                       setState(() {
-                        _emailId = value;
+                        _emailId = value!;
                       });
                     },
                     validator: (value) {
@@ -615,7 +610,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                           r"{0,253}[a-zA-Z0-9])?)*$";
                       RegExp regex = RegExp(pattern);
-                      if (!regex.hasMatch(value))
+                      if (!regex.hasMatch(value!))
                         return 'Enter a valid email address';
                       if (value.isEmpty) {
                         return "Please enter your Email Address";
@@ -680,7 +675,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         ),
                         onChanged: (value) {
                           setState(() {
-                            _categoryId = _categories.indexOf(value);
+                            _categoryId = _categories.indexOf("14");
 
                             //measureList.add(measure);
                           });
@@ -688,15 +683,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         },
                         onSaved: (value) {
                           setState(() {
-                            _categoryId = _categories.indexOf(value);
+                            _categoryId = _categories.indexOf('14');
                           });
                         }),
                   ),
                   SizedBox(height: 16),
                   // Select Institution
 
-                  (_categoryId != null &&
-                          _categoryId != 2 &&
+                  (_categoryId != 2 &&
                           ((_categoryId == 0)
                               ? (collegeInstitutions.length > 0)
                               : (schoolInstitutions.length > 0)))
@@ -771,9 +765,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     );
                                   }).toList(),
                             onChanged: (value) {
-                              print(int.parse(value));
+                              print(int.parse('14'));
                               setState(() {
-                                _institutionId = int.parse(value);
+                                _institutionId = int.parse('14');
                                 _institutionName = (_categoryId == 0)
                                     ? collegeInstitutions
                                         .firstWhere((element) =>
@@ -794,9 +788,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           child: TextFormField(
                             style: TextStyle(
                                 fontFamily: pfontFamily, fontSize: 15),
-                            onSaved: (String value) {
+                            onSaved: (value) {
                               setState(() {
-                                _customInstitutionName = value.trim();
+                                _customInstitutionName = value!.trim();
                               });
                             },
                             onChanged: (String value) {
@@ -805,7 +799,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               });
                             },
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return "Please enter your Institute Name";
                               }
                               return null;
@@ -862,7 +856,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         ),
         onPressed: () {
           print("Saved");
-          _formKey.currentState.validate()
+          _formKey.currentState!.validate()
               ? submitForm().then((value) {
                   if (value == "Submitted") {
                     // Navigator.pushAndRemoveUntil(
@@ -875,8 +869,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
                     Navigator.pop(context);
                   } else {
-                    // _formKey.currentState.save();
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar(value));
+                    // // _formKey.currentState.save();
+                    // ScaffoldMessenger.of(context).showSnackBar(snackBar(value));
                   }
                 }).catchError((e) => print(e))
               : print("Not valid");

@@ -34,8 +34,8 @@ class ResultCard extends StatelessWidget {
                 placeholder: (context, url) {
                   return Shimmer.fromColors(
                     child: CircleAvatar(backgroundColor: Colors.white),
-                    baseColor: Colors.grey[300],
-                    highlightColor: Colors.grey[100],
+                    baseColor: const Color.fromRGBO(224, 224, 224, 1),
+                    highlightColor: const Color.fromRGBO(245, 245, 245, 1),
                   );
                 },
               ),

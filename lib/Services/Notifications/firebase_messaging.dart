@@ -21,7 +21,7 @@ if (Firebase.apps.isEmpty) {
   List notifications =
       await HiveDB.retrieveData(valueName: 'notifications') ?? [];
   final newNotification = {
-    'data': message.data ?? {},
+    'data': message.data,
     'title': '${message.notification?.title}',
     'body': '${message.notification?.body}',
     'time': DateTime.now().toString()
@@ -29,7 +29,7 @@ if (Firebase.apps.isEmpty) {
   notifications.add(newNotification);
   await HiveDB.storeData(valueName: 'notifications', value: notifications);
   int count = await HiveDB.retrieveData(valueName: 'unread_notifications');
-  count = count ?? 0;
+  count = count;
   await HiveDB.storeData(valueName: 'unread_notifications', value: count + 1);
 }
 
@@ -54,7 +54,7 @@ void initiliaseNotificationServices() async {
 //   if (kDebugMode) {
 //     print('Permission granted: ${settings.authorizationStatus}');
 //   }
-  String token = await messaging.getToken();
+  String? token = await messaging.getToken();
 
   if (kDebugMode) {
     print('Registration Token=$token');
@@ -71,12 +71,12 @@ void initiliaseNotificationServices() async {
     }
     if (message.notification != null) {
       print(
-          'Message also contained a notification: ${message.notification.title}');
+          'Message also contained a notification: ${message.notification?.title}');
 
       List notifications =
           await HiveDB.retrieveData(valueName: 'notifications') ?? [];
       final newNotification = {
-        'data': message.data ?? {},
+        'data': message.data,
         'title': '${message.notification?.title}',
         'body': '${message.notification?.body}',
         'time': DateTime.now().toString()
@@ -84,7 +84,7 @@ void initiliaseNotificationServices() async {
       notifications.add(newNotification);
       await HiveDB.storeData(valueName: 'notifications', value: notifications);
       int count = await HiveDB.retrieveData(valueName: 'unread_notifications');
-      count = count ?? 0;
+      count = count;
       await HiveDB.storeData(
           valueName: 'unread_notifications', value: count + 1);
     }

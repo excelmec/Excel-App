@@ -16,7 +16,7 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
-      globalBackgroundColor: Color.fromARGB(255, 236, 244, 245),
+      globalBackgroundColor: Color(0xFFE7F1F3),
       key: introKey,
       pages: [
         PageViewModel(
@@ -100,7 +100,7 @@ class _LandingPageState extends State<LandingPage> {
     {
       "title": "Welcome to Excel 2022",
       "description":
-          "Excel is the official techno-managerial festival of Govt. Model Engineering College, Kochi! Found in 2001, while being the first of its kind in South India, the 23rd edition promises to be bigger and better!"
+          "Excel is the annual techno-managerial fest of Govt. Model Enginnering College. It’s the Nation’s second and South India’s first ever fest of it’s kind!"
     },
     {
       "title": "Hi! I\'m AEVA",

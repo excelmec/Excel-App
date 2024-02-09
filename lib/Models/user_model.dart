@@ -1,39 +1,39 @@
 import 'dart:convert';
 
 class User {
-  int id;
-  String name;
-  String email;
-  String role;
-  String picture;
-  String qrCodeUrl;
-  int institutionId;
-  String institutionName;
-  String gender;
-  String mobileNumber;
-  int categoryId;
-  String category;
-  String ambassador;
-  int referrerAmbassadorId;
-  String referrer;
-  bool isPaid;
+ late int id;
+ late String name;
+ late String email;
+ late String role;
+ late String picture;
+ late String qrCodeUrl;
+ late int institutionId;
+ late String institutionName;
+ late String gender;
+ late String mobileNumber;
+ late int categoryId;
+ late String category;
+ late String ambassador;
+ late int referrerAmbassadorId;
+ late String referrer;
+ late bool isPaid;
 
   User({
-    this.id,
-    this.name,
-    this.email,
-    this.role,
-    this.picture,
-    this.qrCodeUrl,
-    this.institutionId,
-    this.institutionName,
-    this.gender,
-    this.mobileNumber,
-    this.category,
-    this.ambassador,
-    this.referrerAmbassadorId,
-    this.referrer,
-    this.isPaid,
+  required  this.id,
+  required  this.name,
+  required  this.email,
+  required  this.role,
+  required  this.picture,
+  required  this.qrCodeUrl,
+  required  this.institutionId,
+  required  this.institutionName,
+  required  this.gender,
+  required  this.mobileNumber,
+  required  this.category,
+  required  this.ambassador,
+  required  this.referrerAmbassadorId,
+  required  this.referrer,
+  required  this.isPaid,
   });
 
   User.fromJson(json) {
@@ -79,10 +79,10 @@ class User {
 }
 
 class Institution {
-  int id;
-  String name;
+  late int id;
+  late String name;
 
-  Institution({this.id, this.name});
+  Institution({required this.id, required this.name});
 
   Institution.fromJson(Map<String, dynamic> json) {
     id = json['id'];

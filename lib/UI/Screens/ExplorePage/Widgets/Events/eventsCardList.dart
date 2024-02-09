@@ -1,7 +1,6 @@
 import 'package:excelapp/Providers/navigationProvider.dart';
 import 'package:excelapp/UI/Screens/ExplorePage/Widgets/Components/tabs.dart';
 import 'package:excelapp/UI/Screens/ExplorePage/Widgets/Events/allEvents.dart';
-import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,13 +9,13 @@ class EventsCardList extends StatefulWidget {
   State<EventsCardList> createState() => _EventsCardListState();
   final String selectedTab;
   final String txtQuery;
-  const EventsCardList({Key key, this.selectedTab, this.txtQuery})
+  const EventsCardList({Key? key, required this.selectedTab, required this.txtQuery})
       : super(key: key);
 }
 
 class _EventsCardListState extends State<EventsCardList>
     with SingleTickerProviderStateMixin {
-  String selectedCategory;
+  late String selectedCategory;
   List<String> tabs = ["All", "Workshops", "Talks", "General"];
 
   @override

@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 class HiveDB {
- static Future  retrieveData({String valueName}) async {
+ static Future  retrieveData({required String valueName}) async {
     Directory dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true); // make sure it exists
     Hive.init(join(dir.path, 'hiveDB'));
@@ -16,7 +16,7 @@ class HiveDB {
     return data;
   }
 
-  static storeData({String valueName, var value}) async {
+  static storeData({required String valueName, var value}) async {
     Directory dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true); // make sure it exists
     Hive.init(join(dir.path, 'hiveDB'));
@@ -29,7 +29,7 @@ class HiveDB {
     }
   }
 
-  static deleteData({String valueName}) async {
+  static deleteData({required String valueName}) async {
     Directory dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true); // make sure it exists
     try {

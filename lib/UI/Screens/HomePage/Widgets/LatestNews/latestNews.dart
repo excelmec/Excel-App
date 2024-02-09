@@ -1,24 +1,23 @@
 import 'dart:async';
 import 'package:excelapp/Models/latest_news.dart';
 import 'package:excelapp/Services/API/news_api.dart';
-import 'package:excelapp/UI/Screens/HomePage/Widgets/LatestNews/data.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/LatestNews/LatestNews_card.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
+
 
 GlobalKey<_LatestNewsSectionState> globalKey = GlobalKey();
 
 class LatestNewsSection extends StatefulWidget {
-  LatestNewsSection({Key key}) : super(key: key);
+  LatestNewsSection({Key? key}) : super(key: key);
   @override
   State<LatestNewsSection> createState() => _LatestNewsSectionState();
 }
 
 class _LatestNewsSectionState extends State<LatestNewsSection> {
-  StreamController<dynamic> estream;
+  late StreamController<dynamic> estream;
   List<News> news = [];
   bool dataLoaded = false;
   var curr_page = 0;
@@ -132,7 +131,7 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
                   ),
                 );
               if (snapshot.hasData) {
-                if (snapshot.data.length == 0)
+                if (snapshot.data == 0)
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 45),

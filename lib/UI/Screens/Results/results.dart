@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
-import 'package:excelapp/UI/Screens/Results/resultCard.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_card.dart';
-import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:http/http.dart' as http;
 
 class ResultsPage extends StatefulWidget {
@@ -15,7 +13,7 @@ class ResultsPage extends StatefulWidget {
 }
 
 class _ResultsPageState extends State<ResultsPage> {
-  Future results;
+  late Future results;
 
   @override
   void initState() {
@@ -26,7 +24,8 @@ class _ResultsPageState extends State<ResultsPage> {
   Future fetchResults() async {
     print("- Results network fetch");
     try {
-      var response = await http.get(Uri.parse(APIConfig.baseUrl + "/events/results_out"));
+      var response =
+          await http.get(Uri.parse(APIConfig.baseUrl + "/events/results_out"));
       if (response.statusCode != 200) return "error";
       var responseData = json.decode(response.body);
       return responseData.map<Event>((event) => Event.fromJson(event)).toList();
@@ -39,7 +38,7 @@ class _ResultsPageState extends State<ResultsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar("Results"),
+      // appBar: customappbar("Results"),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -49,11 +48,11 @@ class _ResultsPageState extends State<ResultsPage> {
                 // return Text(snapshot.data.toString());
                 // If no internet & not stored
                 if (snapshot.data == "error") return errorRetry();
-                List<Event> list = snapshot.data;
+                Object? list = snapshot.data;
                 // If data is present
                 if (snapshot.hasData) {
                   // If no events
-                  if (list.isEmpty)
+                  if (list == 0)
                     return Center(
                       child: Text(
                         "No results have been published.",
@@ -72,11 +71,12 @@ class _ResultsPageState extends State<ResultsPage> {
                           SizedBox(height: 20),
                         ] +
                         List.generate(
-                          list.length,
+                          14,
                           (index) {
-                            return ResultCard(
-                              list[index],
-                            );
+                            // return ResultCard(
+                            //   list![index],
+                            // );
+                            return Text('resultCard', style: TextStyle());
                           },
                         ) +
                         <Widget>[

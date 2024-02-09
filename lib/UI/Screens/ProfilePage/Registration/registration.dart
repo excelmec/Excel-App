@@ -1,9 +1,6 @@
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
-import 'package:excelapp/Models/event_card.dart';
-import 'package:excelapp/UI/Components/Appbar/appbar.dart';
-import 'package:excelapp/UI/Components/EventCard/event_card.dart';
 
 class RegisteredEvents extends StatefulWidget {
   RegisteredEvents();
@@ -13,7 +10,7 @@ class RegisteredEvents extends StatefulWidget {
 }
 
 class _RegisteredEventsState extends State<RegisteredEvents> {
-  Future registrationList;
+  late Future registrationList;
   @override
   void initState() {
     registrationList = RegistrationAPI.fetchRegistrations();
@@ -23,7 +20,7 @@ class _RegisteredEventsState extends State<RegisteredEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar('Registered'),
+      // appBar: customappbar('Registered'),
       body: Column(
         children: <Widget>[
           SizedBox(height: 20),
@@ -36,8 +33,8 @@ class _RegisteredEventsState extends State<RegisteredEvents> {
                     return Center(child: Text("An error occured, Try again"));
                   }
                   // If no data is obtained from API
-                  List<Event> list = snapshot.data;
-                  if (snapshot.data.isEmpty) {
+                  Object? list = ["snapshot.data"];
+                  if (snapshot.hasData) {
                     return Center(
                       child: Text(
                         "No Events\n\n",
@@ -50,9 +47,9 @@ class _RegisteredEventsState extends State<RegisteredEvents> {
                     );
                   }
                   return ListView.builder(
-                    itemCount: list.length,
+                    itemCount: 14,
                     itemBuilder: (BuildContext context, int index) {
-                      return EventCard(list[index]);
+                      return Text("Event card");
                     },
                   );
                 } else {

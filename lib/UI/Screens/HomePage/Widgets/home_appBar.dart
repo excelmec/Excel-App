@@ -3,7 +3,7 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class ExcelTitle extends StatelessWidget {
-  const ExcelTitle({Key key}) : super(key: key);
+  const ExcelTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

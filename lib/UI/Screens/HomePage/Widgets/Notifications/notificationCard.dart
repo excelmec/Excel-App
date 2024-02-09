@@ -10,13 +10,14 @@ class NotificationCard extends StatelessWidget {
   final String icon;
   final bool outline;
   NotificationCard(
-      {this.id,
-      this.title,
-      this.time,
-      this.description,
-      this.link,
-      this.outline = true,
-      this.icon = null});
+      {
+     required   this.id,
+     required this.title,
+     required this.time,
+     required this.description,
+     required this.link,
+    this.outline = true,
+      this.icon = "icon"});
 
   getTime(time) {
     if (time == "error") {
@@ -131,10 +132,8 @@ class NotificationCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          if (link != null) {
-            launchUrl(Uri.parse(link));
-          }
-        },
+          launchUrl(Uri.parse(link));
+                },
         child: Container(
           decoration: BoxDecoration(
             border:

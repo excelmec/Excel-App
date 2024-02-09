@@ -67,8 +67,8 @@ class NotificationsPage extends StatelessWidget {
           future: notifications(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List notificationData = snapshot.data['notifications'];
-              int unread = snapshot.data['count'];
+              List notificationData = ["notification"];
+              int unread = 14;
               notificationData = notificationData.reversed.toList();
               if (notificationData.length == 0) {
                 return Center(
@@ -88,7 +88,7 @@ class NotificationsPage extends StatelessWidget {
                         description: notificationData[index]['body'],
                         // link: "https://www.google.com",
                         outline: (index < unread)?true:false,
-                        icon:null
+                        icon:"", id: 14, link: '',
                       );
                     },
                   ),

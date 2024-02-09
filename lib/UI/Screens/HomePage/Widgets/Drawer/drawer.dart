@@ -170,11 +170,11 @@ class DrawerOption extends StatelessWidget {
   final Function onPressed;
   final String text;
   final IconData icon;
-  DrawerOption({this.text, this.onPressed, this.icon});
+  DrawerOption({required this.text, required this.onPressed, required this.icon});
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: onPressed(),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         child: Row(

@@ -15,10 +15,10 @@ class AddReferal extends StatefulWidget {
 
 class _AddReferalState extends State<AddReferal> {
   bool loading = false;
-  String referal;
+  late String referal;
 
   applyReferal() async {
-    if (referal == null || referal.length < 4) {
+    if (referal.length < 4) {
       alertDialog(text: "Enter Valid Referal Code", context: context);
       return;
     }

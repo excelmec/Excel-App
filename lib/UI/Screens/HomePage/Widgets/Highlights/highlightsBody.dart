@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class HighlightsBody extends StatelessWidget {
   final List<Highlights> highLightsMap;
-  HighlightsBody({Key key, @required this.highLightsMap}) : super(key: key);
+  HighlightsBody({Key? key, required this.highLightsMap}) : super(key: key);
 
   final int autoplayseconds = 5;
 
@@ -38,7 +38,7 @@ class HighlightsBody extends StatelessWidget {
         };
         uniqueNamesMap[highlight.name] = highlight;
       } else {
-        fullPage[highlight.name]['images'].add(highlight.image);
+        fullPage[highlight.name]!['images'].add(highlight.image);
       }
     }
     List<Map<String,dynamic>> stories = fullPage.values.toList();

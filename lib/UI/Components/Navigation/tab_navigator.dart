@@ -8,14 +8,14 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({this.navigatorKey, this.tabItem});
+  TabNavigator({required this.navigatorKey, required this.tabItem});
   final GlobalKey<NavigatorState> navigatorKey;
   final TabItem tabItem;
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
     return {
       TabNavigatorRoutes.root: (context) => NavigatingPage(
-            pageNumber:  tabName[tabItem],
+            pageNumber:  1,
           ),
     };
   }
@@ -28,7 +28,7 @@ class TabNavigator extends StatelessWidget {
       initialRoute: TabNavigatorRoutes.root,
       onGenerateRoute: (routeSettings) {
         return MaterialPageRoute(
-          builder: (context) => routeBuilders[routeSettings.name](context),
+          builder: (context) => routeBuilders[routeSettings.name]!(context),
         );
       },
     );

@@ -8,8 +8,8 @@ class DevCredits extends StatefulWidget {
 
 class DevCreditsState extends State<DevCredits>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> scaleAnimation;
+ late  AnimationController controller;
+  late Animation<double> scaleAnimation;
 
   @override
   void initState() {
@@ -108,17 +108,17 @@ class DevCreditsState extends State<DevCredits>
                           // color: Colors.red,
                           child: ListTile(
                             title: Text(
-                              developers[index]["name"],
+                              developers[index]["name"]!,
                               style: TextStyle(fontSize: 14.5),
                             ),
                             subtitle: Text(
-                              developers[index]["email"],
+                              developers[index]["email"]!,
                               style: TextStyle(fontSize: 13),
                             ),
                             dense: true,
                             leading: CircleAvatar(
                               backgroundImage: AssetImage(
-                                developers[index]["image"],
+                                developers[index]["image"]!,
                               ),
                             ),
                           ),

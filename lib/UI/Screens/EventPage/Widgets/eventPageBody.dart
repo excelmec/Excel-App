@@ -11,7 +11,7 @@ import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
 class EventPageBody extends StatelessWidget {
   final EventDetails eventDetails;
   final String heroname;
-  EventPageBody({this.eventDetails, this.heroname = 'eventIcon'});
+  EventPageBody({required this.eventDetails, this.heroname = 'eventIcon'});
 
   @override
   Widget build(BuildContext context) {

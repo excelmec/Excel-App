@@ -18,18 +18,18 @@ class ExplorePage extends StatefulWidget {
   State<ExplorePage> createState() => _ExplorePageState();
   final int selectedPage;
   final String selectedCategory;
-  const ExplorePage({Key key, this.selectedPage, this.selectedCategory})
+  const ExplorePage({Key? key, required this.selectedPage, required this.selectedCategory})
       : super(key: key);
 }
 
 class _ExplorePageState extends State<ExplorePage>
     with SingleTickerProviderStateMixin {
-  TabController _tabcontroller;
-  TextEditingController txtQuery = new TextEditingController();
-  StreamController<dynamic> estream;
-  bool dataLoaded = false;
-  List<Event> competitionsAndEvents;
-  bool isInit;
+ late TabController _tabcontroller;
+ late TextEditingController txtQuery = new TextEditingController();
+ late StreamController<dynamic> estream;
+ late bool dataLoaded = false;
+ late List<Event> competitionsAndEvents;
+ late bool isInit;
   @override
   void initState() {
     isInit = true;

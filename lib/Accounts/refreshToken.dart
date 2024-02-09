@@ -3,10 +3,10 @@ import 'package:excelapp/Accounts/account_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<String> refreshToken() async {
+Future<String?> refreshToken() async {
   print("----------\nToken Expired, Retrying\n----------");
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String refreshToken = prefs.getString('refreshToken');
+  String? refreshToken = prefs.getString('refreshToken');
   // Refreshing Token
   var refreshResponse = await http.post(Uri.parse(
     AccountConfig.newUrl + "Auth/refresh"),
@@ -26,6 +26,6 @@ Future<String> refreshToken() async {
   String jwt = refreshedBody["accessToken"];
   refreshToken = refreshedBody["refreshToken"];
   prefs.setString('jwt', jwt);
-  prefs.setString('refreshToken', refreshToken);
+  prefs.setString('refreshToken', refreshToken!);
   return jwt;
 }

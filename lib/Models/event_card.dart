@@ -1,33 +1,23 @@
 class Event {
-  int id;
-  String name;
-  String icon;
-  String desc;
-  String category;
-  String date;
-  String eventType;
-  bool isCompetition;
+  late  int id;
+ late String name;
+ late String icon;
+ late String desc;
+ late String category;
+ late String date;
+ late String eventType;
+ late bool isCompetition;
 
   Event(
-      {this.id,
-      this.name,
-      this.icon,
-      this.desc,
-      this.category,
-      this.date,
-      this.isCompetition});
+      {
+        required this.id,
+     required this.name,
+     required this.icon,
+     required this.desc,
+    required  this.category,
+     required this.date,
+      required this.isCompetition});
 
-  Event.fromJson(json) {
-    id = json['id'];
-    name = json['name'];
-    icon = json['icon'];
-    desc = json['about'];
-    // desc = 'Hey';
-    category = json['category'];
-    eventType = json['eventType'];
-    date = json['datetime'];
-    isCompetition = json['eventType']=="competition";
-  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -40,6 +30,8 @@ class Event {
     data['eventType'] = this.eventType;
     return data;
   }
+
+  static fromJson(event) {}
 }
 
 // class DateTimeConversion {

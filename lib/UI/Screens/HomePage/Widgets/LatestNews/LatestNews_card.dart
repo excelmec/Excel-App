@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 
 import 'package:excelapp/Services/API/favourites_api.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 
 class LastestNewsCard extends StatefulWidget {
@@ -22,9 +20,9 @@ class LastestNewsCard extends StatefulWidget {
 
 class _LastestNewsCardState extends State<LastestNewsCard> {
   @override
-  bool likeState = false;
-  bool _readMore = true;
-  String content;
+ late bool likeState = false;
+ late bool _readMore = true;
+ late String content;
   getFavouritedStatus(id) async {
     bool isFavourited = await FavouritesAPI.isFavourited(id);
     setState(() {

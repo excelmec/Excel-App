@@ -85,7 +85,7 @@ class _ListOfTests extends State<ListOfTests> {
                           ),
                         )
                       ] +
-                      notStarted),
+                      []),
               Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +99,7 @@ class _ListOfTests extends State<ListOfTests> {
                                     color: primaryColor,
                                     fontWeight: FontWeight.w700)))
                       ] +
-                      inProgress),
+                      []),
             ],
           ),
           ListView(
@@ -108,7 +108,7 @@ class _ListOfTests extends State<ListOfTests> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:
-                      <Widget>[Padding(padding: EdgeInsets.all(12))] + results)
+                      <Widget>[Padding(padding: EdgeInsets.all(12))] + [])
             ],
           )
         ])),

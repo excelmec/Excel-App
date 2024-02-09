@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Stories/fullPageView.dart';
 
 class Stories extends StatefulWidget {
@@ -47,7 +46,7 @@ class StoryCircle extends StatelessWidget {
           SizedBox(height: 7),
           InkWell(
             onTap: () {
-              hideBottomNav();
+              // hideBottomNav();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -55,7 +54,8 @@ class StoryCircle extends StatelessWidget {
                       storiesMapList: storiesMapList,
                       storyNumber: selectedIndex),
                 ),
-              ).then((_) => showBottomNav());
+              );
+              // ).then((_) => showBottomNav());
             },
             child: CircleAvatar(
               radius: 29.5,

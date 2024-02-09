@@ -1,7 +1,6 @@
 
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatelessWidget {
   final String qrCodeUrl, name, institutionName, gender, mobileNumber, email;
@@ -108,14 +107,14 @@ class QrCode extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    QrImage(
-                      data: id.toString(),
-                      version: QrVersions.auto,
-                      size: 250.0,
-                      padding: EdgeInsets.all(20.0),
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
-                    ),
+                    // QrImage(
+                    // //  data: id.toString(),
+                    // //  version: QrVersions.auto,
+                    // //  size: 250.0,
+                    // //  padding: EdgeInsets.all(20.0),
+                    // //  backgroundColor: Colors.white,
+                    // //  foregroundColor: Colors.black,
+                    // ),
                     SizedBox(
                       height: 5,
                     ),

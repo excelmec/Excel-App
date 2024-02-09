@@ -4,14 +4,12 @@ import 'package:excelapp/UI/Screens/HomePage/Widgets/QuickAccess/modals/contactU
 import 'package:excelapp/UI/Screens/HomePage/Widgets/QuickAccess/modals/reachUsModal.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/aboutExcel.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
-import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../constants.dart';
 
 class QuickAccessBar extends StatefulWidget {
-  QuickAccessBar({Key key}) : super(key: key);
+  QuickAccessBar({Key? key}) : super(key: key);
 
   @override
   State<QuickAccessBar> createState() => _QuickAccessBarState();
@@ -147,7 +145,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                     future:
                         HiveDB.retrieveData(valueName: 'unread_notifications'),
                     builder: (context, snapshot) {
-                      if (snapshot.hasData && snapshot.data > 0)
+                      if (snapshot.hasData && snapshot.data! == 0)
                         return Transform.translate(
                           offset: Offset(22, -22),
                           child: Container(

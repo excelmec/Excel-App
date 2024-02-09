@@ -4,7 +4,7 @@ import '../Models/schedule_model.dart';
 
 class ScheduleProvider with ChangeNotifier{
 
-  Map<String, List<ScheduleModel>> _dataList;
+  late Map<String, List<ScheduleModel>> _dataList;
 
   Map<String, List<ScheduleModel>> get dataList => _dataList;
 

@@ -1,4 +1,3 @@
-import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ import 'package:social_share/social_share.dart';
 
 class SharingOptions extends StatelessWidget {
   final String referalCode;
-  SharingOptions({this.referalCode});
+  SharingOptions({required this.referalCode});
   @override
   Widget build(BuildContext context) {
     String siteUrl =
@@ -87,9 +86,9 @@ class SharingOptions extends StatelessWidget {
               await SocialShare.copyToClipboard(text:
                 message,
               );
-              ScaffoldMessenger.of(context).showSnackBar(
-                snackBar("Message Copied"),
-              );
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   snackBar("Message Copied"),
+              // );
             },
           ),
         ],
@@ -102,11 +101,11 @@ class ShareOption extends StatelessWidget {
   final Function action;
   final IconData icon;
   final Color color;
-  ShareOption({this.action, this.icon, this.color});
+  ShareOption({required this.action, required this.icon, required this.color});
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: action,
+      onTap: action(),
       child: CircleAvatar(
         radius: 20,
         backgroundColor: color,

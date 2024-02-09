@@ -7,7 +7,7 @@ import 'package:excelapp/UI/constants.dart';
 class ResultBody extends StatelessWidget {
   final Event event;
   final Map<String, dynamic> resultData;
-  ResultBody({this.event, this.resultData});
+  ResultBody({required this.event, required this.resultData});
 
   @override
   Widget build(BuildContext context) {

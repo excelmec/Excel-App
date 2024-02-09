@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-dialogWithContent({@required Widget child, @required context}) {
+dialogWithContent({required Widget child, required context}) {
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

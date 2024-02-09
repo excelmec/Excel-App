@@ -91,31 +91,29 @@ class SchedulePage extends StatelessWidget {
     );
   }
 
-  Widget schedule(dayNumber) {
-    List<ScheduleModel> day0 = scheduleData["day1"];
-    day0.sort((a, b) =>
-        DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-    List<ScheduleModel> day1 = scheduleData["day2"];
-    day1.sort((a, b) =>
-        DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-    List<ScheduleModel> day2 = scheduleData["day3"];
-    day2.sort((a, b) =>
-        DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-    // List<ScheduleModel> day3 = scheduleData["day3"];
-    // day3.sort((a, b) =>
-    //     DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-    Widget returnWidget;
-    if (dayNumber == 0)
-      returnWidget = TimeTableList(day0);
-    else if (dayNumber == 1)
-      returnWidget = TimeTableList(day1);
-    else if (dayNumber == 2)
-      returnWidget = TimeTableList(day2);
-    // else if (dayNumber == 3) returnWidget = TimeTableList(day3);
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      child: returnWidget,
-    );
-  }
+ Widget schedule(dayNumber) {
+  List<ScheduleModel> day0 = scheduleData["day1"];
+  day0.sort((a, b) => DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
+  List<ScheduleModel> day1 = scheduleData["day2"];
+  day1.sort((a, b) => DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
+  List<ScheduleModel> day2 = scheduleData["day3"];
+  day2.sort((a, b) => DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
+  
+  Widget returnWidget = Container(); // Default value
+  
+  if (dayNumber == 0)
+    returnWidget = TimeTableList(day0);
+  else if (dayNumber == 1)
+    returnWidget = TimeTableList(day1);
+  else if (dayNumber == 2)
+    returnWidget = TimeTableList(day2);
+  // else if (dayNumber == 3) returnWidget = TimeTableList(day3);
+  
+  return SingleChildScrollView(
+    physics: BouncingScrollPhysics(),
+    scrollDirection: Axis.vertical,
+    child: returnWidget,
+  );
+}
+
 }

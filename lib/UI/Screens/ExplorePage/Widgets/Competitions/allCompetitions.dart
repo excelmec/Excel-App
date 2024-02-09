@@ -10,14 +10,14 @@ class AllCompetitions extends StatefulWidget {
   State<AllCompetitions> createState() => _AllCompetitionsState();
   final String category;
   final String txtQuery;
-  const AllCompetitions({Key key, this.category, this.txtQuery})
+  const AllCompetitions({ Key? key, required this.category, required this.txtQuery})
       : super(key: key);
 }
 
 class _AllCompetitionsState extends State<AllCompetitions> {
   bool dataLoaded = false;
-  List<Event> competitions;
-  List<Event> CompetitionsData;
+ late List<Event> competitions;
+ late List<Event> CompetitionsData;
   filerbyCategory() {
     if (widget.category == 'all') {
       competitions =
@@ -38,12 +38,10 @@ class _AllCompetitionsState extends State<AllCompetitions> {
   }
 
   filterbyTxtQuery() {
-    if (widget.txtQuery != null) {
-      competitions = competitions
-          .where((i) => i.name.toLowerCase().contains(widget.txtQuery))
-          .toList();
+    competitions = competitions
+        .where((i) => i.name.toLowerCase().contains(widget.txtQuery))
+        .toList();
     }
-  }
 
   @override
   void initState() {

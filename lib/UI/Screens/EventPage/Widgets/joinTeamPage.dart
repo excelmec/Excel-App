@@ -18,14 +18,14 @@ class JoinTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
   final Function refreshIsRegistered;
   JoinTeamPage(
-      {@required this.eventDetails, @required this.refreshIsRegistered});
+      {required this.eventDetails, required this.refreshIsRegistered});
   @override
   _JoinTeamPageState createState() => _JoinTeamPageState();
 }
 
 class _JoinTeamPageState extends State<JoinTeamPage> {
   final _formKey = GlobalKey<FormState>();
-  int teamID;
+  late int teamID;
   String referralID = "";
   bool isLoading = false;
   registerEvent() async {
@@ -38,7 +38,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
     print(registered);
     if (referralID != "") {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String jwt = prefs.getString('jwt');
+        String? jwt = prefs.getString('jwt');
         print(jwt);
         var body = {
           "eventId": widget.eventDetails.id,
@@ -58,7 +58,6 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
         if (response.statusCode == 455 || response.statusCode == 500) {
           // Refreshes Token & gets JWT
           jwt = await refreshToken();
-          if (jwt == null) return null;
           var body = {
             "eventId": widget.eventDetails.id,
             "referrerId": int.parse(referralID),
@@ -103,7 +102,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
   }
 
   onSubmit() async {
-    if (!_formKey.currentState.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
     setState(() {
       isLoading = true;
     });
@@ -210,7 +209,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                         });
                       },
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return "Enter ID of the required team to join";
                         }
                         return null;

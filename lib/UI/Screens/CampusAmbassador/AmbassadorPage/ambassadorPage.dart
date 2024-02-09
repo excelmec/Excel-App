@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
-import 'package:excelapp/UI/Components/LoadingUI/snackBar.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/shareOptions.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +16,9 @@ class AmbassadorPage extends StatefulWidget {
 }
 
 class _AmbassadorPageState extends State<AmbassadorPage> {
-  User userData;
-  Future referalList;
-  Map<String, dynamic> ambassadorData;
+  late User userData;
+  late Future referalList;
+  late Map<String, dynamic> ambassadorData;
 
   @override
   void initState() {
@@ -85,12 +83,12 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                         color: Colors.grey,
                       ),
                       onPressed: () async {
-                        await SocialShare.copyToClipboard(text:
-                          ambassadorData["id"].toString(),
+                        await SocialShare.copyToClipboard(
+                          text: ambassadorData["id"].toString(),
                         );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          snackBar("Copied"),
-                        );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   snackBar("Copied"),
+                        // );
                       },
                     )
                   ],
@@ -112,7 +110,8 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                     ],
                   );
                 if (snapshot.data == "error") return referalError();
-                return ReferedUsers(referedUsers: snapshot.data);
+                return Text('snapshot');
+                // return ReferedUsers(referedUsers: snapshot.data[]);
               },
             ),
             SizedBox(height: 100)

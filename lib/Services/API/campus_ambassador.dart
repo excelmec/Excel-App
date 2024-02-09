@@ -19,11 +19,11 @@ fetchAmbassadorDetails() async {
 
 joinAmbassadorProgram() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString('jwt');
+  String? jwt = prefs.getString('jwt');
   try {
     var response = await http.get(Uri.parse(
       AccountConfig.url + 'Ambassador/signup'),
-      headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt},
+      headers: {HttpHeaders.authorizationHeader: "Bearer " + jwt!},
     );
     print(response.statusCode);
     if (response.body == "") return "error";
