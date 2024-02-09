@@ -1,6 +1,5 @@
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
-import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +25,6 @@ class _ViewProfileState extends State<ViewProfile> {
       return "Not Updated";
     } else {
       User user = await AccountServices.viewProfile();
-      if (user == null) return "error";
       return user;
     }
   }
@@ -34,7 +32,7 @@ class _ViewProfileState extends State<ViewProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar('View Profile'),
+      // appBar: customappbar('View Profile'),
       body: FutureBuilder(
         future: userDetails,
         builder: (BuildContext context, AsyncSnapshot snapshot) {

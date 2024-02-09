@@ -1,9 +1,9 @@
 class Highlights {
-  int id;
-  String name;
-  String image;
+  late int id;
+  late String name;
+  late String image;
 
-  Highlights({this.id, this.name, this.image});
+  Highlights({required this.id, required this.name, required this.image});
 
   Highlights.fromJson(json) {
     id = json['id'];

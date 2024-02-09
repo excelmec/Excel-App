@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ProcessedResult extends StatelessWidget {
   final Map<String, dynamic> resultData;
-  ProcessedResult({this.resultData});
+  ProcessedResult({required this.resultData});
 
 // Data for reference
   final sampleData = [

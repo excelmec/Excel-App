@@ -2,7 +2,6 @@ import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Accounts/auth_service.dart';
 import 'package:excelapp/Providers/loginStatusProvider.dart';
 import 'package:excelapp/Services/API/favourites_api.dart';
-import 'package:excelapp/UI/Components/CreateAccountModal/createAccountModal.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -19,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  AuthService authService;
+  late AuthService authService;
 
   @override
   void initState() {
@@ -49,16 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Authentication went wrong");
     }
     final myProvider = Provider.of<LoginStatus>(context, listen: false);
-    if (User.fromJson(await HiveDB.retrieveData(valueName: "user"))
-                .mobileNumber ==
-            null ||
-        User.fromJson(await HiveDB.retrieveData(valueName: "user")).gender ==
-            null ||
-        User.fromJson(await HiveDB.retrieveData(valueName: "user")).institutionId ==
-            null) {
-      showCreateAccountModal(
-          context, User.fromJson(await HiveDB.retrieveData(valueName: "user")));
-    }
 
     await HiveDB.retrieveData(valueName: "user")
         .then((value) => myProvider.setData(User.fromJson(value)));

@@ -1,22 +1,22 @@
 class News {
-  int id;
-  String title;
-  String content;
-  String image;
-  String button;
-  String link;
-  String date;
-  String imageurl;
+late  int id;
+late  String title;
+late  String content;
+late  String image;
+late  String button;
+late  String link;
+late  String date;
+late  String imageurl;
 
   News({
-    this.id,
-    this.title,
-    this.content,
-    this.image,
-    this.button,
-    this.link,
-    this.date,
-    this.imageurl,
+ required   this.id,
+ required   this.title,
+ required   this.content,
+ required   this.image,
+ required   this.button,
+ required   this.link,
+ required   this.date,
+ required   this.imageurl,
   });
 
   News.fromJson(json) {

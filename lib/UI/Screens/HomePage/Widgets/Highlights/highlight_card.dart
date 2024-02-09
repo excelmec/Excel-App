@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/highlights_model.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
-import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,7 @@ class HighlightsCard extends StatelessWidget {
   final Highlights highlights;
   final int index;
   final List<Map<String,dynamic>> storiesMapList;
-  Color firstColor;
+  late Color firstColor;
   HighlightsCard(this.highlights, this.index,this.storiesMapList) {
     int v =this.index;
     if(v==this.storiesMapList.length-1){

@@ -11,7 +11,7 @@ class HighlightsSection extends StatefulWidget {
 }
 
 class _HighlightsSectionState extends State<HighlightsSection> {
-  StreamController<dynamic> estream;
+  late StreamController<dynamic> estream;
   bool dataLoaded = false;
 
   fetchfromNet() async {
@@ -82,7 +82,7 @@ class _HighlightsSectionState extends State<HighlightsSection> {
                     ),
                   );
                 if (snapshot.hasData)
-                  return HighlightsBody(highLightsMap: snapshot.data);
+                  return HighlightsBody(highLightsMap: []);
                 else {
                   return CarouselSlider.builder(
                     itemCount: 3,
@@ -109,8 +109,8 @@ class _HighlightsSectionState extends State<HighlightsSection> {
                                 width: MediaQuery.of(context).size.width * .9,
                                 margin: EdgeInsets.symmetric(horizontal: 15),
                               ),
-                              baseColor: Colors.grey[300],
-                              highlightColor: Colors.grey[100],
+                              baseColor: const Color.fromRGBO(224, 224, 224, 1),
+                              highlightColor: const Color.fromRGBO(245, 245, 245, 1),
                             ),
                           ));
                     },

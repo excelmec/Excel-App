@@ -187,6 +187,8 @@ MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
     if (states.contains(MaterialState.pressed)) {
       return colorPressed;
     }
+    // Return the default color if no other condition matches
+    return color; 
   };
   return MaterialStateProperty.resolveWith(getColor);
 }

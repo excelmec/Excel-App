@@ -4,7 +4,7 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 class CampusAmbassador extends StatelessWidget {
-  const CampusAmbassador({Key key}) : super(key: key);
+  const CampusAmbassador({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

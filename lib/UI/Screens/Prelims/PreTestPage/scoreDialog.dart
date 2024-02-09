@@ -170,7 +170,7 @@ class ScoreDialog extends StatelessWidget {
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(7.0),
-                              side: BorderSide(color: Colors.indigo[900])),
+                              side: BorderSide(color: const Color.fromRGBO(26, 35, 126, 1))),
                         ),
                         onPressed: () {
                           Navigator.pop(context);

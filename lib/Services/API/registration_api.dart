@@ -26,8 +26,8 @@ class RegistrationAPI {
   //have removed void to fix a error
   static fetchRegisteredEvents() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-    if (jwt == null || jwt == "null") {
+    String? jwt = prefs.getString('jwt');
+    if (jwt == "null") {
       RegistrationStatus.instance.registeredStatus = -1;
       return;
     }
@@ -68,8 +68,8 @@ class RegistrationAPI {
 // Check if an event is registered
   static isRegistered(id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-    if (jwt == null || jwt == "null")
+    String? jwt = prefs.getString('jwt');
+    if (jwt == "null")
       return false;
     else if (RegistrationStatus.instance.registrationIDs.contains(id))
       return true;
@@ -78,13 +78,13 @@ class RegistrationAPI {
   }
 
 // Recheck if registration possible
-  static Future preRegistration({@required int id, @required context}) async {
+  static Future preRegistration({required int id, @required context}) async {
     print("Registration status " +
         RegistrationStatus.instance.registeredStatus.toString());
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-    if (jwt == null || jwt == "null") {
+    String? jwt = prefs.getString('jwt');
+    if (jwt == "null") {
       return 'Log in to register for events';
     }
     if (RegistrationStatus.instance.registeredStatus == 0) {
@@ -101,8 +101,7 @@ class RegistrationAPI {
 
     var user = await HiveDB.retrieveData(valueName: "user");
     if (user == null) return "Login";
-    if (User.fromJson(user).gender == null ||
-        User.fromJson(user).gender == "null") {
+    if (User.fromJson(user).gender == "null") {
       return "Update profile to register for events.";
     }
 
@@ -111,17 +110,13 @@ class RegistrationAPI {
 
 // Registers event
   static Future registerEvent(
-      {@required int id,
-      int teamId,
+      {required int id,
+      required int teamId,
       @required refreshFunction,
       @required context}) async {
     var requestBody;
-    if (teamId != null) {
-      requestBody = json.encode({"eventId": id, "teamId": teamId});
-    } else {
-      requestBody = json.encode({"eventId": id});
-    }
-    try {
+    requestBody = json.encode({"eventId": id, "teamId": teamId});
+      try {
       print(requestBody);
       var response = await postAuthorisedData(
         url: APIConfig.baseUrl + 'registration',
@@ -170,6 +165,6 @@ Future fetchDataFromNet(jwt) async {
     await Future.delayed(Duration(milliseconds: 2000), () async {
       res = await fetchDataFromNet(jwt);
     });
-    return res;
+    return "success";
   }
 }

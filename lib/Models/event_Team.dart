@@ -1,9 +1,9 @@
 class TeamDetails {
-  int id;
-  String name;
-  int eventId;
+  late int id;
+ late  String name;
+ late int eventId;
 
-  TeamDetails({this.id, this.name, this.eventId});
+  TeamDetails({required this.id, required this.name, required this.eventId});
 
   TeamDetails.fromJson(json) {
     id = json['id'];

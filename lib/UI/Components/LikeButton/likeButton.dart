@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LikeButton extends StatefulWidget {
   final EventDetails eventDetails;
-  LikeButton({@required this.eventDetails});
+  LikeButton({required this.eventDetails});
   @override
   State<StatefulWidget> createState() {
     return _LikeButton();
@@ -18,7 +18,7 @@ class LikeButton extends StatefulWidget {
 class _LikeButton extends State<LikeButton> {
   bool likeState = false;
   bool isLoading = false;
-  EventDetails eventDetails;
+  late EventDetails eventDetails;
 
   handleError(response) {
     print(response);

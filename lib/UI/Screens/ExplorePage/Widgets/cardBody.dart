@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CardBody extends StatelessWidget {
   final List<Event> eventsMap;
-  CardBody({Key key, @required this.eventsMap}) : super(key: key);
+  CardBody({ Key? key, required this.eventsMap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

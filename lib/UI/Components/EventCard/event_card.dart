@@ -175,7 +175,7 @@ _buildCard(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          event.name ?? "Event",
+                          event.name,
                           style: TextStyle(
                               color: Color.fromARGB(255, 28, 31, 32),
                               fontWeight: FontWeight.w800,
@@ -189,8 +189,7 @@ _buildCard(
                                 child: Text(
                                   event.desc
                                           .toString()
-                                          .replaceAll(RegExp('<[^>]*>'), '') ??
-                                      "Event Description",
+                                          .replaceAll(RegExp('<[^>]*>'), ''),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(

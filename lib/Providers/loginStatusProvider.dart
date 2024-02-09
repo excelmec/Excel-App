@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class LoginStatus with ChangeNotifier{
 
-  StreamController userdata;
+ late StreamController userdata;
 
   StreamController get data => userdata;
 

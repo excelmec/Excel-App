@@ -68,8 +68,8 @@ class EventsAPI {
   static fetchAndStoreEventDetailsFromNet(int id) async {
     print("- Event list $id network fetch");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
-    if (jwt == null || jwt == "null")
+    String? jwt = prefs.getString('jwt');
+    if (jwt == "null")
       try {
         var response =
             await http.get(Uri.parse(APIConfig.baseUrl + 'events/' + '$id'));

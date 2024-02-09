@@ -9,7 +9,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
-import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -18,20 +17,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ImgUpload extends StatefulWidget {
   final String imgUrl;
-  ImgUpload({@required this.imgUrl});
+  ImgUpload({required this.imgUrl});
   @override
   _ImgUploadState createState() => _ImgUploadState();
 }
 
 class _ImgUploadState extends State<ImgUpload> {
-  File _image;
+  late File _image;
   bool isLoading = false;
   final picker = ImagePicker();
 
-  Future getImage({@required bool fromGallery}) async {
+  Future getImage({required bool fromGallery}) async {
     var pickedFile;
     try {
-      pickedFile = await picker.getImage(
+      pickedFile = await picker.pickImage(
         source: fromGallery ? ImageSource.gallery : ImageSource.camera,
       );
     } catch (e) {
@@ -54,7 +53,7 @@ class _ImgUploadState extends State<ImgUpload> {
 
     var url = 'https://staging.accounts.excelmec.org/api/Profile/update/image';
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
+    String? jwt = prefs.getString('jwt');
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.headers['authorization'] = "Bearer $jwt";
@@ -116,7 +115,7 @@ class _ImgUploadState extends State<ImgUpload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar("Update Image"),
+      // appBar: customappbar("Update Image"),
       body: ListView(
         children: [
           SizedBox(height: 30),
@@ -137,11 +136,13 @@ class _ImgUploadState extends State<ImgUpload> {
               child: CircleAvatar(
                 backgroundColor: Colors.transparent,
                 radius: MediaQuery.of(context).size.height / 9,
-                backgroundImage: _image == null
-                    ? NetworkImage(
+                // backgroundImage: _image == null
+                    // ? 
+                   
+                    // : FileImage(_image),
+                  backgroundImage:  NetworkImage(
                         widget.imgUrl,
-                      )
-                    : FileImage(_image),
+                      ),  
               ),
             ),
           ),
@@ -182,7 +183,7 @@ class _ImgUploadState extends State<ImgUpload> {
     );
   }
 
-  Widget imageOption({String optionName, Function onPressed, IconData icon}) {
+  Widget imageOption({required String optionName, required Function onPressed, required IconData icon}) {
     return Center(
       child: Container(
         width: MediaQuery.of(context).size.width * .6,
@@ -213,7 +214,7 @@ class _ImgUploadState extends State<ImgUpload> {
               ),
             ],
           ),
-          onPressed: onPressed,
+          onPressed: onPressed(),
         ),
       ),
     );

@@ -5,7 +5,7 @@ import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/Screens/Schedule/schedule.dart';
 
 class NavigatingPage extends StatelessWidget {
-  NavigatingPage({this.pageNumber});
+  NavigatingPage({required this.pageNumber});
   final int pageNumber;
 
   @override
@@ -15,7 +15,7 @@ class NavigatingPage extends StatelessWidget {
         return HomePage();
         break;
       case 1:
-        return ExplorePage();
+        return ExplorePage(selectedPage: 2, selectedCategory: '',);
         break;
       case 2:
         return Schedule();

@@ -11,7 +11,7 @@ class UnregisterAllEvents extends StatelessWidget {
     var user = await HiveDB.retrieveData(valueName: "user");
     User userData = User.fromJson(user);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
+    String? jwt = prefs.getString('jwt');
     final request = http.Request("DELETE",
         Uri.parse("https://staging.events.excelmec.org/api/registration"));
     request.headers.addAll(<String, String>{

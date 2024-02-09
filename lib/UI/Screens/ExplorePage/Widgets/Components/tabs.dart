@@ -5,7 +5,7 @@ class FilterTab extends StatefulWidget {
   final String text;
   final Function() onPressed;
   final bool isSelected;
-  const FilterTab({Key key,this.text,this.onPressed,this.isSelected=false}) : super(key: key);
+  const FilterTab({ Key? key,required this.text,required this.onPressed,this.isSelected=false}) : super(key: key);
 
   @override
   State<FilterTab> createState() => _FilterTabState();

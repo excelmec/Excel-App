@@ -12,12 +12,12 @@ class AccountServices {
   static Future<String> fetchUserDetails() async {
     User user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
+    String? jwt = prefs.getString('jwt');
 
     try {
       var response = await http.get(
         Uri.parse(AccountConfig.newUrl + 'profile/'),
-        headers: AccountConfig.getHeader(jwt),
+        headers: AccountConfig.getHeader(jwt!),
       );
 
       // Store User in DB
@@ -86,7 +86,7 @@ class AccountServices {
   // Update User Profile
   static Future<String> updateProfile(Map<String, dynamic> userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jwt = prefs.getString('jwt');
+    String? jwt = prefs.getString('jwt');
     User user;
 
     try {
@@ -109,7 +109,7 @@ class AccountServices {
       print("fetching user details");
       var response = await http.get(
         Uri.parse(AccountConfig.newUrl + 'profile'),
-        headers: AccountConfig.getHeader(jwt),
+        headers: AccountConfig.getHeader(jwt!),
       );
       Map<String, dynamic> responseData = json.decode(response.body);
       user = User.fromJson(responseData);

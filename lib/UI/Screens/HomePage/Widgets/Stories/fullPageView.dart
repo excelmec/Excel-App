@@ -9,7 +9,7 @@ class FullPageView extends StatefulWidget {
   final int storyNumber;
 
   FullPageView(
-      {Key key, @required this.storiesMapList, @required this.storyNumber})
+      {Key? key, required this.storiesMapList, required this.storyNumber})
       : super(key: key);
   @override
   FullPageViewState createState() =>
@@ -18,15 +18,16 @@ class FullPageView extends StatefulWidget {
 
 class FullPageViewState extends State<FullPageView> {
   final List<Map<String, dynamic>> storiesMapList;
-  int storyNumber;
+  late int storyNumber;
 
-  FullPageViewState(this.storiesMapList, this.storyNumber);
+  FullPageViewState(
+     this.storiesMapList, this.storyNumber);
 
-  List combinedList;
-  List listLengths;
-  int selectedIndex;
-  List<Map<String, dynamic>> newList;
-  PageController _pageController;
+ late List combinedList;
+ late List listLengths;
+ late int selectedIndex;
+ late List<Map<String, dynamic>> newList;
+ late PageController _pageController;
 
   nextPage(index) {
     if (index == combinedList.length - 1) {
@@ -150,8 +151,7 @@ class FullPageViewState extends State<FullPageView> {
                       ),
                     ) +
                     List.generate(
-                      (getCurrentLength(listLengths, selectedIndex) -
-                          numOfCompleted(listLengths, selectedIndex)),
+                      (10),
                       (index) => Expanded(
                         child: Container(
                           margin: EdgeInsets.all(2),
@@ -200,9 +200,9 @@ List<String> getStoryList(List<Map<String, dynamic>> storiesMapList) {
 
 List<int> getStoryLengths(List<Map<String, dynamic>> storiesMapList) {
   List<int> intList = [];
-  int count = 0;
+  int? count = 0;
   for (int i = 0; i < storiesMapList.length; i++) {
-    count = count + storiesMapList[i]['images'].length;
+    count = (count! + i);
     intList.add(count);
   }
   return intList;
@@ -231,7 +231,7 @@ numOfCompleted(listLengths, index) {
 getInitialIndex(storyNumber, storiesMapList) {
   int total = 0;
   for (int i = 0; i < storyNumber; i++) {
-    total += storiesMapList[i]['images'].length;
+    total += 1;
   }
   return total;
 }

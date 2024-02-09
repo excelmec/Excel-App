@@ -76,7 +76,7 @@ Est quisquam quia repellendus est ut dolorem.
                 height: (MediaQuery.of(context).size.height / 2.5),
                 child: SingleChildScrollView(
                   child: Text(
-                    eventMap['description'] * 3,
+                    eventMap['description']! * 3,
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -104,7 +104,7 @@ Est quisquam quia repellendus est ut dolorem.
                           Row(
                             children: <Widget>[
                               Text(
-                                eventMap['duration'],
+                                eventMap['duration']!,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25,

@@ -8,23 +8,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 getAuthorisedData(String url) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString('jwt');
+  String? jwt = prefs.getString('jwt');
 
   // print(jwt);
   var response = await http.get(Uri.parse(
     url),
-    headers: AccountConfig.getHeader(jwt),
+    headers: AccountConfig.getHeader(jwt!),
   );
   // If token has expired, refresh it
   if (response.statusCode == 455 || response.statusCode == 500) {
     // Refreshes Token & gets JWT
     jwt = await refreshToken();
-    if (jwt == null) return null;
 
     // Retrying Request
     response = await http.get(Uri.parse(
       url),
-      headers: AccountConfig.getHeader(jwt),
+      headers: AccountConfig.getHeader(jwt!),
     );
   }
   return response;

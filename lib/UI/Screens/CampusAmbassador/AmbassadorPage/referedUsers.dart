@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 class ReferedUsers extends StatelessWidget {
   final List referedUsers;
-  ReferedUsers({this.referedUsers});
+  ReferedUsers({required this.referedUsers});
   @override
   Widget build(BuildContext context) {
     String referalText;

@@ -9,13 +9,13 @@ class AllEvents extends StatefulWidget {
   State<AllEvents> createState() => _AllEventsState();
   final String category;
   final String txtQuery;
-  const AllEvents({Key key, this.category, this.txtQuery}) : super(key: key);
+  const AllEvents({ Key? key, required this.category, required this.txtQuery}) : super(key: key);
 }
 
 class _AllEventsState extends State<AllEvents> {
   bool dataLoaded = false;
-  List<Event> events;
-  List<Event> EventsData;
+  late List<Event> events;
+ late List<Event> EventsData;
   filerbyCategory() {
     if (widget.category == 'all') {
       events = EventsData.where((i) => i.isCompetition == false).toList();
@@ -32,12 +32,10 @@ class _AllEventsState extends State<AllEvents> {
   }
 
   filterbyTxtQuery() {
-    if (widget.txtQuery != null) {
-      events = events
-          .where((i) => i.name.toLowerCase().contains(widget.txtQuery))
-          .toList();
+    events = events
+        .where((i) => i.name.toLowerCase().contains(widget.txtQuery))
+        .toList();
     }
-  }
 
   @override
   void initState() {
@@ -53,6 +51,6 @@ class _AllEventsState extends State<AllEvents> {
   Widget build(BuildContext context) {
     filerbyCategory();
     filterbyTxtQuery();
-    return (CardBody(eventsMap: events));
+    return (CardBody(eventsMap: events, key: null,));
   }
 }

@@ -2,11 +2,9 @@ import 'dart:async';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
-import 'package:excelapp/UI/Screens/EventPage/Widgets/eventPageBody.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Services/API/favourites_api.dart';
-import '../../Themes/colors.dart';
 
 class EventPage extends StatefulWidget {
   final int eventId;
@@ -17,8 +15,8 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
-  int _eventId;
-  StreamController<dynamic> estream;
+  late int _eventId;
+  late StreamController<dynamic> estream;
 
   @override
   void initState() {
@@ -68,7 +66,8 @@ class _EventPageState extends State<EventPage> {
                 
                   ChangeNotifierProvider<FavouritesStatus>(create: (c)=>FavouritesStatus.instance),
               ],
-              child: EventPageBody(eventDetails: snapshot.data,heroname: widget.heroname,));
+              // child: EventPageBody(eventDetails: snapshot.data,heroname: widget.heroname,)
+              );
           } else {
             return Stack(
               fit: StackFit.expand,

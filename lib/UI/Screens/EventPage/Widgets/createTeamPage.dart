@@ -18,7 +18,7 @@ class CreateTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
   final Function refreshIsRegistered;
   CreateTeamPage(
-      {@required this.eventDetails, @required this.refreshIsRegistered});
+      {required this.eventDetails, required this.refreshIsRegistered});
   @override
   _CreateTeamPageState createState() => _CreateTeamPageState();
 }
@@ -31,86 +31,79 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
   createTeam() async {
     TeamDetails teamdetails =
         await RegistrationAPI.createTeam(teamName, widget.eventDetails.id);
-    if (teamdetails != null) {
-      var registered = await RegistrationAPI.registerEvent(
-        id: widget.eventDetails.id,
-        teamId: teamdetails.id,
-        refreshFunction: widget.refreshIsRegistered,
-        context: context,
-      );
-      if (referralID != "") {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String jwt = prefs.getString('jwt');
-        print(jwt);
+    var registered = await RegistrationAPI.registerEvent(
+      id: widget.eventDetails.id,
+      teamId: teamdetails.id,
+      refreshFunction: widget.refreshIsRegistered,
+      context: context,
+    );
+    if (referralID != "") {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? jwt = prefs.getString('jwt');
+      print(jwt);
+      var body = {
+        "eventId": widget.eventDetails.id,
+        "referrerId": int.parse(referralID),
+        "accessToken": jwt,
+        "point": 10
+      };
+      print(json.encode(body));
+      var response = await http.post(
+          Uri.parse(APIConfig.cabaseUrl + "addTransactionByToken"),
+          body: json.encode(body),
+          headers: {
+            "content-type": "application/json",
+          });
+      print(response.statusCode);
+      // If token has expired, rfresh it
+      if (response.statusCode == 455 || response.statusCode == 500) {
+        // Refreshes Token & gets JWT
+        jwt = await refreshToken();
         var body = {
           "eventId": widget.eventDetails.id,
           "referrerId": int.parse(referralID),
           "accessToken": jwt,
           "point": 10
         };
-        print(json.encode(body));
-        var response = await http.post(
+        // Retrying Request
+        response = await http.post(
             Uri.parse(APIConfig.cabaseUrl + "addTransactionByToken"),
             body: json.encode(body),
             headers: {
               "content-type": "application/json",
             });
-        print(response.statusCode);
-        // If token has expired, rfresh it
-        if (response.statusCode == 455 || response.statusCode == 500) {
-          // Refreshes Token & gets JWT
-          jwt = await refreshToken();
-          if (jwt == null) return null;
-          var body = {
-            "eventId": widget.eventDetails.id,
-            "referrerId": int.parse(referralID),
-            "accessToken": jwt,
-            "point": 10
-          };
-          // Retrying Request
-          response = await http.post(
-              Uri.parse(APIConfig.cabaseUrl + "addTransactionByToken"),
-              body: json.encode(body),
-              headers: {
-                "content-type": "application/json",
-              });
-        }
-        if (response.statusCode == 200) {
-          print("Transaction added");
-          print(response.body);
-        } else {
-          print("Transaction not added");
-        }
       }
-      if (registered == -1)
-        print("Error occured");
-      else if (registered != null && registered.statusCode != 200) {
-        try {
-          alertDialog(
-            text: jsonDecode(registered.body)["error"].toString(),
-            context: context,
-          );
-        } catch (_) {
-          alertDialog(text: "Registration failed. Try again", context: context);
-        }
+      if (response.statusCode == 200) {
+        print("Transaction added");
+        print(response.body);
       } else {
-        EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
-        await Future.delayed(Duration(milliseconds: 200));
-        Navigator.pop(context);
-        return;
+        print("Transaction not added");
       }
-    } else
-      alertDialog(
-        text: "Team creation failed",
-        context: context,
-      );
-    setState(() {
+    }
+    if (registered == -1)
+      print("Error occured");
+    else if (registered != null && registered.statusCode != 200) {
+      try {
+        alertDialog(
+          text: jsonDecode(registered.body)["error"].toString(),
+          context: context,
+        );
+      } catch (_) {
+        alertDialog(text: "Registration failed. Try again", context: context);
+      }
+    } else {
+      EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
+      await Future.delayed(Duration(milliseconds: 200));
+      Navigator.pop(context);
+      return;
+    }
+      setState(() {
       isLoading = false;
     });
   }
 
   onSubmit() async {
-    if (!_formKey.currentState.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
     setState(() {
       isLoading = true;
     });
@@ -215,7 +208,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                           });
                         },
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Enter a team name";
                           }
                           if (value.trim().length < 5) {

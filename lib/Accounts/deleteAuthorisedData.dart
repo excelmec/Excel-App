@@ -8,11 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 deleteAuthorisedData(String url) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString('jwt');
+  String? jwt = prefs.getString('jwt');
   var response = await http.delete(Uri.parse(
     url),
     headers: {
-      HttpHeaders.authorizationHeader: "Bearer " + jwt,
+      HttpHeaders.authorizationHeader: "Bearer " + jwt!,
       "Content-Type": "application/json"
     },
   );
@@ -20,13 +20,12 @@ deleteAuthorisedData(String url) async {
   if (response.statusCode == 455 || response.statusCode == 500) {
     // Refreshes Token & gets JWT
     jwt = await refreshToken();
-    if (jwt == null) return null;
 
     // Retrying Request
     response = await http.delete(Uri.parse(
       url),
       headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + jwt,
+        HttpHeaders.authorizationHeader: "Bearer " + jwt!,
         "Content-Type": "application/json"
       },
     );

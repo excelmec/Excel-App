@@ -1,9 +1,5 @@
-import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
-import 'package:excelapp/UI/Components/Appbar/appbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/ambassadorPage.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/joinProgram.dart';
 import 'package:flutter/material.dart';
 
 class CampusAmbassador extends StatefulWidget {
@@ -25,7 +21,7 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customappbar("Campus Ambassador"),
+      // appBar: customappbar("Campus Ambassador"),
       body: FutureBuilder(
         future: ambassadorDetails,
         builder: (context, snapshot) {
@@ -39,11 +35,12 @@ class _CampusAmbassadorState extends State<CampusAmbassador> {
             return Center(
               child: Text("Not logged in"),
             );
-          User userData = snapshot.data;
+          Object? userData = snapshot.data;
+          return Text('ambassodor');
           // If ambassador not an ambassador
-          if (userData.ambassador == "null") return JoinAmbassadorProgram();
-          // Ambassador page
-          return AmbassadorPage(userData);
+          // if (userData?.ambassador == "null") return JoinAmbassadorProgram();
+          // // Ambassador page
+          // return AmbassadorPage(userData);
         },
       ),
     );

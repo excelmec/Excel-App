@@ -5,22 +5,22 @@ import 'package:provider/provider.dart';
 import '../../../../Providers/navigationProvider.dart';
 
 class FABBottomAppBarItem {
-  FABBottomAppBarItem({this.iconName, this.text});
+  FABBottomAppBarItem({required this.iconName, required this.text});
   String iconName;
   String text;
 }
 
 class FABBottomAppBar extends StatefulWidget {
   FABBottomAppBar({
-    this.items,
-    this.centerItemText,
-    this.height: 60.0,
-    this.iconSize: 24.0,
-    this.backgroundColor,
-    this.color,
-    this.selectedColor,
-    this.notchedShape,
-    this.onTabSelected,
+    required this.items,
+    required this.centerItemText,
+    this.height = 40,
+    this.iconSize = 20.0,
+    required this.backgroundColor,
+    required this.color,
+    required this.selectedColor,
+    // this.notchedShape,
+    required this.onTabSelected,
   }) {
     assert(this.items.length == 2 || this.items.length == 4);
   }
@@ -31,7 +31,7 @@ class FABBottomAppBar extends StatefulWidget {
   final Color backgroundColor;
   final Color color;
   final Color selectedColor;
-  final NotchedShape notchedShape;
+  // final NotchedShape notchedShape;
   final ValueChanged<int> onTabSelected;
 
   @override
@@ -57,10 +57,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     // items.insert(items.length >> 1, _buildMiddleTabItem());
 
     return BottomAppBar(
-      notchMargin: 10,
       child: Container(
-        height: 68,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,14 +72,14 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
   Widget _buildMiddleTabItem() {
     return Expanded(
       child: SizedBox(
-        height: widget.height,
+        height: 30,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: widget.iconSize),
+          children: [
+            SizedBox(height: 26),
             Text(
-              widget.centerItemText ?? '',
+              widget.centerItemText,
               style: TextStyle(color: widget.color),
             ),
           ],
@@ -91,34 +89,38 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
   }
 
   Widget _buildTabItem({
-    FABBottomAppBarItem item,
-    int index,
-    ValueChanged<int> onPressed,
+    required FABBottomAppBarItem item,
+    required int index,
+    required ValueChanged<int> onPressed,
   }) {
     Color color = _selectedIndex == index ? widget.selectedColor : widget.color;
     return Expanded(
       child: Container(
-        margin: EdgeInsets.symmetric( vertical: 8, horizontal: 4),
+        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 4),
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
             borderRadius: BorderRadius.circular(30.0),
             splashColor: white200,
-          highlightColor: white200,
+            highlightColor: white200,
             onTap: () => onPressed(index),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
                       color: _selectedIndex == index
                           ? blue100
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(30)),
                   alignment: Alignment.center,
-                  child: Image.asset(_selectedIndex == index? "assets/icons/${item.iconName}_filled.png" : "assets/icons/${item.iconName}.png", height: 26),
+                  child: Image.asset(
+                      _selectedIndex == index
+                          ? "assets/icons/${item.iconName}_filled.png"
+                          : "assets/icons/${item.iconName}.png",
+                      height: 20),
                 ),
               ],
             ),

@@ -15,24 +15,22 @@ class AuthService {
         'email'
       ]);
       await googleSignIn.signOut();
-      GoogleSignInAccount accountInfo = await googleSignIn.signIn();
-      if (accountInfo != null) {
-        GoogleSignInAuthentication googleKeys =
-            await accountInfo.authentication;
-        accessToken = googleKeys.accessToken;
-      }
-    } catch (err) {
+      GoogleSignInAccount? accountInfo = await googleSignIn.signIn();
+      GoogleSignInAuthentication googleKeys =
+          await accountInfo!.authentication;
+      accessToken = googleKeys.accessToken!;
+        } catch (err) {
       print("Error: $err");
     }
 
     // Store access token locally
-    print("Google Access Token : $accessToken");
-    prefs.setString('access_token', accessToken);
+    // print("Google Access Token : $accessToken");
+    // prefs.setString('access_token', accessToken);
 
     // Send access token to backend -- Recieve jwt
     try {
       print(AccountConfig.newUrl + 'Auth/login/');
-      Map<String, String> token = {"accessToken": accessToken};
+      Map<String, String> token = {"accessToken": ""};
       print(json.encode(token));
       var response = await http.post(
         Uri.parse(AccountConfig.newUrl + 'Auth/login/'),

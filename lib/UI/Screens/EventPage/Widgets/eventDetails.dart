@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:excelapp/Models/event_details.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/referedUsers.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ import '../../../constants.dart';
 class MoreEventDetails extends StatefulWidget {
   final EventDetails eventDetails;
 
-  MoreEventDetails({this.eventDetails});
+  MoreEventDetails({required this.eventDetails});
 
   @override
   State<MoreEventDetails> createState() => _MoreEventDetailsState();
@@ -21,12 +20,12 @@ class MoreEventDetails extends StatefulWidget {
 
 class _MoreEventDetailsState extends State<MoreEventDetails>
     with TickerProviderStateMixin {
-  double height = 800.0;
-  int selectedIndex;
-  String content;
-  List<String> contents = [];
-  double lines;
-  TabController _controller;
+late  double height = 800.0;
+late  int selectedIndex;
+late  String content;
+late  List<String> contents = [];
+late  double lines;
+late  TabController _controller;
 
   @override
   void initState() {
@@ -51,13 +50,11 @@ class _MoreEventDetailsState extends State<MoreEventDetails>
   }
 
   double calcHeight(String content) {
-    if (content != null) {
-      double lines = (content.split(" ").length) / 5.0;
-      double height = lines < 25 ? 640 : lines * 30;
-      height += lines < 30 ? (content.split("\n")?.length) : 0;
-      return height;
-    }
-    return 580.0;
+    double lines = (content.split(" ").length) / 5.0;
+    double height = lines < 25 ? 640 : lines * 30;
+    height += lines < 30 ? (content.split("\n").length) : 0;
+    return height;
+      return 580.0;
   }
 
   @override
@@ -147,43 +144,45 @@ class _MoreEventDetailsState extends State<MoreEventDetails>
       padding: padding,
       child: Html(
         data: content,
-        customTextStyle: (node, baseStyle) {
-          if (node is dom.Element)
-            switch (node.localName) {
-              case "h2":
-                return TextStyle(
-                    fontFamily: pfontFamily,
-                    fontSize: 18,
-                    height: 1.3,
-                    color: Color(0xff3D4747));
-              case "p":
-                return TextStyle(
-                    fontFamily: pfontFamily,
-                    fontSize: 14.7,
-                    height: 1.5,
-                    color: Color(0xff3D4747));
-              case "li":
-                return TextStyle(
-                    fontFamily: pfontFamily,
-                    fontSize: 14.7,
-                    height: 1.7,
-                    color: Color(0xff3D4747));
-            }
-          return TextStyle(
-              fontFamily: pfontFamily,
-              fontSize: 14.7,
-              height: 1.5,
-              color: Color(0xff3D4747));
-        },
-        defaultTextStyle: TextStyle(
-            color: Color.fromARGB(255, 61, 71, 71),
-            fontFamily: pfontFamily,
-            height: 1.7,
-            fontSize: 14.5,
-            fontWeight: FontWeight.w400),
+        // customTextStyle: customTextstyle,
+        // defaultTextStyle: TextStyle(
+        //     color: Color.fromARGB(255, 61, 71, 71),
+        //     fontFamily: pfontFamily,
+        //     height: 1.7,
+        //     fontSize: 14.5,
+        //     fontWeight: FontWeight.w400),
       ),
     );
   }
+
+  customTextstyle(node, baseStyle) {
+        if (node is dom.Element)
+          switch (node.localName) {
+            case "h2":
+              return TextStyle(
+                  fontFamily: pfontFamily,
+                  fontSize: 18,
+                  height: 1.3,
+                  color: Color(0xff3D4747));
+            case "p":
+              return TextStyle(
+                  fontFamily: pfontFamily,
+                  fontSize: 14.7,
+                  height: 1.5,
+                  color: Color(0xff3D4747));
+            case "li":
+              return TextStyle(
+                  fontFamily: pfontFamily,
+                  fontSize: 14.7,
+                  height: 1.7,
+                  color: Color(0xff3D4747));
+          }
+        return TextStyle(
+            fontFamily: pfontFamily,
+            fontSize: 14.7,
+            height: 1.5,
+            color: Color(0xff3D4747));
+      }
 
   Widget contactTab() {
     var eventhead1 = json.decode(widget.eventDetails.eventHead1);
@@ -261,12 +260,8 @@ class _MoreEventDetailsState extends State<MoreEventDetails>
                         scheme: 'mailto',
                         path: eventHeadEmail,
                       );
-                      if (await canLaunchUrl(launchUri) != null) {
-                        await launchUrl(launchUri);
-                      } else {
-                        throw 'Could not launch';
-                      }
-                    },
+                      await launchUrl(launchUri);
+                                        },
                     icon: Image.asset("assets/icons/message.png", height: 24),
                     color: Colors.blue,
                     iconSize: 28),

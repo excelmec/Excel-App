@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 class ViewTeam extends StatefulWidget {
   final EventDetails eventDetails;
   final int teamID;
-  ViewTeam({@required this.eventDetails, @required this.teamID});
+  ViewTeam({required this.eventDetails, required this.teamID});
   @override
   _ViewTeamState createState() => _ViewTeamState();
 }

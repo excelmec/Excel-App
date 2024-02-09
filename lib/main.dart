@@ -1,13 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:excelapp/UI/Screens/SplashScreen/splashscreen.dart';
 import 'package:provider/provider.dart';
 
-import 'Services/Notifications/firebase_messaging.dart';
+import 'Services/Notifications/firebase_options.dart';
+import 'UI/Screens/LandingPage/landingPage.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
-  await initiliaseNotificationServices();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -34,7 +39,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         appBarTheme: AppBarTheme(backgroundColor: Color(0xffe4edef)),
       ),
-      home: Splashscreen(),
+      home: LandingPage(),
+      //SplashScreen
     );
   }
 }

@@ -14,8 +14,8 @@ class CheckUserLoggedIn extends StatefulWidget {
 }
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
-  bool isProfileUpdated;
-  Future userData;
+late  bool isProfileUpdated;
+late  Future userData;
 
   Future<dynamic> checkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,7 +34,7 @@ class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
     }
   }
 
-  bool isInit;
+  late bool isInit;
   @override
   void initState() {
     isInit = true;

@@ -41,19 +41,19 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
   // Form Fields
   final _formKey = GlobalKey<FormState>();
 //int _id;
-  String _name;
+  late String _name;
   // ignore: unused_field
-  String _picture;
-  String _mobileNumber;
-  int _categoryId;
-  int _institutionId;
-  String _institutionName;
-  String _gender;
-  String _emailId;
-  List<String> _categories = <String>['College', 'School'];
-  List<String> _genders = <String>['Male', 'Female', 'Other'];
-  String notInListOptionName = "NOT IN THIS LIST";
-  String _customInstitutionName = "";
+  late String _picture;
+  late String _mobileNumber;
+  late int _categoryId;
+  late int _institutionId;
+  late String _institutionName;
+  late String _gender;
+  late String _emailId;
+  late List<String> _categories = <String>['College', 'School'];
+  late  List<String> _genders = <String>['Male', 'Female', 'Other'];
+  late  String notInListOptionName = "NOT IN THIS LIST";
+  late String _customInstitutionName = "";
 
   @override
   void initState() {
@@ -133,10 +133,6 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
       builder: (BuildContext context) => loadingDialog,
       barrierDismissible: false,
     );
-    if (_gender == null || _gender == null) {
-      Navigator.of(context, rootNavigator: true).pop();
-      return "Gender not selected";
-    }
 
     // // get institutionId only if category is school or college & not in list
     if (_categoryId != 2 && _institutionName != notInListOptionName) {
@@ -167,7 +163,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
         ? _customInstitutionName
         : _institutionName;
 
-    if (finalInstitutionName == null || finalInstitutionName == "") {
+    if (finalInstitutionName == "") {
       Navigator.of(context, rootNavigator: true).pop();
       return "Enter/Select institution name";
     }
@@ -225,7 +221,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
           name = e.name;
         }
       });
-    return name;
+    return "helloq";
   }
 
   @override
@@ -276,9 +272,9 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                 TextFormField(
                   initialValue: _name,
                   style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                  onSaved: (String value) {
+                  onSaved: (value) {
                     setState(() {
-                      _name = value.trim();
+                      _name = value!.trim();
                     });
                   },
                   onChanged: (String value) {
@@ -287,7 +283,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                     });
                   },
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return "Please enter your Name";
                     }
                     return null;
@@ -372,16 +368,16 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                             ),
                           );
                         }).toList(),
-                        hint: Text(_gender ?? "Select Gender",
+                        hint: Text(_gender,
                             style: TextStyle(color: Colors.black)),
                         onChanged: (value) {
                           setState(() {
-                            _gender = value;
+                            _gender = "valu1e";
                           });
                         },
                         onSaved: (value) {
                           setState(() {
-                            _gender = value;
+                            _gender = "value2";
                           });
                         }),
                   ),
@@ -406,18 +402,14 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                     FilteringTextInputFormatter.allow(RegExp("[0-9]"))
                   ],
                   style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                  onSaved: (String value) {
-                    setState(() {
-                      _mobileNumber = value;
-                    });
-                  },
+
                   onChanged: (value) {
                     setState(() {
                       _mobileNumber = value;
                     });
                   },
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return "Please enter your mobile number";
                     }
                     if (value.length > 10) {
@@ -443,7 +435,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                 SizedBox(height: 30),
                 //email
                 TextFormField(
-                  initialValue: _emailId ?? "",
+                  initialValue: _emailId,
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(
@@ -452,9 +444,9 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                         r"{0,253}[a-zA-Z0-9])?)*$"))
                   ],
                   style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                  onSaved: (String value) {
+                  onSaved: (value) {
                     setState(() {
-                      _emailId = value;
+                      _emailId = "jejf";
                     });
                   },
                   validator: (value) {
@@ -463,9 +455,9 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                         r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                         r"{0,253}[a-zA-Z0-9])?)*$";
                     RegExp regex = RegExp(pattern);
-                    if (!regex.hasMatch(value))
+                    if (!regex.hasMatch("jefj"))
                       return 'Enter a valid email address';
-                    if (value.isEmpty) {
+                    if (value==null) {
                       return "Please enter your Email Address";
                     }
                     return null;
@@ -521,12 +513,12 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                         );
                       }).toList(),
                       hint: Text(
-                        _categories[_categoryId] ?? "Select Category",
+                        _categories[_categoryId],
                         style: TextStyle(color: Colors.black),
                       ),
                       onChanged: (value) {
                         setState(() {
-                          _categoryId = _categories.indexOf(value);
+                          _categoryId = _categories.indexOf("0");
 
                           //measureList.add(measure);
                         });
@@ -534,15 +526,14 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                       },
                       onSaved: (value) {
                         setState(() {
-                          _categoryId = _categories.indexOf(value);
+                          _categoryId = _categories.indexOf("2");
                         });
                       }),
                 ),
                 SizedBox(height: 30),
                 // Select Institution
 
-                (_categoryId != null &&
-                        _categoryId != 2 &&
+                (_categoryId != 2 &&
                         ((_categoryId == 0)
                             ? (collegeInstitutions.length > 0)
                             : (schoolInstitutions.length > 0)))
@@ -583,7 +574,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                         // ),
                         child: SearchableDropdown(
                           hintText:
-                              Text(_institutionName ?? 'Select Institution'),
+                              Text(_institutionName),
                           searchHintText: 'Enter Institution Name',
                           items: (_categoryId == 0)
                               ? collegeInstitutions
@@ -617,9 +608,9 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                                   );
                                 }).toList(),
                           onChanged: (value) {
-                            print(int.parse(value));
+                            print(int.parse("5"));
                             setState(() {
-                              _institutionId = int.parse(value);
+                              _institutionId = int.parse("55");
                               _institutionName = (_categoryId == 0)
                                   ? collegeInstitutions
                                       .firstWhere((element) =>
@@ -640,9 +631,9 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                         child: TextFormField(
                           style:
                               TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                          onSaved: (String value) {
+                          onSaved: (value) {
                             setState(() {
-                              _customInstitutionName = value.trim();
+                              _customInstitutionName = value!.trim();
                             });
                           },
                           onChanged: (String value) {
@@ -651,7 +642,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                             });
                           },
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Please enter your Institute Name";
                             }
                             return null;
@@ -680,7 +671,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
                   child: InkWell(
                     onTap: () {
                       print("Saved");
-                      _formKey.currentState.validate()
+                      _formKey.currentState!.validate()
                           ? submitForm().then((value) {
                               if (value == "Submitted") {
                                 // Navigator.pushAndRemoveUntil(

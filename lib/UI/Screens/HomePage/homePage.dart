@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: () => globalKey.currentState.fetchfromNet(0),
+                onRefresh: () => globalKey.currentState!.fetchfromNet(0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),

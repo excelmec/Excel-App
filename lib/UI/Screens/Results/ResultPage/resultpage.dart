@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Services/API/api_config.dart';
-import 'package:excelapp/UI/Components/Appbar/darkAppbar.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/backgroundImage.dart';
 import 'package:excelapp/UI/Screens/Results/ResultPage/Widgets/resultBody.dart';
@@ -12,13 +11,13 @@ import 'package:http/http.dart' as http;
 
 class ResultPage extends StatefulWidget {
   final Event event;
-  ResultPage({@required this.event});
+  ResultPage({required this.event});
   @override
   _ResultPageState createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
-  Future resultDetails;
+  late Future resultDetails;
 
   @override
   void initState() {
@@ -44,7 +43,7 @@ class _ResultPageState extends State<ResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: darkAppbar(),
+      // appBar: darkAppbar(color: null),
       body: FutureBuilder(
         future: resultDetails,
         builder: (context, snapshot) {
@@ -52,7 +51,7 @@ class _ResultPageState extends State<ResultPage> {
             if (snapshot.data == "error") {
               return errorRetry();
             }
-            return ResultBody(resultData: snapshot.data, event: widget.event);
+            return ResultBody(resultData: {"snapshot.data":"14"}, event: widget.event);
           } else {
             return Stack(
               fit: StackFit.expand,
