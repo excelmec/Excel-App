@@ -26,7 +26,7 @@ class _LandingPageState extends State<LandingPage> {
             context,
             data[0]["title"],
             data[0]["description"],
-            Image.asset('assets/excellogo.png', height: 240),
+            Image.asset('assets/Excel Logo23.png', height: 240),
           ),
         ),
         PageViewModel(
@@ -80,16 +80,31 @@ class _LandingPageState extends State<LandingPage> {
       padding: const EdgeInsets.fromLTRB(10, 32, 10, 0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            shape: const StadiumBorder(), elevation: 0),
+            backgroundColor: Color(0xFFE80A5A),
+            shape: const StadiumBorder(),
+            elevation: 0),
         onPressed: () => onIntroEnd(context),
         child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
-          child: Text(
-            "Get Started",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Get Started",
+                style: TextStyle(
+                  color: white100,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Icon(
+                Icons.arrow_forward,
+                color: white100,
+              )
+            ],
           ),
         ),
       ),
