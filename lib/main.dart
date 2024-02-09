@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         appBarTheme: AppBarTheme(backgroundColor: Color(0xffe4edef)),
       ),
-      home: LandingPage(),
-      //SplashScreen
+      home: Splashscreen(),
+      //Landingscreen
     );
   }
 }

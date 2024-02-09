@@ -81,7 +81,7 @@ class _HighlightsSectionState extends State<HighlightsSection> {
                       ),
                     ),
                   );
-                if (snapshot.hasData)
+                if (dataLoaded!=false) 
                   return HighlightsBody(highLightsMap: []);
                 else {
                   return CarouselSlider.builder(

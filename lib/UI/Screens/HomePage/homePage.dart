@@ -47,12 +47,15 @@ class _HomePageState extends State<HomePage> {
                           decoration: BoxDecoration(
                             color: white100,
                             border: Border(
-                                bottom: BorderSide(color: white300, width: 1.2)),
+                                bottom:
+                                    BorderSide(color: white300, width: 1.2)),
                           ),
                         ),
                         Discover(),
                         CampusAmbassador(),
-                        LatestNewsSection(key: globalKey,),
+                        LatestNewsSection(
+                          key: globalKey,
+                        ),
                         const SizedBox(height: 30)
                       ],
                     ),

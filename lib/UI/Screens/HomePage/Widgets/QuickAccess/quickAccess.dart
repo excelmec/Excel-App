@@ -30,7 +30,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //quickAccessButton(context, FontAwesomeIcons.qrcode, "Scan QR", null),
         quickAccessButton(
-            context, "assets/excel logo.png", "About", AboutExcelPopUp(),
+            context, "assets/scanner.png", "Scan QR", AboutExcelPopUp(),
             inverted: true),
         quickAccessButton(context, "assets/icons/call.png", "Contact",
             ContactUsModal(context)),
@@ -83,11 +83,11 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                   side: MaterialStateProperty.all(
                     BorderSide(
                       color: white300,
-                      width: inverted ?  1.2 : 0,
+                      width: inverted ? 1.2 : 0,
                     ),
                   ),
                   backgroundColor:
-                      MaterialStateProperty.all(inverted ? blue500 : white200),
+                      MaterialStateProperty.all(inverted ? color1100 : white200),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)))),
             ),
@@ -123,7 +123,8 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                       setState(() {});
                     });
                   },
-                  child: Image.asset("assets/icons/notification.png", height: 28),
+                  child:
+                      Image.asset("assets/icons/notification.png", height: 28),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(const Size(60, 60)),
                     padding:
