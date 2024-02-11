@@ -3,6 +3,8 @@ import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../../Themes/colors.dart';
+
 // class AboutExcelPopUp extends StatefulWidget {
 //   @override
 //   State<StatefulWidget> createState() => AboutExcelPopUpState();
@@ -86,7 +88,7 @@ class AboutExcelPopUp extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: Color.fromARGB(255, 14, 152, 232),
+                        color: red100,
                       ),
                       height: 50,
                       alignment: Alignment.center,

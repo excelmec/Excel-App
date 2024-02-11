@@ -11,7 +11,7 @@ class HighlightsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (highLightsMap.length == 0)
+    if (highLightsMap.length == 0) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 45),
         child: Center(
@@ -20,20 +20,20 @@ class HighlightsBody extends StatelessWidget {
           style: TextStyle(color: Colors.black54),
         )),
       );
+    }
     List<Highlights> uniqueHighlightsList = [];
 
 // A Map to track the unique names and the first item for each name
     Map<String, Highlights> uniqueNamesMap = {};
-    Map<String, Map<String,dynamic>> fullPage ={};
+    Map<String, Map<String, dynamic>> fullPage = {};
 
     for (Highlights highlight in highLightsMap) {
       if (!uniqueNamesMap.containsKey(highlight.name)) {
         // Add the first item with this name to the unique list and to the Map
         uniqueHighlightsList.add(highlight);
-        fullPage[highlight.name]={
+        fullPage[highlight.name] = {
           'name': highlight.name,
-          'thumbnail':
-              highlight.image,
+          'thumbnail': highlight.image,
           'images': [highlight.image]
         };
         uniqueNamesMap[highlight.name] = highlight;
@@ -41,7 +41,7 @@ class HighlightsBody extends StatelessWidget {
         fullPage[highlight.name]!['images'].add(highlight.image);
       }
     }
-    List<Map<String,dynamic>> stories = fullPage.values.toList();
+    List<Map<String, dynamic>> stories = fullPage.values.toList();
     return CarouselSlider.builder(
       itemCount: uniqueHighlightsList.length,
       options: CarouselOptions(
@@ -53,7 +53,7 @@ class HighlightsBody extends StatelessWidget {
       ),
       itemBuilder: (BuildContext build, index, pageViewIndex) {
         return GestureDetector(
-          child: HighlightsCard(uniqueHighlightsList[index], index,stories),
+          child: HighlightsCard(uniqueHighlightsList[index], index, stories),
         );
       },
     );

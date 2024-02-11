@@ -34,11 +34,13 @@ class EventsAPI {
   static fetchAndStoreEventsandCompetitionsFromNet() async {
     print("- Event and Compe list network fetch");
     try {
-      var response = await http.get(Uri.parse(APIConfig.baseUrl + 'events'));
+      var response = await http.get(Uri.parse(
+          'https://excel-events-backend-z5t623hcnq-el.a.run.app/api/events'));
       List responseData = json.decode(response.body);
       await HiveDB.storeData(
           valueName: "eventAndCompelist", value: responseData);
-      return responseData.map<Event>((event) => Event.fromJson(event)).toList();
+      print(responseData.map<Event>((event) => Event.fromJson(event)));
+      return responseData.map<Event>((event) => Event.fromJson(event));
     } catch (e) {
       print("Error $e");
       return ("error");

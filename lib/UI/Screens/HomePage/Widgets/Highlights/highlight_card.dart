@@ -20,10 +20,10 @@ class HighlightsCard extends StatelessWidget {
       }
     }
     firstColor = v % 3 == 0
-        ? blue500
+        ? red100
         : v % 3 == 1
-            ? green500
-            : Color.fromARGB(255, 13, 53, 81);
+            ? red200
+            : Color.fromARGB(255, 81, 13, 13);
   }
 
   @override
@@ -66,7 +66,7 @@ class HighlightsCard extends StatelessWidget {
                               gradient: LinearGradient(
                                 begin: FractionalOffset.bottomCenter,
                                 end: FractionalOffset.topCenter,
-                                colors: [firstColor, firstColor.withOpacity(0.4)],
+                                colors: [firstColor, firstColor.withOpacity(0.1)],
                                 stops: [0.2, 1],
                               ),
                             ),

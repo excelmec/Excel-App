@@ -87,7 +87,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                     ),
                   ),
                   backgroundColor:
-                      MaterialStateProperty.all(inverted ? color1100 : white200),
+                      MaterialStateProperty.all(inverted ? red100 : white200),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)))),
             ),
@@ -124,7 +124,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                     });
                   },
                   child:
-                      Image.asset("assets/icons/notification.png", height: 28),
+                      Image.asset("assets/icons/Notification.png", height: 28),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(const Size(60, 60)),
                     padding:
