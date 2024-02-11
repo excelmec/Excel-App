@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColor = Color.fromARGB(255, 14, 152, 232);
+import 'Themes/colors.dart';
+
+const Color primaryColor = red100;
 const Color secondaryColor = Color(0xFF252A50);
 const Color lightTextColor = Color(0xff555555);
 

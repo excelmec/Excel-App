@@ -39,8 +39,11 @@ class EventsAPI {
       List responseData = json.decode(response.body);
       await HiveDB.storeData(
           valueName: "eventAndCompelist", value: responseData);
-      print(responseData.map<Event>((event) => Event.fromJson(event)));
-      return responseData.map<Event>((event) => Event.fromJson(event));
+      
+      // return responseData.map<Event>((event) => Event.fromJson(event));
+       return responseData
+        .map<Event>((highlight) => Event.fromJson(highlight))
+        .toList();
     } catch (e) {
       print("Error $e");
       return ("error");

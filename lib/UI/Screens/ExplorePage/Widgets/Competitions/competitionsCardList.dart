@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class CompetitionsCardList extends StatefulWidget {
   final String txtQuery;
-  const CompetitionsCardList({ Key? key, required this.txtQuery}) : super(key: key);
+  const CompetitionsCardList({Key? key, required this.txtQuery})
+      : super(key: key);
 
   @override
   State<CompetitionsCardList> createState() => _CompetitionsCardListState();
@@ -12,7 +13,7 @@ class CompetitionsCardList extends StatefulWidget {
 
 class _CompetitionsCardListState extends State<CompetitionsCardList>
     with SingleTickerProviderStateMixin {
- late String selectedCategory;
+  late String selectedCategory;
   List<String> tabs = ["All", "CS-Tech", "Gen-Tech", "Non-Tech"];
 
   @override
