@@ -18,18 +18,21 @@ class ExplorePage extends StatefulWidget {
   State<ExplorePage> createState() => _ExplorePageState();
   final int selectedPage;
   final String selectedCategory;
-  const ExplorePage({Key? key, required this.selectedPage, required this.selectedCategory})
+  const ExplorePage(
+      {Key? key, required this.selectedPage, required this.selectedCategory})
       : super(key: key);
 }
 
 class _ExplorePageState extends State<ExplorePage>
     with SingleTickerProviderStateMixin {
- late TabController _tabcontroller;
- late TextEditingController txtQuery = new TextEditingController();
- late StreamController<dynamic> estream;
- late bool dataLoaded = false;
- late List<Event> competitionsAndEvents;
- late bool isInit;
+  late TabController _tabcontroller;
+  late TextEditingController txtQuery = new TextEditingController();
+  late StreamController<dynamic> estream;
+  late bool dataLoaded = false;
+  late List<Event> competitionsAndEvents;
+  late bool isInit;
+
+
   @override
   void initState() {
     isInit = true;
@@ -39,7 +42,7 @@ class _ExplorePageState extends State<ExplorePage>
     fetchfromStorage();
     fetchfromNet();
     _tabcontroller = TabController(
-        length: 2, vsync: this, initialIndex: widget.selectedPage ?? 0);
+        length: 2, vsync: this, initialIndex: widget.selectedPage);
   }
 
   void didChangeDependencies() {
@@ -59,6 +62,7 @@ class _ExplorePageState extends State<ExplorePage>
     var dataFromNet =
         await EventsAPI.fetchAndStoreEventsandCompetitionsFromNet();
     if (!dataLoaded || dataFromNet != "error") {
+      print(dataFromNet);
       estream.add(dataFromNet ?? "error");
     }
     // estream.add(competitions);
@@ -133,12 +137,12 @@ class _ExplorePageState extends State<ExplorePage>
                     Padding(
                       padding: EdgeInsets.fromLTRB(30, 3, 30, 3),
                       child: TabBar(
-                        indicatorColor: Color.fromARGB(255, 14, 152, 232),
+                        indicatorColor: red100,
                         controller: _tabcontroller,
                         indicatorPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        labelColor: Color.fromARGB(255, 14, 152, 232),
+                        labelColor: red100,
                         labelStyle: TextStyle(
-                          decorationColor: Color.fromARGB(255, 14, 152, 232),
+                          decorationColor: red100,
                         ),
                         unselectedLabelColor:
                             Color.fromARGB(235, 119, 133, 133),
@@ -187,7 +191,7 @@ class _ExplorePageState extends State<ExplorePage>
                               SizedBox(height: 20),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: primaryColor,
+                                  backgroundColor: red100,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                   ),

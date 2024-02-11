@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import './BottomNavigationBarWidget/fab_bottom_app_bar.dart';
@@ -20,8 +21,8 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return FABBottomAppBar(
       centerItemText: 'Home',
-      color: Colors.grey,
-      selectedColor: primaryColor,
+      color: white100,
+      selectedColor: red50,
       onTabSelected: onSelect,
       items: [
         FABBottomAppBarItem(iconName: "home", text: ''),
@@ -29,7 +30,7 @@ class BottomNavigation extends StatelessWidget {
         FABBottomAppBarItem(iconName: "calendar", text: ''),
         FABBottomAppBarItem(iconName: "profile", text: ''),
       ],
-      backgroundColor: const Color(0xfffffff),
+      backgroundColor: white100,
     );
   }
 }

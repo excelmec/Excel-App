@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:excelapp/Services/API/highlights_api.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/data.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlightsBody.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
 class HighlightsSection extends StatefulWidget {
   @override
   _HighlightsSectionState createState() => _HighlightsSectionState();
@@ -13,12 +15,14 @@ class HighlightsSection extends StatefulWidget {
 class _HighlightsSectionState extends State<HighlightsSection> {
   late StreamController<dynamic> estream;
   bool dataLoaded = false;
+  var dataFromNet;
 
   fetchfromNet() async {
-    var dataFromNet = await fetchAndStoreHighlightsFromNet();
+    dataFromNet = await fetchAndStoreHighlightsFromNet();
     if (!dataLoaded || dataFromNet != "error") {
       estream.add(dataFromNet);
       // estream.add(highlightsData);
+      print(dataFromNet);
       dataLoaded = true;
     }
   }
@@ -47,7 +51,7 @@ class _HighlightsSectionState extends State<HighlightsSection> {
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             StreamBuilder(
               stream: estream.stream,
               builder: (context, snapshot) {
@@ -81,38 +85,39 @@ class _HighlightsSectionState extends State<HighlightsSection> {
                       ),
                     ),
                   );
-                if (dataLoaded!=false) 
-                  return HighlightsBody(highLightsMap: []);
-                else {
+                if (snapshot.hasData) {
+                  return HighlightsBody(highLightsMap: dataFromNet);
+                } else {
                   return CarouselSlider.builder(
                     itemCount: 3,
                     options: CarouselOptions(
                       viewportFraction: .7,
                       initialPage: 2,
                       height:
-                      MediaQuery.of(context).size.width * .9 * (3 / 5.7),
+                          MediaQuery.of(context).size.width * .9 * (3 / 5.7),
                       autoPlay: false,
                       autoPlayInterval: Duration(seconds: 2),
                     ),
                     itemBuilder: (BuildContext build, index, pageViewIndex) {
                       return GestureDetector(
                           child: Container(
-                            child: Shimmer.fromColors(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                height: MediaQuery.of(context).size.width *
-                                    .9 *
-                                    (3 / 5.7),
-                                width: MediaQuery.of(context).size.width * .9,
-                                margin: EdgeInsets.symmetric(horizontal: 15),
-                              ),
-                              baseColor: const Color.fromRGBO(224, 224, 224, 1),
-                              highlightColor: const Color.fromRGBO(245, 245, 245, 1),
+                        child: Shimmer.fromColors(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                          ));
+                            height: MediaQuery.of(context).size.width *
+                                .9 *
+                                (3 / 5.7),
+                            width: MediaQuery.of(context).size.width * .9,
+                            margin: EdgeInsets.symmetric(horizontal: 15),
+                          ),
+                          baseColor: const Color.fromRGBO(224, 224, 224, 1),
+                          highlightColor:
+                              const Color.fromRGBO(245, 245, 245, 1),
+                        ),
+                      ));
                     },
                   );
                 }

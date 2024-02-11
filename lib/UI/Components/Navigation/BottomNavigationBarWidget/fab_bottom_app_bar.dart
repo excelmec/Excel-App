@@ -65,7 +65,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
           children: items,
         ),
       ),
-      color: widget.backgroundColor,
+      color: white100,
     );
   }
 
@@ -112,7 +112,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                   padding: EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
                       color: _selectedIndex == index
-                          ? blue100
+                          ? red100.withOpacity(0.2)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(30)),
                   alignment: Alignment.center,

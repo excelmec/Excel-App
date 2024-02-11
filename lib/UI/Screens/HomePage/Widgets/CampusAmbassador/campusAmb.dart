@@ -11,7 +11,7 @@ class CampusAmbassador extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20,10,20,12),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
           child: Divider(
             color: white400,
             thickness: 2,
@@ -51,7 +51,7 @@ class CampusAmbassador extends StatelessWidget {
                               "Campus Ambassador",
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: primaryColor,
+                                  color: red100,
                                   fontWeight: FontWeight.w900),
                             ),
                             const SizedBox(height: 8),
@@ -75,7 +75,7 @@ class CampusAmbassador extends StatelessWidget {
                               padding: MaterialStateProperty.all(
                                   EdgeInsets.fromLTRB(30, 16, 30, 16)),
                               backgroundColor:
-                                  MaterialStatePropertyAll(Color(0xffD7F5F5)),
+                                  MaterialStatePropertyAll(Color(0x7EF0353D)),
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -87,7 +87,7 @@ class CampusAmbassador extends StatelessWidget {
                             "Join now",
                             style: TextStyle(
                                 fontSize: 14,
-                                color: primaryColor,
+                                color: red100,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -100,7 +100,7 @@ class CampusAmbassador extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(20,12,20,2),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 2),
           child: Divider(
             color: white400,
             thickness: 2,
