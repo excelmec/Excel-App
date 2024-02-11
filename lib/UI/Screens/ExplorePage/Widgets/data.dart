@@ -1,14 +1,15 @@
 import 'package:excelapp/Models/event_card.dart';
 
-var CompetitionsData = [
+List<Event> CompetitionsData = [
   Event(
     id: 1,
     name: 'Wave Cloning',
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'CS-Tech',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
     isCompetition: true,
+    eventType: 'general',
   ),
   Event(
     id: 2,
@@ -16,8 +17,9 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'CS-Tech',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
     isCompetition: true,
+      eventType: 'general',
   ),
   Event(
     id: 3,
@@ -25,7 +27,8 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'Gen-Tech',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
+      eventType: 'general',
     isCompetition: true,
   ),
   Event(
@@ -34,8 +37,9 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'Non-Tech',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
     isCompetition: true,
+      eventType: 'general',
   ),
   Event(
     id: 5,
@@ -43,8 +47,9 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'Workshops',
-    date: "27 Oct 2022",
+    date:'2022-12-04T09:00:00',
     isCompetition: false,
+      eventType: 'general',
   ),
   Event(
     id: 6,
@@ -52,7 +57,8 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'Talks',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
+      eventType: 'general',
     isCompetition: false,
   ),
   Event(
@@ -61,7 +67,8 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'General',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
+      eventType: 'general',
     isCompetition: false,
   ),
   Event(
@@ -70,7 +77,8 @@ var CompetitionsData = [
     icon: 'assets/icons/even_sample.png',
     desc: 'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
     category: 'General',
-    date: "27 Oct 2022",
+    date: '2022-12-04T09:00:00',
     isCompetition: false,
+      eventType: 'general',
   ),
 ];
