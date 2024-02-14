@@ -5,7 +5,6 @@ import 'package:excelapp/UI/Screens/SplashScreen/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'Services/Notifications/firebase_options.dart';
-import 'UI/Screens/LandingPage/landingPage.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;

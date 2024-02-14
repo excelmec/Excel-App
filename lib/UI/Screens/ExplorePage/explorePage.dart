@@ -4,7 +4,6 @@ import 'package:excelapp/Providers/navigationProvider.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/ExplorePage/Widgets/Competitions/competitionsCardList.dart';
 import 'package:excelapp/UI/Screens/ExplorePage/Widgets/Events/eventsCardList.dart';
-import 'package:excelapp/UI/Screens/ExplorePage/Widgets/data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,6 @@ import '../../../Models/event_card.dart';
 import '../../../Providers/eventsAndCompetitonsProvider.dart';
 import '../../../Services/API/events_api.dart';
 import '../../Themes/colors.dart';
-import '../../constants.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -62,7 +60,7 @@ class _ExplorePageState extends State<ExplorePage>
   fetchfromNet() async {
     dataFromNet = await EventsAPI.fetchAndStoreEventsandCompetitionsFromNet();
     if (!dataLoaded || dataFromNet != "error") {
-      print(dataFromNet);
+
       // print(CompetitionsData);
       estream.add(dataFromNet);
       //  estream.add(CompetitionsData);
@@ -213,7 +211,7 @@ class _ExplorePageState extends State<ExplorePage>
                     if (snapshot.hasData) {
                       return ChangeNotifierProvider(
                           create: (context) =>
-                              EventsAndCompetitionsProvider(dataFromNet),
+                              EventsAndCompetitionsProvider(snapshot.data),
                           child: TabBarView(
                               controller: _tabcontroller,
                               physics: BouncingScrollPhysics(),

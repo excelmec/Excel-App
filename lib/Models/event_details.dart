@@ -18,7 +18,7 @@ class EventDetails {
   late String eventHead1;
   late int eventHead2Id;
   late String eventHead2;
- late bool isTeam;
+  late bool isTeam;
   late int teamSize;
   late int eventStatusId;
   late String eventStatus;
@@ -31,6 +31,8 @@ class EventDetails {
   late String registrationLink;
   late String rounds;
   late String registration;
+
+
   EventDetails({
     required this.id,
     required this.name,
@@ -81,7 +83,7 @@ class EventDetails {
     day = data['day'];
     datetime = data['datetime'];
     entryFee = data['entryFee'];
-    prizeMoney = data['prizeMoney'];
+    prizeMoney = data['prizeMoney'] ?? 0;
     eventHead1Id = data['eventHead1Id'];
     eventHead1 = data['eventHead1'];
     eventHead2Id = data['eventHead2Id'];
@@ -101,7 +103,7 @@ class EventDetails {
     button = data['button'];
     registrationLink = data['registrationLink'];
     rounds = data['rounds'];
-    registration = data['registration'];
+    registration = data['registration'] ?? false;
   }
 
   Map<String, dynamic> toJson() {

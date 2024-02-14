@@ -2,29 +2,32 @@ class Event {
   late int id;
   late String name;
   late String icon;
-  late String desc;
   late String category;
   late String date;
   late String eventType;
+  late String about;
   late bool isCompetition;
 
-  Event(
-      {required this.id,
-      required this.name,
-      required this.icon,
-      required this.desc,
-      required this.category,
-      required this.date,
-      required this.eventType,
-      required this.isCompetition});
+  Event({
+    required this.id,
+    required this.name,
+    required this.icon,
+    required this.category,
+    required this.date,
+    required this.eventType,
+    required this.about,
+    required this.isCompetition,
+  });
 
   Event.fromJson(json) {
     id = json['id'];
     name = json['name'];
     icon = json['icon'];
-    desc = json['eventType'];
+    eventType = json['eventType'];
     category = json['category'];
-     date = json['datetime'];
+    about = json['about'] ?? 'Excel 2023';
+    date = json['datetime'];
+    isCompetition = json['needRegistration'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -32,10 +35,12 @@ class Event {
     data['id'] = this.id;
     data['name'] = this.name;
     data['icon'] = this.icon;
-    data['eventType'] = this.desc;
     data['category'] = this.category;
     data['datetime'] = this.date;
     data['eventType'] = this.eventType;
+    data['about'] = this.about;
+    data['needRegistration'] = this.isCompetition;
+
     return data;
   }
 }
