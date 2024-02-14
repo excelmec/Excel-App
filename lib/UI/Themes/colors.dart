@@ -31,3 +31,4 @@ const Color green800 = Color(0xFF01283F);
 const Color red50 = Color(0x8AF0353D);
 const Color red100 = Color(0xFFE80A5A);
 const Color red200 = Color(0xFF7F0D36);
+const Color red300 = Color(0xFFF0353D);

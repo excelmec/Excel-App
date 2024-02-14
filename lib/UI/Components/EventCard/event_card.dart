@@ -145,7 +145,7 @@ _buildCard(
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(21),
-                      color: Color.fromARGB(255, 14, 152, 232),
+                      color: red100,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(10),
@@ -182,14 +182,16 @@ _buildCard(
                               fontFamily: "mulish",
                               fontSize: 14),
                         ),
-                        event.desc != null ? SizedBox(height: 6) : SizedBox(height: 2),
-                        event.desc != null
+                        event.about != null
+                            ? SizedBox(height: 6)
+                            : SizedBox(height: 2),
+                        event.about != null
                             ? SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.46,
                                 child: Text(
-                                  event.desc
-                                          .toString()
-                                          .replaceAll(RegExp('<[^>]*>'), ''),
+                                  event.about
+                                      .toString()
+                                      .replaceAll(RegExp('<[^>]*>'), ''),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -244,7 +246,7 @@ _buildCard(
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: Color.fromARGB(255, 215, 245, 245),
+                                color: red100.withOpacity(0.2),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -264,8 +266,7 @@ _buildCard(
                                     child: Text(
                                       'View',
                                       style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 14, 152, 232),
+                                          color: red100,
                                           fontWeight: FontWeight.w700,
                                           fontFamily: "mulish",
                                           fontSize: 11),
@@ -339,7 +340,7 @@ _buildCard(
                           new DateFormat.MMM()
                               .format(DateTime.parse(event.date)),
                           style: TextStyle(
-                              color: green600,
+                              color: red300,
                               fontWeight: FontWeight.w800,
                               fontFamily: "mulish",
                               fontSize: 11),
@@ -347,7 +348,7 @@ _buildCard(
                         Text(
                           new DateFormat.d().format(DateTime.parse(event.date)),
                           style: TextStyle(
-                              color: green500,
+                              color: red300,
                               fontWeight: FontWeight.w800,
                               fontFamily: "mulish",
                               fontSize: 18),

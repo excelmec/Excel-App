@@ -34,16 +34,15 @@ class EventsAPI {
   static fetchAndStoreEventsandCompetitionsFromNet() async {
     print("- Event and Compe list network fetch");
     try {
-      var response = await http.get(Uri.parse(
-          'https://excel-events-backend-z5t623hcnq-el.a.run.app/api/events'));
+      var response = await http.get(Uri.parse(APIConfig.baseUrl + 'events'));
       List responseData = json.decode(response.body);
       await HiveDB.storeData(
           valueName: "eventAndCompelist", value: responseData);
-      
+
       // return responseData.map<Event>((event) => Event.fromJson(event));
-       return responseData
-        .map<Event>((highlight) => Event.fromJson(highlight))
-        .toList();
+      return responseData
+          .map<Event>((highlight) => Event.fromJson(highlight))
+          .toList();
     } catch (e) {
       print("Error $e");
       return ("error");
@@ -74,11 +73,12 @@ class EventsAPI {
     print("- Event list $id network fetch");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jwt = prefs.getString('jwt');
-    if (jwt == "null")
+    if (jwt == null) {
       try {
         var response =
             await http.get(Uri.parse(APIConfig.baseUrl + 'events/' + '$id'));
         Map<String, dynamic> responseData = json.decode(response.body);
+
         responseData["eventHead1"] = json.encode(responseData["eventHead1"]);
         responseData["eventHead2"] = json.encode(responseData["eventHead2"]);
         responseData["rounds"] = json.encode(responseData["rounds"]);
@@ -87,13 +87,15 @@ class EventsAPI {
 
         await HiveDB.storeData(
             valueName: "eventdetails-$id", value: responseData);
+
+        print(responseData);
         EventDetails event = EventDetails.fromJson(responseData);
         return event;
       } catch (e) {
         print("Error $e");
         return ("error");
       }
-    else
+    } else
       try {
         var response =
             await getAuthorisedData(APIConfig.baseUrl + 'events/' + '$id');

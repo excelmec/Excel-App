@@ -4,7 +4,9 @@ import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../Models/event_details.dart';
 import '../../../Services/API/favourites_api.dart';
+import 'Widgets/eventPageBody.dart';
 
 class EventPage extends StatefulWidget {
   final int eventId;
@@ -16,13 +18,14 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   late int _eventId;
-  late StreamController<dynamic> estream;
+  late StreamController<EventDetails> estream;
 
   @override
   void initState() {
     super.initState();
     _eventId = widget.eventId;
-    estream = StreamController<dynamic>();
+    print(_eventId);
+    estream = StreamController<EventDetails>();
     fetchEventDetails(_eventId);
   }
 
@@ -33,7 +36,7 @@ class _EventPageState extends State<EventPage> {
     // // Fetch from net & update
     var result2 = await EventsAPI.fetchAndStoreEventDetailsFromNet(id);
     if (result2 == "error" && result1 == null) {
-      estream.add("error");
+ 
       return;
     }
     if (result2 == "error") return;
@@ -45,7 +48,7 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
+      body: StreamBuilder<EventDetails>(
         stream: estream.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -66,7 +69,7 @@ class _EventPageState extends State<EventPage> {
                 
                   ChangeNotifierProvider<FavouritesStatus>(create: (c)=>FavouritesStatus.instance),
               ],
-              // child: EventPageBody(eventDetails: snapshot.data,heroname: widget.heroname,)
+              child: EventPageBody(eventDetails: snapshot.data!,heroname: widget.heroname,)
               );
           } else {
             return Stack(

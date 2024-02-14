@@ -9,7 +9,8 @@ class EventsCardList extends StatefulWidget {
   State<EventsCardList> createState() => _EventsCardListState();
   final String selectedTab;
   final String txtQuery;
-  const EventsCardList({Key? key, required this.selectedTab, required this.txtQuery})
+  const EventsCardList(
+      {Key? key, required this.selectedTab, required this.txtQuery})
       : super(key: key);
 }
 
