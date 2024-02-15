@@ -126,7 +126,7 @@ Widget detailBox(
           child: FaIcon(
             icon,
             size: 20.0,
-            color: Color(0xFF0E99E8),
+            color: red100,
           ),
         ),
         Expanded(

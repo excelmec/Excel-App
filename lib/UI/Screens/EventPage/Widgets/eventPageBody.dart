@@ -17,7 +17,7 @@ class EventPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget registerButton;
 
-    if (eventDetails.needRegistration == false && eventDetails.button == null)
+    if (eventDetails.needRegistration == false && eventDetails.button == "NA")
       registerButton = Container(
         width: 240,
         height: 50,
@@ -108,8 +108,7 @@ class EventPageBody extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(21),
-                                          color:
-                                              Color.fromARGB(255, 14, 152, 232),
+                                          color: red100,
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.all(12.25),
