@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
 
+import '../../HomePage/Widgets/socialIcons.dart';
+
 class SharingOptions extends StatelessWidget {
   final String referalCode;
   SharingOptions({required this.referalCode});

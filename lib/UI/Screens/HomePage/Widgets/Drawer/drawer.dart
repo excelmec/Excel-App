@@ -203,7 +203,12 @@ class DrawerOption extends StatelessWidget {
   }
 }
 
-launchURL(url) async {
-  url = url.trim();
-  await launch(url);
+// launchURL(url) async {
+//   url = url.trim();
+//   await launch(url);
+// }
+launchUrl(url) async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
 }
