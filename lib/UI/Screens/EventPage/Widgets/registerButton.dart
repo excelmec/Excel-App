@@ -21,6 +21,8 @@ import 'package:social_share/social_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../HomePage/Widgets/socialIcons.dart';
+
 // All these commented because raised button deprecated
 
 // The given file contains logic related to registration of event & the button

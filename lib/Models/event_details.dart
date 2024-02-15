@@ -102,7 +102,7 @@ class EventDetails {
     button = data['button'] ?? "NA";
     registrationLink = data['registrationLink'] ?? 'NA';
     rounds = data['rounds'];
-    registration = data['registration'] ?? false;
+    registration = data['registration'] ?? true;
   }
 
   Map<String, dynamic> toJson() {

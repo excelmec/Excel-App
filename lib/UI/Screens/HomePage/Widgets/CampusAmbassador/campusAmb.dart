@@ -2,6 +2,8 @@ import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../socialIcons.dart';
+
 class CampusAmbassador extends StatelessWidget {
   const CampusAmbassador({Key? key}) : super(key: key);
 
