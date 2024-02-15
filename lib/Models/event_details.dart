@@ -32,7 +32,6 @@ class EventDetails {
   late String rounds;
   late String registration;
 
-
   EventDetails({
     required this.id,
     required this.name,
@@ -77,14 +76,14 @@ class EventDetails {
     eventTypeId = data['eventTypeId'];
     eventType = data['eventType'];
     about = data['about'];
-    format = data['format'];
-    rules = data['rules'];
+    format = data['format'] ?? 'NA';
+    rules = data['rules'] ?? 'NA';
     venue = data['venue'];
     day = data['day'];
     datetime = data['datetime'];
-    entryFee = data['entryFee'];
+    entryFee = data['entryFee'] ?? 0;
     prizeMoney = data['prizeMoney'] ?? 0;
-    eventHead1Id = data['eventHead1Id'];
+    eventHead1Id = data['eventHead1Id'] ?? 'NA';
     eventHead1 = data['eventHead1'];
     eventHead2Id = data['eventHead2Id'];
     eventHead2 = data['eventHead2'];
@@ -92,16 +91,16 @@ class EventDetails {
     teamSize = data['teamSize'] ?? 1;
     eventStatusId = data['eventStatusId'];
     eventStatus = data['eventStatus'];
-    numberOfRounds = data['numberOfRounds'];
-    currentRound = data['currentRound'];
-    needRegistration = data['needRegistration'];
+    numberOfRounds = data['numberOfRounds'] ?? 0;
+    currentRound = data['currentRound'] ?? 1;
+    needRegistration = data['needRegistration'] ?? false;
     registrationOpen =
         (data['registrationOpen'] == true || data['registrationOpen'] == 1)
             ? true
             : false;
-    registrationEndDate = data['registrationEndDate'];
-    button = data['button'];
-    registrationLink = data['registrationLink'];
+    registrationEndDate = data['registrationEndDate'] ?? "2023-03-06T13:00:00";
+    button = data['button'] ?? "NA";
+    registrationLink = data['registrationLink'] ?? 'NA';
     rounds = data['rounds'];
     registration = data['registration'] ?? false;
   }
