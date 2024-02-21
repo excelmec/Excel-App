@@ -7,7 +7,6 @@ import 'package:excelapp/UI/Screens/HomePage/Widgets/LatestNews/LatestNews_card.
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 GlobalKey<_LatestNewsSectionState> globalKey = GlobalKey();
 
 class LatestNewsSection extends StatefulWidget {
@@ -60,7 +59,7 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
   @override
   void initState() {
     estream = StreamController<dynamic>();
-    // initialisePage();
+    // initialisePage
     fetchfromNet(0);
     super.initState();
   }
@@ -83,7 +82,7 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
                   ],
                 ),
                 Text(
-                  "from Excel 2022",
+                  "from Excel 2023",
                   style: TextStyle(
                       color: black200,
                       fontWeight: FontWeight.w600,

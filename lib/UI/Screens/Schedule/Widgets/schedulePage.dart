@@ -37,14 +37,14 @@ class SchedulePage extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorWeight: 3,
-                  indicatorColor: Color(0xff0E99E8),
-                  labelColor: Color(0xff0E99E8),
+                  indicatorColor: red100,
+                  labelColor: red100,
                   unselectedLabelColor: Color(0xff778585),
                   tabs: [
                     // dayTab('Oct-Nov', 'Pre Events'),
-                    dayTab('Mar 10', 'Day 1'),
-                    dayTab('Mar 11', 'Day 2'),
-                    dayTab('Mar 12', 'Day 3'),
+                    dayTab('Mar 1', 'Day 1'),
+                    dayTab('Mar 2', 'Day 2'),
+                    dayTab('Mar 3', 'Day 3'),
                   ],
                 ),
               ),
@@ -91,29 +91,30 @@ class SchedulePage extends StatelessWidget {
     );
   }
 
- Widget schedule(dayNumber) {
-  List<ScheduleModel> day0 = scheduleData["day1"];
-  day0.sort((a, b) => DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-  List<ScheduleModel> day1 = scheduleData["day2"];
-  day1.sort((a, b) => DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-  List<ScheduleModel> day2 = scheduleData["day3"];
-  day2.sort((a, b) => DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
-  
-  Widget returnWidget = Container(); // Default value
-  
-  if (dayNumber == 0)
-    returnWidget = TimeTableList(day0);
-  else if (dayNumber == 1)
-    returnWidget = TimeTableList(day1);
-  else if (dayNumber == 2)
-    returnWidget = TimeTableList(day2);
-  // else if (dayNumber == 3) returnWidget = TimeTableList(day3);
-  
-  return SingleChildScrollView(
-    physics: BouncingScrollPhysics(),
-    scrollDirection: Axis.vertical,
-    child: returnWidget,
-  );
-}
+  Widget schedule(dayNumber) {
+    List<ScheduleModel> day0 = scheduleData["day1"];
+    day0.sort((a, b) =>
+        DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
+    List<ScheduleModel> day1 = scheduleData["day2"];
+    day1.sort((a, b) =>
+        DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
+    List<ScheduleModel> day2 = scheduleData["day3"];
+    day2.sort((a, b) =>
+        DateTime.parse(a.datetime).compareTo(DateTime.parse(b.datetime)));
 
+    Widget returnWidget = Container(); // Default value
+
+    if (dayNumber == 0)
+      returnWidget = TimeTableList(day0);
+    else if (dayNumber == 1)
+      returnWidget = TimeTableList(day1);
+    else if (dayNumber == 2) returnWidget = TimeTableList(day2);
+    // else if (dayNumber == 3) returnWidget = TimeTableList(day3);
+
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      child: returnWidget,
+    );
+  }
 }

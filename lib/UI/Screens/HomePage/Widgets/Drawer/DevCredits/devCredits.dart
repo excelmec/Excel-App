@@ -27,46 +27,51 @@ class DevCreditsState extends State<DevCredits>
   }
 
   var developers = [
-    {
-      "name":"Tom Vempala",
-      "email": "tomthomas.mec@gmail.com",
-      "image": "assets/devs/tom.jpg"
-    },
+    // {
+    //   "name":"Tom Vempala",
+    //   "email": "tomthomas.mec@gmail.com",
+    //   "image": "assets/devs/tom.jpg"
+    // },
     // {
     //   "name": "Ashish Mathew Philip",
     //   "email": "ashishmathewphilip.mec@gmail.com",
     //   "image": "assets/devs/ashish.jpg"
     // },
     {
-      "name": "Jaison Dennis",
-      "email": "jaisondennis080@gmail.com",
-      "image": "assets/devs/jaison.jpg"
+       "name":"Alfred Jimmy",
+      "email": "alfredjimmyaj007@gmail.com",
+      "image": "assets/devs/alfred.jpg"
     },
-    {
-      "name": "Denin Paul",
-      "email": "deninpaulv@gmail.com",
-      "image": "assets/devs/denin.jpg"
-    },
-    {
-      "name": "Athul Reji",
-      "email": "athulreji007@gmail.com",
-      "image": "assets/devs/athul.jpg"
-    },
-    {
-      "name": "Faheem",
-      "email": "send2faheempp@gmail.com",
-      "image": "assets/devs/faheem.jpg"
-    },
-    {
-      "name": "Nevin Manoj",
-      "email": "nevinmanojp@gmail.com",
-      "image": "assets/devs/nevin.jpg"
-    },
-    {
-      "name": "Pooja Johnson",
-      "email": "poojajohnson2002@gmail.com",
-      "image": "assets/devs/pooja.jpg"
-    }
+    // {
+    //   "name": "Jaison Dennis",
+    //   "email": "jaisondennis080@gmail.com",
+    //   "image": "assets/devs/jaison.jpg"
+    // },
+    // {
+    //   "name": "Denin Paul",
+    //   "email": "deninpaulv@gmail.com",
+    //   "image": "assets/devs/denin.jpg"
+    // },
+    // {
+    //   "name": "Athul Reji",
+    //   "email": "athulreji007@gmail.com",
+    //   "image": "assets/devs/athul.jpg"
+    // },
+    // {
+    //   "name": "Faheem",
+    //   "email": "send2faheempp@gmail.com",
+    //   "image": "assets/devs/faheem.jpg"
+    // },
+    // {
+    //   "name": "Nevin Manoj",
+    //   "email": "nevinmanojp@gmail.com",
+    //   "image": "assets/devs/nevin.jpg"
+    // },
+    // {
+    //   "name": "Pooja Johnson",
+    //   "email": "poojajohnson2002@gmail.com",
+    //   "image": "assets/devs/pooja.jpg"
+    // }
   ];
 
   @override

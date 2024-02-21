@@ -30,7 +30,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //quickAccessButton(context, FontAwesomeIcons.qrcode, "Scan QR", null),
         quickAccessButton(
-            context, "assets/scanner.png", "Scan QR", AboutExcelPopUp(),
+            context, "assets/icons/about.png", "Excel", AboutExcelPopUp(),
             inverted: true),
         quickAccessButton(context, "assets/icons/call.png", "Contact",
             ContactUsModal(context)),

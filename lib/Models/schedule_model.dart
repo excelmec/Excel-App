@@ -30,8 +30,8 @@ class ScheduleModel {
     icon = json['icon'];
     eventType = json['eventType'];
     category = json['category'];
-    needRegistration = json['needRegistration'];
-    round = json['round'];
+    needRegistration = json['needRegistration']??false;
+    round = json['round']??"Fullday";
     roundId = json['roundId'];
     day = json['day'];
     datetime = json['datetime'];

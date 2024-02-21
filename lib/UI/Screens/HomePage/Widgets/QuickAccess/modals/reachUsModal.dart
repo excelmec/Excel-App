@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Themes/colors.dart';
+
 final Uri _url = Uri.parse(
     "geo:10.0283637,76.3263237?q=Government Model Engineering College");
 
@@ -52,7 +54,7 @@ Widget ReachUsModal(context) {
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color.fromARGB(255, 14, 152, 232),
+                      color: red100,
                     ),
                     alignment: Alignment.center,
                     child: Row(

@@ -7,6 +7,7 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:excelapp/Services/API/favourites_api.dart';
+import 'package:intl/intl.dart';
 
 import 'package:readmore/readmore.dart';
 
@@ -20,9 +21,9 @@ class LastestNewsCard extends StatefulWidget {
 
 class _LastestNewsCardState extends State<LastestNewsCard> {
   @override
- late bool likeState = false;
- late bool _readMore = true;
- late String content;
+  late bool likeState = false;
+  late bool _readMore = true;
+  late String content;
   getFavouritedStatus(id) async {
     bool isFavourited = await FavouritesAPI.isFavourited(id);
     setState(() {
@@ -158,7 +159,11 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
                         ),
                       ),
                       Text(
-                        dateMsgGenerator(widget.news.date),
+                        // dateMsgGenerator(widget.news.date),
+                        new DateFormat.MMM()
+                                .format(DateTime.parse(widget.news.date)) +
+                            new DateFormat.d()
+                                .format(DateTime.parse(widget.news.date)),
                         style: TextStyle(
                           color: black100,
                           fontSize: 12,
@@ -176,14 +181,14 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
     );
   }
 
-  readMoreCallback(){
+  readMoreCallback() {
     setState(() {
-      _readMore = ! _readMore;
+      _readMore = !_readMore;
       print(_readMore);
 
-      if(_readMore)
+      if (_readMore)
         content = widget.news.content.replaceAll("\n", " ");
-      else  
+      else
         content = widget.news.content;
     });
   }

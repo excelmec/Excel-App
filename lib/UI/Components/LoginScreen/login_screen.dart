@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await AccountServices.fetchUserDetails();
       // Refresh fvourites
       print("In if after success");
-       FavouritesStatus.instance.favouritesStatus = 3;
+      FavouritesStatus.instance.favouritesStatus = 3;
       Navigator.of(context, rootNavigator: true).pop();
     } else {
       print("Authentication went wrong");
@@ -131,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           FaIcon(
                             FontAwesomeIcons.google,
                             size: 18,
+                            color: white100,
                           ),
                           // CircleAvatar(
                           //   radius: 10,
