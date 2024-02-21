@@ -8,29 +8,27 @@ import 'dart:convert';
 class AuthService {
   Future<String> login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accessToken;
+    late String accessToken;
     // Get access token from Google
     try {
-      GoogleSignIn googleSignIn = GoogleSignIn(scopes: [
-        'email'
-      ]);
+      GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
       await googleSignIn.signOut();
       GoogleSignInAccount? accountInfo = await googleSignIn.signIn();
-      GoogleSignInAuthentication googleKeys =
-          await accountInfo!.authentication;
+      GoogleSignInAuthentication googleKeys = await accountInfo!.authentication;
       accessToken = googleKeys.accessToken!;
-        } catch (err) {
+      print(accessToken);
+    } catch (err) {
       print("Error: $err");
     }
 
     // Store access token locally
-    // print("Google Access Token : $accessToken");
-    // prefs.setString('access_token', accessToken);
+    print("Google Access Token : $accessToken");
+    prefs.setString('access_token', accessToken);
 
     // Send access token to backend -- Recieve jwt
     try {
       print(AccountConfig.newUrl + 'Auth/login/');
-      Map<String, String> token = {"accessToken": ""};
+      Map<String, String> token = {"accessToken": accessToken};
       print(json.encode(token));
       var response = await http.post(
         Uri.parse(AccountConfig.newUrl + 'Auth/login/'),

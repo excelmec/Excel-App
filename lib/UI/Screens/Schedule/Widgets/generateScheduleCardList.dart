@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/schedule_model.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:intl/intl.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
@@ -125,7 +126,7 @@ class ScheduleEvent extends StatelessWidget {
                             child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(21),
-                            color: Color.fromARGB(255, 14, 152, 232),
+                            color: red100,
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(12.25),
@@ -181,7 +182,7 @@ class ScheduleEvent extends StatelessWidget {
                                     "View Event",
                                     style: TextStyle(
                                         fontSize: 11,
-                                        color: Color(0xff0E99E8),
+                                        color: red100,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),

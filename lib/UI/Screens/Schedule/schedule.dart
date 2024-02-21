@@ -19,14 +19,20 @@ class _ScheduleState extends State<Schedule> {
   late StreamController<dynamic> estream;
 
   fetchScheduleDetails() async {
-    var result1 = await fetchScheduleFromStorage();
-    if (result1 != null) estream.add(result1);
     var result2 = await fetchAndStoreScheduleFromNet();
+    var result1 = await fetchScheduleFromStorage();
+    if (result1 != null) {
+      estream.add(result1);
+    }
+
     if (result2 == "error" && result1 == null) {
       estream.add("error");
       return;
     }
-    if (result2 == "error") return;
+    if (result2 == "error") {
+      print('error result 2');
+      return;
+    }
     print("schedule fetched, added to DB & updated in UI");
     estream.add(result2);
     return;
@@ -35,8 +41,9 @@ class _ScheduleState extends State<Schedule> {
   @override
   void initState() {
     super.initState();
-    estream = StreamController<dynamic>();
+    print('fetch');
     fetchScheduleDetails();
+    estream = StreamController<dynamic>();
   }
 
   @override
@@ -55,7 +62,7 @@ class _ScheduleState extends State<Schedule> {
               return errorRetry();
             }
             return ChangeNotifierProvider(
-              create: (context) => ScheduleProvider({"alfred":[]}),
+              create: (context) => ScheduleProvider({}),
               child: SchedulePage(scheduleData: snapshot.data),
             );
           } else {
