@@ -18,25 +18,32 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   leavePage(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? firstTime = prefs.getBool('firstTime');
+    final bool? firstTime = prefs.getBool('firstTime');
+    print(firstTime);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
           builder: (context) => MultiProvider(
                 providers: [
-                  ChangeNotifierProvider<MyNavigationIndex>(create: (c)=>MyNavigationIndex()),
-                  ChangeNotifierProvider<LoginStatus>(create: (c)=>LoginStatus()),
-                  ChangeNotifierProvider<FavoritesProvider>(create: (c)=>FavoritesProvider()),
-                  ChangeNotifierProvider<FavouritesStatus>(create: (c)=>FavouritesStatus.instance),
-                  ],
+                  ChangeNotifierProvider<MyNavigationIndex>(
+                      create: (c) => MyNavigationIndex()),
+                  ChangeNotifierProvider<LoginStatus>(
+                      create: (c) => LoginStatus()),
+                  ChangeNotifierProvider<FavoritesProvider>(
+                      create: (c) => FavoritesProvider()),
+                  ChangeNotifierProvider<FavouritesStatus>(
+                      create: (c) => FavouritesStatus.instance),
+                ],
                 child: CustomNavigator(),
               )),
     );
-    if (firstTime == true)
+
+    if (firstTime == null || firstTime == true) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LandingPage()),
       );
+    }
   }
 
   @override

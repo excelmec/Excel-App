@@ -7,8 +7,8 @@ class Highlights {
 
   Highlights.fromJson(json) {
     id = json['id'];
-    name = json['name'];
-    image = json['image'];
+    name = json['name']?? "Not updated";
+    image = json['image'] ?? "Not updated";
   }
 
   Map<String, dynamic> toJson() {

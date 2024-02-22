@@ -14,7 +14,7 @@ class LoginStatus with ChangeNotifier{
 
   setData(dynamic data){
     userdata.add(data);
-    // notifyListeners();
+    notifyListeners();
   }
 
 }

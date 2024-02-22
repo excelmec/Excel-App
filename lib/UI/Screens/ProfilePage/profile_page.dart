@@ -22,8 +22,7 @@ import '../../../Models/event_card.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
-  final bool isProfileUpdated;
-  ProfilePage(this.user, this.isProfileUpdated);
+  ProfilePage(this.user);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -31,7 +30,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
  late User _user;
- late bool _isProfileUpdated;
  late AuthService authService;
  late List<Event> _favouritedEvents = [];
  late List<Event> _registeredEvents = [];
@@ -45,7 +43,6 @@ class _ProfilePageState extends State<ProfilePage>
     tabController = TabController(length: 2, vsync: this);
     _user = widget.user;
     userDetails = viewUserProfile();
-    _isProfileUpdated = widget.isProfileUpdated;
     authService = AuthService();
     RegistrationAPI.fetchRegisteredEvents();
     fetchFavourites();

@@ -113,7 +113,7 @@ class _LandingPageState extends State<LandingPage> {
 
   var data = [
     {
-      "title": "Welcome to Excel 2022",
+      "title": "Welcome to Excel 2023",
       "description":
           "Excel is the annual techno-managerial fest of Govt. Model Enginnering College. It’s the Nation’s second and South India’s first ever fest of it’s kind!"
     },

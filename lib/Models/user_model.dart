@@ -1,59 +1,85 @@
 import 'dart:convert';
 
 class User {
- late int id;
- late String name;
- late String email;
- late String role;
- late String picture;
- late String qrCodeUrl;
- late int institutionId;
- late String institutionName;
- late String gender;
- late String mobileNumber;
- late int categoryId;
- late String category;
- late String ambassador;
- late int referrerAmbassadorId;
- late String referrer;
- late bool isPaid;
+  late int id;
+  late String name;
+  late String email;
+  late String role;
+  late String picture;
+  late String qrCodeUrl;
+  late int institutionId;
+  late String institutionName;
+  late String gender;
+  late String mobileNumber;
+  late int categoryId;
+  late String category;
+  late String ambassador;
+  late int referrerAmbassadorId;
+  late String referrer;
+  late bool isPaid;
 
   User({
-  required  this.id,
-  required  this.name,
-  required  this.email,
-  required  this.role,
-  required  this.picture,
-  required  this.qrCodeUrl,
-  required  this.institutionId,
-  required  this.institutionName,
-  required  this.gender,
-  required  this.mobileNumber,
-  required  this.category,
-  required  this.ambassador,
-  required  this.referrerAmbassadorId,
-  required  this.referrer,
-  required  this.isPaid,
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.role,
+    required this.picture,
+    required this.qrCodeUrl,
+    required this.institutionId,
+    required this.institutionName,
+    required this.gender,
+    required this.mobileNumber,
+    required this.category,
+    required this.ambassador,
+    required this.referrerAmbassadorId,
+    required this.referrer,
+    required this.isPaid,
   });
 
   User.fromJson(json) {
-    id = json['id'];
+    id = json['id'] ?? 0;
     name = json['name'];
     email = json['email'];
     role = json['role'];
     picture = json['picture'];
     qrCodeUrl = json['qrCodeUrl'];
-    institutionId =
-        json.containsKey('institutionId') ? json['institutionId'] : 0;
+    institutionId = json['institutionId'] ?? 0;
     institutionName =
-        json.containsKey('institutionName') ? json['institutionName'] : null;
-    gender = json['gender'];
-    mobileNumber = json['mobileNumber'];
-    categoryId = json['categoryId'];
-    category = json['category'];
-    ambassador = jsonEncode(json['ambassador']);
-    referrerAmbassadorId = json['referrerAmbassadorId'];
-    referrer = jsonEncode(json['referrer']);
+       "not mentioned";
+    gender = json['gender'] ?? "Not mentioned";
+    mobileNumber = json['mobileNumber'] ?? "Not mentioned";
+    categoryId = json['categoryId'] ?? 0;
+    category = json['category'] ?? "NA";
+    //   ambassador = jsonEncode(json['ambassador']) ?? jsonEncode({
+    //   "id": 0,
+    //   "userId": 0,
+    //   "user": "string",
+    //   "referredUsers": [
+    //     "string"
+    //   ],
+    //   "freeMembership": 0,
+    //   "paidMembership": 0
+    // });
+    ambassador = jsonEncode({
+      "id": 0,
+      "userId": 0,
+      "user": "string",
+      "referredUsers": ["string"],
+      "freeMembership": 0,
+      "paidMembership": 0
+    });
+    referrerAmbassadorId = json['referrerAmbassadorId'] ?? 0;
+    // referrer = jsonEncode(json['referrer']) ?? "NA";
+    referrer = jsonEncode( {
+    "id": 0,
+    "userId": 0,
+    "user": "string",
+    "referredUsers": [
+      "string"
+    ],
+    "freeMembership": 0,
+    "paidMembership": 0
+  });
     isPaid = (json['isPaid'] == true || json['isPaid'] == 1) ? true : false;
   }
 

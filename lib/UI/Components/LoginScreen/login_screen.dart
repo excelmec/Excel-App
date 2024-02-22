@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print("Authentication went wrong");
     }
+    
     final myProvider = Provider.of<LoginStatus>(context, listen: false);
 
     await HiveDB.retrieveData(valueName: "user")
