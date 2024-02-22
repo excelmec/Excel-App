@@ -14,10 +14,12 @@ class CheckUserLoggedIn extends StatefulWidget {
 }
 
 class _CheckUserLoggedInState extends State<CheckUserLoggedIn> {
-late  bool isProfileUpdated;
+ bool? isProfileUpdated;
 late  Future userData;
 
   Future<dynamic> checkUser() async {
+
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("In check user");
     if (prefs.getBool('isLogged') == false ||
@@ -67,7 +69,7 @@ late  Future userData;
             if (snapshot.data == 'login') {
               return LoginScreen();
             } else {
-              return ProfilePage(snapshot.data, isProfileUpdated);
+              return ProfilePage(snapshot.data);
             }
           } else {
             return LoadingAnimation();

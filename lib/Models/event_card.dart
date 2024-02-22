@@ -20,13 +20,13 @@ class Event {
   });
 
   Event.fromJson(json) {
-    id = json['id'];
-    name = json['name'];
-    icon = json['icon'];
-    eventType = json['eventType'];
-    category = json['category'];
+    id = json['id'] ?? "NA";
+    name = json['name'] ?? "NA";
+    icon = json['icon'] ?? "NA";
+    eventType = json['eventType'] ?? "NA";
+    category = json['category'] ??'NA';
     about = json['about'] ?? 'Excel 2023';
-    date = json['datetime'];
+    date = json['datetime'] ?? "NA";
     isCompetition = json['needRegistration'] ?? false;
   }
 

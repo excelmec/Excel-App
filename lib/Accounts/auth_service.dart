@@ -16,7 +16,6 @@ class AuthService {
       GoogleSignInAccount? accountInfo = await googleSignIn.signIn();
       GoogleSignInAuthentication googleKeys = await accountInfo!.authentication;
       accessToken = googleKeys.accessToken!;
-      print(accessToken);
     } catch (err) {
       print("Error: $err");
     }
@@ -27,7 +26,7 @@ class AuthService {
 
     // Send access token to backend -- Recieve jwt
     try {
-      print(AccountConfig.newUrl + 'Auth/login/');
+      print(AccountConfig.newUrl + 'Auth/login');
       Map<String, String> token = {"accessToken": accessToken};
       print(json.encode(token));
       var response = await http.post(

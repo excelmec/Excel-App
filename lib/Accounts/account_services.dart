@@ -13,7 +13,6 @@ class AccountServices {
     User user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jwt = prefs.getString('jwt');
-
     try {
       var response = await http.get(
         Uri.parse(AccountConfig.newUrl + 'profile/'),
