@@ -9,9 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
 
+import '../../../Models/view_user.dart';
 import '../../Themes/colors.dart';
 
-void showCreateAccountModal(context, User user) {
+void showCreateAccountModal(context, ViewUser user) {
   showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       useRootNavigator: true,
@@ -27,7 +28,7 @@ void showCreateAccountModal(context, User user) {
 }
 
 class CreateAccountModal extends StatefulWidget {
-  final User user;
+  final ViewUser user;
   final BuildContext context;
   CreateAccountModal(this.user, this.context);
   @override
@@ -63,7 +64,7 @@ class _CreateAccountModalState extends State<CreateAccountModal> {
   }
 
   initialiseUserDetails(
-    User user,
+    ViewUser user,
   ) async {
     //_id = user.id;
     _name = user.name;

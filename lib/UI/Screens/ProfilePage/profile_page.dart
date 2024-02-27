@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Accounts/auth_service.dart';
-import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/Providers/navigationProvider.dart';
 import 'package:excelapp/Services/API/favourites_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
@@ -9,6 +9,7 @@ import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/qr_code.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/update_profile.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ import '../../Components/EventCard/event_card.dart';
 import '../../../Models/event_card.dart';
 
 class ProfilePage extends StatefulWidget {
-  final User user;
+  final ViewUser user;
   ProfilePage(this.user);
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -29,10 +30,10 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
- late User _user;
- late AuthService authService;
- late List<Event> _favouritedEvents = [];
- late List<Event> _registeredEvents = [];
+  late ViewUser _user;
+  late AuthService authService;
+  late List<Event> _favouritedEvents = [];
+  late List<Event> _registeredEvents = [];
 
   late TabController tabController;
 
@@ -64,13 +65,14 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   Future<dynamic> viewUserProfile() async {
-    print("netpoi");
+    print("Profile viewed");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('isProfileUpdated') == false ||
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
     } else {
-      User user = await AccountServices.viewProfile();
+      ViewUser user = await AccountServices.viewProfile();
+      print(user);
       return user;
     }
   }
@@ -314,14 +316,12 @@ class _ProfilePageState extends State<ProfilePage>
                               ),
                               SizedBox(height: 4),
                               TabBar(
-                                  indicatorColor:
-                                      Color.fromARGB(255, 14, 152, 232),
+                                  indicatorColor: red100,
                                   indicatorPadding:
                                       EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  labelColor: Color.fromARGB(255, 14, 152, 232),
+                                  labelColor: red100,
                                   labelStyle: TextStyle(
-                                    decorationColor:
-                                        Color.fromARGB(255, 14, 152, 232),
+                                    decorationColor: red100,
                                   ),
                                   unselectedLabelColor:
                                       Color.fromARGB(235, 119, 133, 133),
@@ -397,7 +397,8 @@ class _ProfilePageState extends State<ProfilePage>
           return Future<void>.delayed(const Duration(seconds: 1));
         },
         child: ListView.builder(
-          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           itemCount: _registeredEvents.length,
           // shrinkWrap: true,
           itemBuilder: (_, index) {
@@ -417,7 +418,8 @@ class _ProfilePageState extends State<ProfilePage>
           return Future<void>.delayed(const Duration(seconds: 1));
         },
         child: ListView.builder(
-          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           itemCount: _favouritedEvents.length,
           itemBuilder: (_, index) {
             return EventCard(_favouritedEvents[index], first: index == 0);
@@ -437,7 +439,7 @@ class _ProfilePageState extends State<ProfilePage>
   //       });
   // }
 
-  Widget showQRButton(BuildContext context, User user) {
+  Widget showQRButton(BuildContext context, ViewUser user) {
     return ButtonTheme(
       //minWidth: MediaQuery.of(context).size.width / 2,
       child: TextButton(
@@ -480,7 +482,7 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Widget editProfileButton(BuildContext context, User user) {
+  Widget editProfileButton(BuildContext context, ViewUser user) {
     return ButtonTheme(
       //minWidth: MediaQuery.of(context).size.width / 2,
       child: TextButton(

@@ -16,7 +16,6 @@ fetchAndStoreScheduleFromNet() async {
   try {
     var response = await http.get(Uri.parse(APIConfig.baseUrl + 'schedule'));
     await HiveDB.storeData(valueName: "schedule", value: response.body);
-
     return scheduleJSONtoModel(response.body);
   } catch (err) {
     print(err);
@@ -27,17 +26,12 @@ fetchAndStoreScheduleFromNet() async {
 scheduleJSONtoModel(data) {
   dynamic responseData = json.decode(data);
   Map<String, List<ScheduleModel>> scheduleData = {
-    "day0": [],
     "day1": [],
     "day2": [],
     "day3": []
   };
   for (var i in responseData) {
-    if (i["day"] == 0)
-      scheduleData["day0"] = i["events"]
-          .map<ScheduleModel>((event) => ScheduleModel.fromJson(event))
-          .toList();
-    else if (i["day"] == 1)
+    if (i["day"] == 1)
       scheduleData["day1"] = i["events"]
           .map<ScheduleModel>((event) => ScheduleModel.fromJson(event))
           .toList();

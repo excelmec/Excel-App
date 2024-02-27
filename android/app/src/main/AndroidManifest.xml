@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.excelmec">
    <application
-        android:label="Excel 2022"
+        android:label="Excel 2023"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

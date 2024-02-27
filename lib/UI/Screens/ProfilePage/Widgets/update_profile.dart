@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Accounts/account_services.dart';
 import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
 
 class UpdateProfile extends StatefulWidget {
-  final User user;
+  final ViewUser user;
   UpdateProfile(this.user);
 
   @override
@@ -52,7 +53,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   // Initialize form fields
   initialiseUserDetails(
-    User user,
+    ViewUser user,
   ) async {
     //_id = user.id;
     _name = user.name;
@@ -63,7 +64,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _institutionName = user.institutionName;
     _gender = user.gender;
     _emailId = user.email;
-    _categoryId = user.categoryId;
+    _categoryId = 0;
     if (_categoryId == 1 || _categoryId == 0) {
       await getInstitutions(loading: false);
       _institutionName = await getInstitutionName(_institutionId);

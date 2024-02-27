@@ -2,27 +2,29 @@ import 'dart:convert';
 import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:http/http.dart' as http;
 import 'package:excelapp/Accounts/account_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+
 class AccountServices {
   // Fetch user details right after authentication
   static Future<String> fetchUserDetails() async {
-    User user;
+    ViewUser user;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jwt = prefs.getString('jwt');
     try {
       var response = await http.get(
-        Uri.parse(AccountConfig.newUrl + 'profile/'),
+        Uri.parse(AccountConfig.newUrl + 'Profile/view'),
         headers: AccountConfig.getHeader(jwt!),
       );
 
       // Store User in DB
       Map<String, dynamic> responseData = json.decode(response.body);
-      print(responseData);
-      user = User.fromJson(responseData);
+      user = ViewUser.fromJson(responseData);
       print("adding to database");
       await HiveDB.storeData(valueName: "user", value: user.toJson());
       print("done");
@@ -36,6 +38,7 @@ class AccountServices {
       } else {
         await prefs.setBool('isProfileUpdated', true);
       }
+      print("${prefs.getBool('isProfileUpdated')}" + "profile staues");
     } catch (e) {
       print("Error: $e");
     }
@@ -45,15 +48,17 @@ class AccountServices {
 
   // View user profile
   static viewProfile() async {
-    User user;
+    ViewUser user;
 
     try {
       print("fetching user details");
       var response =
-          await getAuthorisedData(AccountConfig.newUrl + 'profile/view');
+          await getAuthorisedData(AccountConfig.newUrl + 'Profile/view');
       if (response.statusCode != 200) return null;
       Map<String, dynamic> responseData = json.decode(response.body);
-      user = User.fromJson(responseData);
+      print(responseData);
+      user = ViewUser.fromJson(responseData);
+      print(user);
       return user;
     } catch (e) {
       print("Error : $e");
@@ -70,7 +75,7 @@ class AccountServices {
     try {
       print("fetching institutions");
       var response = await getAuthorisedData(
-        AccountConfig.newUrl+ 'institution/$category/list',
+        AccountConfig.newUrl + 'institution/$category/list',
       );
       List<dynamic> responseData = json.decode(response.body);
       // print(responseData);
@@ -86,7 +91,7 @@ class AccountServices {
   static Future<String> updateProfile(Map<String, dynamic> userInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jwt = prefs.getString('jwt');
-    User user;
+    ViewUser user;
 
     try {
       var response = await postAuthorisedData(
@@ -111,7 +116,7 @@ class AccountServices {
         headers: AccountConfig.getHeader(jwt!),
       );
       Map<String, dynamic> responseData = json.decode(response.body);
-      user = User.fromJson(responseData);
+      user = ViewUser.fromJson(responseData);
       print("adding to database");
       await HiveDB.storeData(valueName: "user", value: user.toJson());
       print("done");

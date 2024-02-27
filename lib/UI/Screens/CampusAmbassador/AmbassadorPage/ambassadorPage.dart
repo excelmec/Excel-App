@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/API/campus_ambassador.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/shareOptions.dart';
@@ -8,15 +7,17 @@ import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:social_share/social_share.dart';
 
+import '../../../../Models/view_user.dart';
+
 class AmbassadorPage extends StatefulWidget {
-  final User userData;
+  final ViewUser userData;
   AmbassadorPage(this.userData);
   @override
   _AmbassadorPageState createState() => _AmbassadorPageState();
 }
 
 class _AmbassadorPageState extends State<AmbassadorPage> {
-  late User userData;
+  late ViewUser userData;
   late Future referalList;
   late Map<String, dynamic> ambassadorData;
 

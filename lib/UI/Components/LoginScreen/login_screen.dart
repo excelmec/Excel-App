@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../../Models/user_model.dart';
+import '../../../Models/view_user.dart';
 import '../../../Services/Database/hive_operations.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final myProvider = Provider.of<LoginStatus>(context, listen: false);
 
     await HiveDB.retrieveData(valueName: "user")
-        .then((value) => myProvider.setData(User.fromJson(value)));
+        .then((value) => myProvider.setData(ViewUser.fromJson(value)));
 //I want to open a bottommodal hseet if user doesn't have mobileNumber
 
     // myProvider.setData('user');

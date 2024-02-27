@@ -1,9 +1,10 @@
 import 'package:excelapp/Accounts/account_services.dart';
-import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:excelapp/UI/constants.dart';
+
+import '../../../../Models/view_user.dart';
 
 class ViewProfile extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _ViewProfileState extends State<ViewProfile> {
         prefs.getBool('isProfileUpdated') == null) {
       return "Not Updated";
     } else {
-      User user = await AccountServices.viewProfile();
+      ViewUser user = await AccountServices.viewProfile();
       return user;
     }
   }
@@ -55,7 +56,7 @@ class _ViewProfileState extends State<ViewProfile> {
   }
 }
 
-Widget viewProfileBody(User userData, context) {
+Widget viewProfileBody(ViewUser userData, context) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 20),
     child: SingleChildScrollView(

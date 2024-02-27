@@ -1,6 +1,7 @@
-
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatelessWidget {
   final String qrCodeUrl, name, institutionName, gender, mobileNumber, email;
@@ -115,6 +116,13 @@ class QrCode extends StatelessWidget {
                     // //  backgroundColor: Colors.white,
                     // //  foregroundColor: Colors.black,
                     // ),
+                    QrImageView(
+                      data: id.toString(),
+                      version: QrVersions.auto,
+                      size: 250.0,
+                      padding: EdgeInsets.all(20.0),
+                      backgroundColor: Colors.white,
+                    ),
                     SizedBox(
                       height: 5,
                     ),
@@ -158,7 +166,7 @@ class QrCode extends StatelessWidget {
                     child: Icon(
                       Icons.person_2_outlined,
                       size: 20.0,
-                      color: Color(0xFF0E99E8),
+                      color: red100,
                     ),
                   ),
                   Expanded(
@@ -215,7 +223,7 @@ class QrCode extends StatelessWidget {
                       child: Icon(
                         Icons.phone_in_talk_outlined,
                         size: 20.0,
-                        color: Color(0xFF0E99E8),
+                        color: red100,
                       ),
                     ),
                     Expanded(
@@ -271,7 +279,7 @@ class QrCode extends StatelessWidget {
                   child: Icon(
                     Icons.email_outlined,
                     size: 20.0,
-                    color: Color(0xFF0E99E8),
+                    color: red100,
                   ),
                 ),
                 Expanded(
@@ -328,7 +336,7 @@ class QrCode extends StatelessWidget {
                   child: Icon(
                     Icons.location_on_outlined,
                     size: 20.0,
-                    color: Color(0xFF0E99E8),
+                    color: red100,
                   ),
                 ),
                 Expanded(

@@ -15,6 +15,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../Models/view_user.dart';
+
 class ImgUpload extends StatefulWidget {
   final String imgUrl;
   ImgUpload({required this.imgUrl});
@@ -81,7 +83,7 @@ class _ImgUploadState extends State<ImgUpload> {
         print("Fetching user details");
         var response = await getAuthorisedData(AccountConfig.url + 'profile');
         Map<String, dynamic> responseData = json.decode(response.body);
-        User user = User.fromJson(responseData);
+        ViewUser user = ViewUser.fromJson(responseData);
         print("Adding to DB");
         await HiveDB.storeData(valueName: "user", value: user.toJson());
         // Clearing image cache
