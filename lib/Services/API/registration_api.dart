@@ -3,9 +3,9 @@ import 'package:excelapp/Accounts/getAuthorisedData.dart';
 import 'package:excelapp/Accounts/postAuthorisedData.dart';
 import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_card.dart';
+import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:http/http.dart' as http;
-import 'package:excelapp/Models/user_model.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +101,7 @@ class RegistrationAPI {
 
     var user = await HiveDB.retrieveData(valueName: "user");
     if (user == null) return "Login";
-    if (User.fromJson(user).gender == "null") {
+    if (ViewUser.fromJson(user).gender == "null") {
       return "Update profile to register for events.";
     }
 
@@ -115,7 +115,7 @@ class RegistrationAPI {
       @required refreshFunction,
       @required context}) async {
     var requestBody;
-    requestBody = json.encode({"eventId": id, "teamId": teamId});
+    requestBody = json.encode({"eventId": id, "teamId": teamId,"ambassadorId": 0});
       try {
       print(requestBody);
       var response = await postAuthorisedData(

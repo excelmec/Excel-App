@@ -6,10 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Models/view_user.dart';
+
 class UnregisterAllEvents extends StatelessWidget {
   unregister(context) async {
     var user = await HiveDB.retrieveData(valueName: "user");
-    User userData = User.fromJson(user);
+    ViewUser userData = ViewUser.fromJson(user);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jwt = prefs.getString('jwt');
     final request = http.Request("DELETE",

@@ -78,7 +78,7 @@ class EventsAPI {
         var response =
             await http.get(Uri.parse(APIConfig.baseUrl + 'events/' + '$id'));
         Map<String, dynamic> responseData = json.decode(response.body);
-
+        print(responseData);
         responseData["eventHead1"] = json.encode(responseData["eventHead1"]);
         responseData["eventHead2"] = json.encode(responseData["eventHead2"]);
         responseData["rounds"] = json.encode(responseData["rounds"]);
@@ -88,7 +88,6 @@ class EventsAPI {
         await HiveDB.storeData(
             valueName: "eventdetails-$id", value: responseData);
 
-        print(responseData);
         EventDetails event = EventDetails.fromJson(responseData);
         return event;
       } catch (e) {

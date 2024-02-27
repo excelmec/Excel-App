@@ -32,7 +32,6 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   image_picker: ^1.0.7
   fluttertoast: ^8.2.4
-  flutter_launcher_icons: ^0.13.1
   provider:
   http: ^1.2.0
   searchable_paginated_dropdown: ^1.2.0
@@ -49,13 +48,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1  
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/appicon/fullicon.jpg"
-  adaptive_icon_background: "assets/appicon/whitebg.png"
-  adaptive_icon_foreground: "assets/appicon/excelicon.png"
+  image_path: "assets/appicon/fullicon.png"
+  adaptive_icon_background: "assets/appicon/whitebg2.png"
+  adaptive_icon_foreground: "assets/appicon/excelforeground.png"
 
 flutter:
 
@@ -63,7 +63,7 @@ flutter:
 
   assets:
   - assets/BG 2.jpg
-  - assets/mascot.json
+  - assets/mascot.png
   - assets/rocket.png
   - assets/qrcode.png
   - assets/divider_design.png

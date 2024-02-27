@@ -36,7 +36,7 @@ class _LandingPageState extends State<LandingPage> {
             context,
             data[1]["title"],
             data[1]["description"],
-            Lottie.asset('assets/mascot.json',
+            Image.asset('assets/mascot.png',
                 height: 256, fit: BoxFit.contain),
           ),
         ),
@@ -118,9 +118,9 @@ class _LandingPageState extends State<LandingPage> {
           "Excel is the annual techno-managerial fest of Govt. Model Enginnering College. It’s the Nation’s second and South India’s first ever fest of it’s kind!"
     },
     {
-      "title": "Hi! I\'m AEVA",
+      "title": "Hi! I\'m JUNO",
       "description":
-          "Meet Excel\'s bubbly, pointy-eared mascot that is hyper-excited about all things tech and fun, Aeva! Unable to sit still due to unbridled excitement, she is excited to have a blast at Excel with you!"
+          "Meet Excel\'s bubbly, pointy-eared mascot that is hyper-excited about all things tech and fun, Juno! Unable to sit still due to unbridled excitement, she is excited to have a blast at Excel with you!"
     },
     {
       "title": "Let\'s get into it!",

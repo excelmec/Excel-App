@@ -1,4 +1,4 @@
-import 'package:excelapp/Models/user_model.dart';
+import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/Providers/loginStatusProvider.dart';
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
@@ -32,7 +32,7 @@ late  Future userData;
       isProfileUpdated = prefs.getBool('isProfileUpdated') ?? false;
       var user = await HiveDB.retrieveData(valueName: "user");
       if (user == null) return "login";
-      return User.fromJson(user);
+      return ViewUser.fromJson(user);
     }
   }
 
