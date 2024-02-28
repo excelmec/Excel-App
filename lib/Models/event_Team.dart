@@ -6,9 +6,9 @@ class TeamDetails {
   TeamDetails({required this.id, required this.name, required this.eventId});
 
   TeamDetails.fromJson(json) {
-    id = json['id'];
-    name = json['name'];
-    eventId = json['eventId'];
+    id = json['id']??0;
+    name = json['name']??"Not given";
+    eventId = json['eventId']??0;
   }
 
   Map<String, dynamic> toJson() {

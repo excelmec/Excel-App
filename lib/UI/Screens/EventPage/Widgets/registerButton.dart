@@ -337,61 +337,9 @@ class _RegisterButtonState extends State<RegisterButton> {
                                         id: widget.eventDetails.id,
                                         refreshFunction: refreshIsRegistered,
                                         context: context,
-                                        teamId: 14,
-                                      ).then((_) async {
-                                        if (_controller.text != "") {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          String? jwt = prefs.getString('jwt');
-                                          print(jwt);
-                                          var body = {
-                                            "eventId": widget.eventDetails.id,
-                                            "referrerId":
-                                                int.parse(_controller.text),
-                                            "accessToken": jwt,
-                                            "point": 10
-                                          };
-                                          print(json.encode(body));
-                                          var response = await http.post(
-                                              Uri.parse(APIConfig.cabaseUrl +
-                                                  "addTransactionByToken"),
-                                              body: json.encode(body),
-                                              headers: {
-                                                "content-type":
-                                                    "application/json",
-                                              });
-                                          print(response.statusCode);
-                                          // If token has expired, rfresh it
-                                          if (response.statusCode == 455 ||
-                                              response.statusCode == 500) {
-                                            // Refreshes Token & gets JWT
-                                            jwt = await refreshToken();
-                                            var body = {
-                                              "eventId": widget.eventDetails.id,
-                                              "referrerId":
-                                                  int.parse(_controller.text),
-                                              "accessToken": jwt,
-                                              "point": 10
-                                            };
-                                            // Retrying Request
-                                            response = await http.post(
-                                                Uri.parse(APIConfig.cabaseUrl +
-                                                    "addTransactionByToken"),
-                                                body: json.encode(body),
-                                                headers: {
-                                                  "content-type":
-                                                      "application/json",
-                                                });
-                                          }
-                                          if (response.statusCode == 200) {
-                                            print("Transaction added");
-                                            print(response.body);
-                                          } else {
-                                            print("Transaction not added");
-                                          }
-                                        }
-                                      });
+                                        teamId:null ,
+                                        ambassadorId:_controller.text
+                                      );
 
                                       // Ends Loading
                                       setState(() {

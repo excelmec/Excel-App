@@ -135,6 +135,7 @@ class FavouritesAPI {
       );
       print("Adding to favourites attempted with status code" +
           response.statusCode.toString());
+ 
       if (response.statusCode != 200) return "An error occured+${response.statusCode}";
       FavouritesStatus.instance.favouritesIDs.add(id);
       // Converts event details model to event model to add to favourites

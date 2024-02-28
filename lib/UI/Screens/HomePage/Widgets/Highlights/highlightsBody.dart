@@ -12,14 +12,14 @@ class HighlightsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (highLightsMap.length == 0) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 45),
-        child: Center(
-            child: Text(
-          "No Highlights",
-          style: TextStyle(color: Colors.black54),
-        )),
-      );
+      return SizedBox(
+          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 45),
+          // child: Center(
+          //     child: Text(
+          //   "No Highlights",
+          //   style: TextStyle(color: Colors.black54),
+          // )),
+          );
     }
     List<Highlights> uniqueHighlightsList = [];
 

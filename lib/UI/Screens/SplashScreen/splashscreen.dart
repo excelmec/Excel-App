@@ -39,6 +39,8 @@ class _SplashscreenState extends State<Splashscreen> {
     );
 
     if (firstTime == null || firstTime == true) {
+      await prefs.remove('access_token');
+      await prefs.remove('refreshToken');
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LandingPage()),

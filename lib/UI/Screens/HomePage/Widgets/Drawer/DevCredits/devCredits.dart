@@ -8,7 +8,7 @@ class DevCredits extends StatefulWidget {
 
 class DevCreditsState extends State<DevCredits>
     with SingleTickerProviderStateMixin {
- late  AnimationController controller;
+  late AnimationController controller;
   late Animation<double> scaleAnimation;
 
   @override
@@ -38,9 +38,14 @@ class DevCreditsState extends State<DevCredits>
     //   "image": "assets/devs/ashish.jpg"
     // },
     {
-       "name":"Alfred Jimmy",
+      "name": "Alfred Jimmy",
       "email": "alfredjimmyaj007@gmail.com",
       "image": "assets/devs/alfred.jpg"
+    },
+    {
+      "name": "Sreehari K N",
+      "email": "knsreehari2001@gmail.com",
+      "image": "assets/devs/sreehari.jpg"
     },
     // {
     //   "name": "Jaison Dennis",

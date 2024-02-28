@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../../../../Accounts/getAuthorisedData.dart';
+
 class ViewTeam extends StatefulWidget {
   final EventDetails eventDetails;
   final int teamID;
@@ -25,13 +27,11 @@ class _ViewTeamState extends State<ViewTeam> {
     // teamDetails["name"] = "Team Name";
     String teamID = widget.teamID.toString();
     print(teamID);
-    String requestUrl = APIConfig.teamUrl + "getTeamDetails";
-    var response = await http.post(Uri.parse(requestUrl), body: {
-      "teamId": teamID,
-    });
+    String requestUrl = APIConfig.baseUrl + "Team/" + teamID;
+    var response = await getAuthorisedData(requestUrl);
     setState(() {
       dataFetched = true;
-      teamDetails["members"] = jsonDecode(response.body);
+      teamDetails["members"] = jsonDecode(response.body)["members"];
     });
     print(teamDetails);
   }
@@ -118,8 +118,10 @@ class _ViewTeamState extends State<ViewTeam> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                            new DateFormat("dd MMMM yyyy")
-                                .format(DateTime.parse(widget.eventDetails.datetime)).toString(),
+                          new DateFormat("dd MMMM yyyy")
+                              .format(
+                                  DateTime.parse(widget.eventDetails.datetime))
+                              .toString(),
                           style: TextStyle(
                             fontSize: 14,
                             color: lightTextColor,

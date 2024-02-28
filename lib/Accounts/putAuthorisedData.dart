@@ -19,7 +19,7 @@ putAuthorisedData({required String url, body}) async {
   );
   print(response.statusCode);
   // If token has expired, rfresh it
-  if (response.statusCode == 455 || response.statusCode == 500) {
+  if (response.statusCode == 455 || response.statusCode == 500 || response.statusCode == 401) {
     // Refreshes Token & gets JWT
     jwt = await refreshToken();
     // Retrying Request
