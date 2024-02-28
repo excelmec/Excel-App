@@ -34,13 +34,13 @@ class ViewUser {
 
   ViewUser.fromJson(json) {
     id = json['id'] ?? 0;
-    name = json['name'];
-    email = json['email'];
-    picture = json['picture'];
-    qrCodeUrl = json['qrCodeUrl'];
+    name = json['name']??"Not added";
+    email = json['email']??"Not added";
+    picture = json['picture']??"Not added";
+    qrCodeUrl = json['qrCodeUrl']??"Not added";
     institutionId = json['institutionId'] ?? 0;
     institutionName = json['insituitionName'] ?? "Not mentioned";
-    gender = json['gender'] ?? "Not mentioned";
+    gender = json['gender'] ?? "---";
     mobileNumber = json['mobileNumber'] ?? "Not mentioned";
     category = json['category'] ?? "NA";
     //   ambassador = jsonEncode(json['ambassador']) ?? jsonEncode({

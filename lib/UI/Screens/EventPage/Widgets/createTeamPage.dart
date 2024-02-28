@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../Themes/colors.dart';
+
 class CreateTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
   final Function refreshIsRegistered;
@@ -28,12 +30,17 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
   String teamName = "";
   String referralID = "";
   bool isLoading = false;
+
+
+
   createTeam() async {
     TeamDetails teamdetails =
         await RegistrationAPI.createTeam(teamName, widget.eventDetails.id);
+        
     var registered = await RegistrationAPI.registerEvent(
       id: widget.eventDetails.id,
       teamId: teamdetails.id,
+      ambassadorId: referralID,
       refreshFunction: widget.refreshIsRegistered,
       context: context,
     );
@@ -56,7 +63,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
           });
       print(response.statusCode);
       // If token has expired, rfresh it
-      if (response.statusCode == 455 || response.statusCode == 500) {
+      if (response.statusCode == 455 || response.statusCode == 500 || response.statusCode == 401) {
         // Refreshes Token & gets JWT
         jwt = await refreshToken();
         var body = {
@@ -147,7 +154,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(21),
-                      color: Color.fromARGB(255, 14, 152, 232),
+                      color: red100,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(12.25),

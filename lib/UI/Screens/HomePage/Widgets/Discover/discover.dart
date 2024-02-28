@@ -12,7 +12,7 @@ class Discover extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     final myNavIndex = Provider.of<MyNavigationIndex>(context);
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
+      margin: EdgeInsets.fromLTRB(20, 16, 20, 20),
       child: Column(
         children: [
           SizedBox(height: 8),
@@ -57,6 +57,7 @@ class Discover extends StatelessWidget {
                   ),
                   flex: 1,
                 ),
+                const SizedBox(width: 16),
                 Expanded(
                   child: InkWell(
                     onTap: () {
@@ -70,7 +71,7 @@ class Discover extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 3),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -84,6 +85,7 @@ class Discover extends StatelessWidget {
                 ),
                 flex: 3,
               ),
+              const SizedBox(width: 16),
               Expanded(
                 child: InkWell(
                   onTap: () {

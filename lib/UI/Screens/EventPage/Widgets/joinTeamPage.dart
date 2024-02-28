@@ -30,6 +30,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
   bool isLoading = false;
   registerEvent() async {
     var registered = await RegistrationAPI.registerEvent(
+      ambassadorId: referralID,
       id: widget.eventDetails.id,
       teamId: teamID,
       refreshFunction: widget.refreshIsRegistered,

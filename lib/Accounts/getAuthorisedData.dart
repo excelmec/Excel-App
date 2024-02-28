@@ -16,7 +16,7 @@ getAuthorisedData(String url) async {
     headers: AccountConfig.getHeader(jwt!),
   );
   // If token has expired, refresh it
-  if (response.statusCode == 455 || response.statusCode == 500) {
+  if (response.statusCode == 455 || response.statusCode == 500 || response.statusCode == 401 ) {
     // Refreshes Token & gets JWT
     jwt = await refreshToken();
 
