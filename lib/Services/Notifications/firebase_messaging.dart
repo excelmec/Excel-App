@@ -9,9 +9,9 @@ import 'package:firebase_core/firebase_core.dart';
 // final _messageStreamController = BehaviorSubject<RemoteMessage>();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-if (Firebase.apps.isEmpty) {
+  if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(name: 'Excel Services');
- }
+  }
   if (kDebugMode) {
     print("Handling a background message: ${message.messageId}");
     print('Message data: ${message.data}');
@@ -41,19 +41,19 @@ void initiliaseNotificationServices() async {
   );
   final messaging = FirebaseMessaging.instance;
 
-  // final settings = await messaging.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
+  final settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
 
-//   if (kDebugMode) {
-//     print('Permission granted: ${settings.authorizationStatus}');
-//   }
+  if (kDebugMode) {
+    print('Permission granted: ${settings.authorizationStatus}');
+  }
   String? token = await messaging.getToken();
 
   if (kDebugMode) {
