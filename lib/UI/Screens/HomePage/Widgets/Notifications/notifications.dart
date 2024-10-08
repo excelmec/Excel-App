@@ -1,10 +1,10 @@
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Notifications/notificationCard.dart';
 import 'package:clear_all_notifications/clear_all_notifications.dart';
-
 
 class NotificationsPage extends StatelessWidget {
   Future<Map> notifications() async {
@@ -37,7 +37,7 @@ class NotificationsPage extends StatelessWidget {
     //   'count': 3
     // };
     // print(noti);
-    return {'notifications': noti ?? [], 'count': count??noti.length};
+    return {'notifications': noti ?? [], 'count': count ?? noti.length};
   }
 
   @override
@@ -67,7 +67,9 @@ class NotificationsPage extends StatelessWidget {
           future: notifications(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List notificationData = ["notification"];
+              final notificationMappedData =
+                  Map<String, dynamic>.from(snapshot.data as Map);
+              List notificationData = notificationMappedData['notifications'];
               int unread = 14;
               notificationData = notificationData.reversed.toList();
               if (notificationData.length == 0) {
@@ -80,15 +82,17 @@ class NotificationsPage extends StatelessWidget {
                     notificationData.length,
                     (index) {
                       // return FlutterLogo();
-                            // notificationData[index]['data'] =
-                            //     notificationData[index]['data'] ?? {};
+                      // notificationData[index]['data'] =
+                      //     notificationData[index]['data'] ?? {};
                       return NotificationCard(
                         title: notificationData[index]['title'],
-                        time: notificationData[index]['time']??"error",
+                        time: notificationData[index]['time'] ?? "error",
                         description: notificationData[index]['body'],
-                        // link: "https://www.google.com",
-                        outline: (index < unread)?true:false,
-                        icon:"", id: 14, link: '',
+                        //link: "https://www.google.com",
+                        link: "",
+                        outline: (index < unread) ? true : false,
+                        icon: "",
+                        id: 14,
                       );
                     },
                   ),
@@ -96,7 +100,8 @@ class NotificationsPage extends StatelessWidget {
               );
             } else if (snapshot.hasError) {
               {
-                return Center(child: Text("Seems like you have no new notifcations"));
+                return Center(
+                    child: Text("Seems like you have no new notifcations"));
               }
             }
 

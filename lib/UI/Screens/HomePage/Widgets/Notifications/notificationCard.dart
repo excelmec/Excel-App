@@ -10,13 +10,12 @@ class NotificationCard extends StatelessWidget {
   final String icon;
   final bool outline;
   NotificationCard(
-      {
-     required   this.id,
-     required this.title,
-     required this.time,
-     required this.description,
-     required this.link,
-    this.outline = true,
+      {required this.id,
+      required this.title,
+      required this.time,
+      required this.description,
+      required this.link,
+      this.outline = true,
       this.icon = "icon"});
 
   getTime(time) {
@@ -133,7 +132,7 @@ class NotificationCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           launchUrl(Uri.parse(link));
-                },
+        },
         child: Container(
           decoration: BoxDecoration(
             border:
@@ -151,7 +150,7 @@ class NotificationCard extends StatelessWidget {
                 padding: EdgeInsets.all(12.25),
                 child: ClipRRect(
                   //Change this to Image.network when image server is up
-                  child: icon == null
+                  child: icon == ""
                       ? Image.asset(
                           "assets/icons/excel logo.png",
                           //event.icon,
