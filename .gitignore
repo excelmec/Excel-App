@@ -26,6 +26,7 @@
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+devtools_options.yaml
 .packages
 .pub-cache/
 .pub/
@@ -50,3 +51,6 @@ app.*.map.json
 
 # Ignore Gradle build output directory
 build
+
+#FlutterFireConfig
+firebase.json
