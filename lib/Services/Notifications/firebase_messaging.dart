@@ -35,6 +35,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void initiliaseNotificationServices() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //Using this to temporarily patch Notification Duplication issue
+  //TODO : Look for proper fix
+  int duplicatedNotificationHandler = 0;
   await Firebase.initializeApp(
     name: 'Excel Services',
     options: DefaultFirebaseOptions.currentPlatform,
@@ -62,6 +65,7 @@ void initiliaseNotificationServices() async {
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     print('Got a message whilst in the foreground!');
+    duplicatedNotificationHandler++;
     print('Message data: ${message.data}');
     if (kDebugMode) {
       print("Handling a background message: ${message.messageId}");
@@ -69,7 +73,8 @@ void initiliaseNotificationServices() async {
       print('Message notification: ${message.notification?.title}');
       print('Message notification: ${message.notification?.body}');
     }
-    if (message.notification != null) {
+    if (message.notification != null &&
+        duplicatedNotificationHandler % 2 == 0) {
       print(
           'Message also contained a notification: ${message.notification?.title}');
 
