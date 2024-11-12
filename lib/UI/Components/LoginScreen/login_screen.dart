@@ -4,6 +4,7 @@ import 'package:excelapp/Providers/loginStatusProvider.dart';
 import 'package:excelapp/Services/API/favourites_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print("Authentication went wrong");
     }
-    
+
     final myProvider = Provider.of<LoginStatus>(context, listen: false);
 
     await HiveDB.retrieveData(valueName: "user")
@@ -67,18 +68,29 @@ class _LoginScreenState extends State<LoginScreen> {
       //appBar: darkAppbar(),
       backgroundColor: white200,
       body: Container(
+        decoration: BoxDecoration(
+          gradient: primaryGradient(),
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Container(
               width: 327,
               height: 542,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  color: Colors.white,
-                  border: Border.all(
-                    width: 1.2,
-                    color: Color.fromRGBO(228, 237, 239, 1.0), //E4EDEF;
-                  )),
+                borderRadius: BorderRadius.circular(24),
+                color: backgroundBlue,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.3),
+                    blurRadius: 20,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+                // border: Border.all(
+                //   width: 1.2,
+                //   color: Color.fromRGBO(228, 237, 239, 1.0), //E4EDEF;
+                // )
+              ),
               padding: EdgeInsets.symmetric(horizontal: 45),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "Excel Accounts",
                     style: TextStyle(
-                      color: secondaryColor,
+                      color: white100,
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                       fontFamily: pfontFamily,
@@ -107,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       "Manage everything Excel using Excel accounts. Connect your google account to proceed",
                       style: TextStyle(
-                        color: lightTextColor,
+                        color: white100,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         fontFamily: pfontFamily,
@@ -132,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           FaIcon(
                             FontAwesomeIcons.google,
                             size: 18,
-                            color: white100,
+                            color: backgroundBlue,
                           ),
                           // CircleAvatar(
                           //   radius: 10,
@@ -141,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             "Continue with Google",
                             style: TextStyle(
-                                color: Colors.white,
+                                color: backgroundBlue,
                                 fontFamily: pfontFamily,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14),
