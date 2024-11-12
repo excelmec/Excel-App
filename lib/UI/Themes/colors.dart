@@ -32,3 +32,6 @@ const Color red50 = Color(0x8AF0353D);
 const Color red100 = Color(0xFFE80A5A);
 const Color red200 = Color(0xFF7F0D36);
 const Color red300 = Color(0xFFF0353D);
+
+const Color primaryPink = Color(0xFFFD95FF);
+const Color backgroundBlue = Color(0xFF2C1B77);
