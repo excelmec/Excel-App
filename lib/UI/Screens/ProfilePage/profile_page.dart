@@ -10,6 +10,7 @@ import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/qr_code.dart';
 import 'package:excelapp/UI/Screens/ProfilePage/Widgets/update_profile.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -102,6 +103,7 @@ class _ProfilePageState extends State<ProfilePage>
   logOutConfirmation() async {
     await showModalBottomSheet(
       useRootNavigator: true,
+      backgroundColor: backgroundBlue,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
@@ -130,6 +132,7 @@ class _ProfilePageState extends State<ProfilePage>
                     style: TextStyle(
                         fontFamily: "mulish",
                         fontSize: 20,
+                        color: white100,
                         fontWeight: FontWeight.w800),
                   )),
               SizedBox(
@@ -142,6 +145,7 @@ class _ProfilePageState extends State<ProfilePage>
                   style: TextStyle(
                       fontFamily: "mulish",
                       fontSize: 14,
+                      color: white100,
                       fontWeight: FontWeight.w400),
                 ),
               ),
@@ -185,9 +189,9 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: Color.fromARGB(255, 228, 237, 239),
+                          color: Colors.black,
                           border: Border.all(
-                            color: Color.fromARGB(255, 211, 225, 228),
+                            color: Colors.black,
                           ),
                         ),
                         width: MediaQuery.of(context).size.width * 0.4,
@@ -198,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage>
                             style: TextStyle(
                                 fontFamily: "mulish",
                                 fontSize: 14,
-                                color: Color.fromARGB(255, 61, 71, 71),
+                                color: white100,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -219,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage>
     // print(widget.user.referrerAmbassadorId);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xDBE4E7),
+        backgroundColor: backgroundBlue,
         body: FutureBuilder(
             future: userDetails,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -240,7 +244,9 @@ class _ProfilePageState extends State<ProfilePage>
                         Container(
                           width: MediaQuery.of(context).size.width * 100,
                           padding: EdgeInsets.fromLTRB(22, 20, 22, 0),
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            gradient: primaryGradient(),
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -285,6 +291,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 style: TextStyle(
                                   fontFamily: pfontFamily,
                                   fontSize: 20,
+                                  color: white100,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
@@ -298,6 +305,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 style: TextStyle(
                                   fontFamily: pfontFamily,
                                   fontSize: 11,
+                                  color: white100,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -316,12 +324,12 @@ class _ProfilePageState extends State<ProfilePage>
                               ),
                               SizedBox(height: 4),
                               TabBar(
-                                  indicatorColor: red100,
+                                  indicatorColor: primaryPink,
                                   indicatorPadding:
                                       EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  labelColor: red100,
+                                  labelColor: primaryPink,
                                   labelStyle: TextStyle(
-                                    decorationColor: red100,
+                                    decorationColor: primaryPink,
                                   ),
                                   unselectedLabelColor:
                                       Color.fromARGB(235, 119, 133, 133),
@@ -389,7 +397,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   Widget Registered() {
     return Container(
-      color: Color(0xffECF4F5),
+      color: Colors.black,
       child: RefreshIndicator(
         onRefresh: () async {
           await RegistrationAPI.fetchRegisteredEvents();
@@ -411,7 +419,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   Widget Favorites() {
     return Container(
-      color: Color(0xffECF4F5),
+      color: Colors.black,
       child: RefreshIndicator(
         onRefresh: () async {
           await fetchFavourites();

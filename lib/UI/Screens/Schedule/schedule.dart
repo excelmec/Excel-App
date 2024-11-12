@@ -50,7 +50,7 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: white100,
+        backgroundColor: Colors.black,
         toolbarHeight: 0,
         elevation: 0,
       ),
