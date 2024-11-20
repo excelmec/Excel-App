@@ -223,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage>
     // print(widget.user.referrerAmbassadorId);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: backgroundBlue,
+        backgroundColor: Colors.black,
         body: FutureBuilder(
             future: userDetails,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -264,11 +264,11 @@ class _ProfilePageState extends State<ProfilePage>
                                     style: ElevatedButton.styleFrom(
                                       padding: EdgeInsets.all(10),
                                       elevation: 0,
-                                      backgroundColor: Color(0xd0fcd1cc),
+                                      backgroundColor: Color(0x20fcd1cc),
                                       shape: CircleBorder(
                                         side: BorderSide(
-                                          color: Color(0xd0fcd1cc),
-                                          width: 2,
+                                          color: Colors.transparent,
+                                          width: 0,
                                         ),
                                       ),
                                     ),
@@ -461,7 +461,7 @@ class _ProfilePageState extends State<ProfilePage>
         child: Text(
           "Show Profile",
           style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: pfontFamily,
               fontWeight: FontWeight.w700,
               fontSize: 11),
@@ -496,7 +496,7 @@ class _ProfilePageState extends State<ProfilePage>
       child: TextButton(
         style: TextButton.styleFrom(
           padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
-          backgroundColor: Color(0xffE4EDEF),
+          backgroundColor: Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
@@ -504,7 +504,7 @@ class _ProfilePageState extends State<ProfilePage>
         child: Text(
           "Edit Profile",
           style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontFamily: pfontFamily,
               fontWeight: FontWeight.w700,
               fontSize: 11),
