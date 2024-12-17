@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'Themes/colors.dart';
 
 const Color primaryColor = primaryPink;
-const Color secondaryColor = Color(0xFF252A50);
+const Color secondaryColor = Color(0xFFFFFFFF);
 const Color lightTextColor = Color(0xff555555);
 
 const String pfontFamily = "mulish";
