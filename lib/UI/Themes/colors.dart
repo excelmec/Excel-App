@@ -35,3 +35,4 @@ const Color red300 = Color(0xFFF0353D);
 
 const Color primaryPink = Color(0xFFFD95FF);
 const Color backgroundBlue = Color(0xFF2C1B77);
+const Color tertiaryPurple = Color(0xFFAD59AE);
