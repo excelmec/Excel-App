@@ -5,6 +5,7 @@ import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,6 +79,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   backConfirmation() {
     showModalBottomSheet(
       useRootNavigator: true,
+      backgroundColor: backgroundBlue,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
@@ -104,9 +106,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   child: Text(
                     "Abandon Changes ?",
                     style: TextStyle(
-                        fontFamily: "mulish",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800),
+                      fontFamily: "mulish",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: white100,
+                    ),
                   )),
               SizedBox(
                 height: 20,
@@ -116,9 +120,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 child: Text(
                   'The changes made aren’t saved. Are you sure you want to discard all changes?',
                   style: TextStyle(
-                      fontFamily: "mulish",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400),
+                    fontFamily: "mulish",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: white100,
+                  ),
                 ),
               ),
               SizedBox(
@@ -150,10 +156,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           child: Text(
                             "Discard",
                             style: TextStyle(
-                                fontFamily: "mulish",
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 251, 255, 255),
-                                fontWeight: FontWeight.w700),
+                              fontFamily: "mulish",
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 251, 255, 255),
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -165,10 +172,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: Color.fromARGB(255, 228, 237, 239),
-                          border: Border.all(
-                            color: Color.fromARGB(255, 211, 225, 228),
-                          ),
+                          color: Color(0xff000000),
                         ),
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: 60,
@@ -178,7 +182,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             style: TextStyle(
                                 fontFamily: "mulish",
                                 fontSize: 14,
-                                color: Color.fromARGB(255, 61, 71, 71),
+                                color: Color.fromARGB(255, 255, 255, 255),
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -331,9 +335,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: white200,
+        backgroundColor: Colors.black,
         shadowColor: null,
         elevation: 0,
         toolbarHeight: 64,
@@ -357,10 +361,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
       ),
       body: Theme(
         data: Theme.of(context).copyWith(
-          primaryColor: primaryColor,
+          primaryColor: backgroundBlue,
         ),
         child: Container(
           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          decoration: BoxDecoration(
+            gradient: primaryGradient(),
+          ),
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -423,7 +430,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   // Name
                   TextFormField(
                     initialValue: _name,
-                    style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                    style: TextStyle(
+                      fontFamily: pfontFamily,
+                      fontSize: 15,
+                      color: secondaryColor,
+                    ),
                     onSaved: (value) {
                       setState(() {
                         _name = value!.trim();
@@ -449,9 +460,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         borderSide: BorderSide(color: secondaryColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       labelText: "Name",
                       icon: Icon(Icons.person),
                       contentPadding: EdgeInsets.all(16),
+                      iconColor: secondaryColor,
+                      labelStyle: TextStyle(
+                        color: secondaryColor,
+                        fontSize: 14,
+                      ),
+                      fillColor: backgroundBlue,
+                      filled: true,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -498,12 +520,28 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       width: MediaQuery.of(context).size.width / 2,
                       child: DropdownButtonFormField(
                           icon: Icon(Icons.keyboard_arrow_down),
+                          dropdownColor: backgroundBlue,
                           decoration: InputDecoration(
+                            fillColor: backgroundBlue,
+                            filled: true,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: secondaryColor),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             labelText: "Gender",
+                            labelStyle: TextStyle(
+                              color: secondaryColor,
+                              fontSize: 14,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+
                             //hintText: _gender ?? "Select Gender",
                             contentPadding: EdgeInsets.all(16),
                           ),
@@ -521,7 +559,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             );
                           }).toList(),
                           hint: Text(_gender ?? "Select Gender",
-                              style: TextStyle(color: Colors.black)),
+                              style: TextStyle(color: secondaryColor)),
                           onChanged: (value) {
                             setState(() {
                               _gender = "male";
@@ -553,7 +591,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp("[0-9]"))
                     ],
-                    style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                    style: TextStyle(
+                      fontFamily: pfontFamily,
+                      fontSize: 15,
+                      color: secondaryColor,
+                    ),
                     onSaved: (value) {
                       setState(() {
                         _mobileNumber = value!;
@@ -576,12 +618,23 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     decoration: InputDecoration(
                       labelText: "Contact",
                       icon: Icon(Icons.phone),
+                      iconColor: secondaryColor,
+                      labelStyle: TextStyle(
+                        color: secondaryColor,
+                        fontSize: 14,
+                      ),
+                      filled: true,
+                      fillColor: backgroundBlue,
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: primaryColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: secondaryColor),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       //icon: Icon(Icons.person),
@@ -599,7 +652,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
                           r"{0,253}[a-zA-Z0-9])?)*$"))
                     ],
-                    style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                    style: TextStyle(
+                      fontFamily: pfontFamily,
+                      fontSize: 15,
+                      color: secondaryColor,
+                    ),
                     onSaved: (value) {
                       setState(() {
                         _emailId = value!;
@@ -621,13 +678,23 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     decoration: InputDecoration(
                       labelText: "E-mail",
                       icon: Icon(Icons.email_outlined),
-
+                      iconColor: secondaryColor,
+                      labelStyle: TextStyle(
+                        color: secondaryColor,
+                        fontSize: 14,
+                      ),
+                      filled: true,
+                      fillColor: backgroundBlue,
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: primaryColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: secondaryColor),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       //icon: Icon(Icons.person),
@@ -652,11 +719,23 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             borderSide: BorderSide(color: secondaryColor),
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: primaryColor),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           labelText: "Institute Type",
                           icon: Icon(Icons.location_on_outlined),
+                          iconColor: secondaryColor,
+                          labelStyle: TextStyle(
+                            color: secondaryColor,
+                            fontSize: 14,
+                          ),
+                          fillColor: backgroundBlue,
+                          filled: true,
                           contentPadding: EdgeInsets.all(16),
                         ),
                         icon: Icon(Icons.keyboard_arrow_down),
+                        dropdownColor: backgroundBlue,
                         //border: OutlineInputBorder()),
                         items: _categories.map<DropdownMenuItem<String>>((val) {
                           return DropdownMenuItem<String>(
@@ -664,7 +743,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             child: Text(
                               val,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: secondaryColor,
                                 fontSize: 14,
                               ),
                             ),
@@ -672,7 +751,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         }).toList(),
                         hint: Text(
                           _categories[_categoryId] ?? "Select Category",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: secondaryColor),
                         ),
                         onChanged: (value) {
                           setState(() {
@@ -701,7 +780,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           decoration: BoxDecoration(
                             border: Border.all(color: black200),
                             borderRadius: BorderRadius.circular(24),
+                            color: backgroundBlue,
                           ),
+
                           // child: SearchableDropdown.single(
                           //   underline: Center(),
                           //   readOnly: _categoryId == null || _categoryId == 2,
@@ -744,7 +825,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                       child: Text(
                                         val.name.toString(),
                                         style: TextStyle(
-                                          color: Colors.black87,
+                                          color: secondaryColor,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -759,7 +840,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                       child: Text(
                                         val.name.toString(),
                                         style: TextStyle(
-                                          color: Colors.black87,
+                                          color: secondaryColor,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -788,7 +869,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           padding: const EdgeInsets.only(top: 15.0),
                           child: TextFormField(
                             style: TextStyle(
-                                fontFamily: pfontFamily, fontSize: 15),
+                              fontFamily: pfontFamily,
+                              fontSize: 15,
+                              color: secondaryColor,
+                            ),
                             onSaved: (value) {
                               setState(() {
                                 _customInstitutionName = value!.trim();
@@ -806,12 +890,23 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               return null;
                             },
                             decoration: InputDecoration(
+                              iconColor: secondaryColor,
+                              labelStyle: TextStyle(
+                                color: secondaryColor,
+                                fontSize: 14,
+                              ),
+                              filled: true,
+                              fillColor: backgroundBlue,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: primaryColor),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               labelText: "Institute Name",
@@ -850,7 +945,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         child: Text(
           "Save",
           style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: pfontFamily,
               fontWeight: FontWeight.w700,
               fontSize: 12),
