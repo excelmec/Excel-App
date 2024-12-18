@@ -78,9 +78,10 @@ class ScheduleEvent extends StatelessWidget {
                               .toLowerCase(),
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: ExcelTheme.textGrey),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: secondaryColor,
+                      ),
                     )),
               ],
             ),
