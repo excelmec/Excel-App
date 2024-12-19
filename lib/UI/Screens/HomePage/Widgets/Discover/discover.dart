@@ -1,5 +1,7 @@
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../Providers/navigationProvider.dart';
@@ -24,7 +26,7 @@ class Discover extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.asset("assets/icons/discover.png", height: 24),
+                    Image.asset("assets/icons/discover.png", height: 24, color: Colors.white,),
                     SizedBox(width: 10),
                     Text("Discover", style: headingStyle),
                   ],
@@ -32,7 +34,7 @@ class Discover extends StatelessWidget {
                 Text(
                   "our prime events",
                   style: TextStyle(
-                      color: black200,
+                      color: white200,
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
                       fontFamily: pfontFamily),

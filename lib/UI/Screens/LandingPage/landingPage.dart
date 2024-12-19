@@ -16,7 +16,7 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
-      globalBackgroundColor: Color(0xFFE7F1F3),
+      globalBackgroundColor: blue700,
       key: introKey,
       pages: [
         PageViewModel(
@@ -59,17 +59,17 @@ class _LandingPageState extends State<LandingPage> {
         'Skip',
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: black300,
+          color: white300,
           fontFamily: "mulish",
           fontSize: 16,
         ),
       ),
-      next: Icon(Icons.arrow_forward, color: black300),
+      next: Icon(Icons.arrow_forward, color: white300),
       done: Text(''),
       dotsDecorator: DotsDecorator(
         activeColor: black300,
         size: Size(8.0, 8.0),
-        color: black100,
+        color: white400,
       ),
     );
   }
@@ -80,7 +80,7 @@ class _LandingPageState extends State<LandingPage> {
       padding: const EdgeInsets.fromLTRB(10, 32, 10, 0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFE80A5A),
+            backgroundColor: primaryPink,
             shape: const StadiumBorder(),
             elevation: 0),
         onPressed: () => onIntroEnd(context),
@@ -92,7 +92,7 @@ class _LandingPageState extends State<LandingPage> {
               Text(
                 "Get Started",
                 style: TextStyle(
-                  color: white100,
+                  color: backgroundBlue,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
@@ -102,7 +102,7 @@ class _LandingPageState extends State<LandingPage> {
               ),
               Icon(
                 Icons.arrow_forward,
-                color: white100,
+                color: backgroundBlue,
               )
             ],
           ),
