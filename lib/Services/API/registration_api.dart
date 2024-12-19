@@ -5,7 +5,6 @@ import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/Services/API/api_config.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/ambassadorPage.dart';
 import 'package:http/http.dart' as http;
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:shared_preferences/shared_preferences.dart';

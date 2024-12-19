@@ -1,3 +1,5 @@
+import 'package:excelapp/UI/Themes/gradient.dart';
+
 import '../../../Themes/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +10,7 @@ Widget page(context, title, description, image, {extra = const Center()}) {
     margin: EdgeInsets.symmetric(horizontal: 10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(24),
-      color: white100,
+      gradient: landingGradient()
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +21,7 @@ Widget page(context, title, description, image, {extra = const Center()}) {
         Text(
           title,
           style: TextStyle(
-            color: black400,
+            color: white100,
             fontSize: 20,
             fontWeight: FontWeight.w800,
             fontFamily: "mulish",
@@ -33,7 +35,7 @@ Widget page(context, title, description, image, {extra = const Center()}) {
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: black200,
+                  color: white200,
                   fontFamily: "mulish",
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
