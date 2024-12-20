@@ -1,5 +1,6 @@
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
 
 import '../socialIcons.dart';
@@ -20,9 +21,17 @@ class CampusAmbassador extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.3),
+                blurRadius: 20,
+                offset: Offset(0, 4),
+              ),
+            ],
             borderRadius: BorderRadius.circular(32),
-            border: Border.all(color: white300, width: 1.2),
-            color: white100,
+            border: Border.all(color: Colors.transparent, width: 1.2),
+            // color: white100,
+            color: backgroundBlue
           ),
           margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: ClipRRect(
@@ -52,7 +61,7 @@ class CampusAmbassador extends StatelessWidget {
                               "Campus Ambassador",
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: red100,
+                                  color: Color(0xFFE4EDEF),
                                   fontWeight: FontWeight.w900),
                             ),
                             const SizedBox(height: 8),
@@ -61,7 +70,7 @@ class CampusAmbassador extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 14,
                                   height: 1.5,
-                                  color: Color(0xFF3D4747),
+                                  color: Color(0xFFE4EDEF),
                                   fontWeight: FontWeight.w400),
                             ),
                           ],
@@ -73,11 +82,11 @@ class CampusAmbassador extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16)),
                         child: TextButton(
                           style: ButtonStyle(
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   EdgeInsets.fromLTRB(30, 16, 30, 16)),
                               backgroundColor:
-                                  MaterialStatePropertyAll(Color(0x7EF0353D)),
-                              shape: MaterialStateProperty.all(
+                                  WidgetStatePropertyAll(Color(0xFFFC95FE)),
+                              shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(30)))),
@@ -88,7 +97,7 @@ class CampusAmbassador extends StatelessWidget {
                             "Join now",
                             style: TextStyle(
                                 fontSize: 14,
-                                color: red100,
+                                color: Color(0xFF2C1B77),
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
