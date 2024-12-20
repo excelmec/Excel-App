@@ -2,10 +2,14 @@
 
 class APIConfig {
   // static final String baseUrl = 'https://staging.events.excelmec.org/api/';
-   static final String baseUrl = 'https://events-api.excelmec.org/api/';
-   static final String teamUrl = 'https://excel-team-backend.vercel.app/api/';
-   static final String cabaseUrl = 'https://campus-ambassador-backend-xgveswperq-el.a.run.app/';
-   static final String newsbaseUrl = 'https://excel-news-prod-api-qz5tnzui3q-as.a.run.app/news';
+  // static final String baseUrl = 'https://events-api.excelmec.org/api/';
+  static final String baseUrl =
+      'https://excel-events-service-42324430635.asia-south1.run.app/api/';
+  static final String teamUrl = 'https://excel-team-backend.vercel.app/api/';
+  static final String cabaseUrl =
+      'https://campus-ambassador-backend-xgveswperq-el.a.run.app/';
+  static final String newsbaseUrl =
+      'https://excel-news-prod-api-qz5tnzui3q-as.a.run.app/news';
   //static final String baseUrl = 'https://events.excelmec.org/';
 
   static String getEndpoint(String category) {

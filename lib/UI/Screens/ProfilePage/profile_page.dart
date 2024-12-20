@@ -221,176 +221,181 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     // print(widget.user.referrerAmbassadorId);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: backgroundBlue,
-        body: FutureBuilder(
-            future: userDetails,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              print(snapshot.data);
-              if (snapshot.hasData) {
-                if (snapshot.data == "Not Updated") {
-                  return Center(child: Text("Profile not updated"));
-                }
+    return Container(
+      color: backgroundBlue,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: FutureBuilder(
+              future: userDetails,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                print(snapshot.data);
+                if (snapshot.hasData) {
+                  if (snapshot.data == "Not Updated") {
+                    return Center(child: Text("Profile not updated"));
+                  }
 
-                if (snapshot.data == "error") {
-                  return Center(child: Text("An error occured, Try again"));
-                } else {
-                  print(snapshot.data.institutionId.toString());
+                  if (snapshot.data == "error") {
+                    return Center(child: Text("An error occured, Try again"));
+                  } else {
+                    print(snapshot.data.institutionId.toString());
 
-                  return Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 100,
-                          padding: EdgeInsets.fromLTRB(22, 20, 22, 0),
-                          decoration: BoxDecoration(
-                            gradient: primaryGradient(),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 38,
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        snapshot.data.picture),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.all(10),
-                                      elevation: 0,
-                                      backgroundColor: Color(0xd0fcd1cc),
-                                      shape: CircleBorder(
-                                        side: BorderSide(
-                                          color: Color(0xd0fcd1cc),
-                                          width: 2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Icon(
-                                      Icons.logout,
-                                      size: 25,
-                                      color: Color(0xffFD7B69),
-                                    ),
-                                    onPressed: () {
-                                      logOutConfirmation();
-                                    },
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                snapshot.data.name,
-                                style: TextStyle(
-                                  fontFamily: pfontFamily,
-                                  fontSize: 20,
-                                  color: white100,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                snapshot.data.institutionName
-                                    .toString()
-                                    .replaceAll("null", "No Institution Name"),
-                                style: TextStyle(
-                                  fontFamily: pfontFamily,
-                                  fontSize: 11,
-                                  color: white100,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 14,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  showQRButton(context, snapshot.data),
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  editProfileButton(context, snapshot.data),
-                                ],
-                              ),
-                              SizedBox(height: 4),
-                              TabBar(
-                                  indicatorColor: primaryPink,
-                                  indicatorPadding:
-                                      EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  labelColor: primaryPink,
-                                  labelStyle: TextStyle(
-                                    decorationColor: primaryPink,
-                                  ),
-                                  unselectedLabelColor:
-                                      Color.fromARGB(235, 119, 133, 133),
-                                  controller: tabController,
-                                  tabs: [
-                                    Tab(
-                                      child: Text(
-                                        "Registered",
-                                        style: TextStyle(
-                                          fontFamily: "mulish",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                    Tab(
-                                      child: Text(
-                                        "Favorites",
-                                        style: TextStyle(
-                                          fontFamily: "mulish",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                    // Tab(
-                                    //   child: Text(
-                                    //     "Saved News",
-                                    //     style: TextStyle(
-                                    //       fontFamily: "mulish",
-                                    //       fontSize: 13,
-                                    //       fontWeight: FontWeight.w800,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ]),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: TabBarView(
-                              controller: tabController,
-                              physics: BouncingScrollPhysics(),
+                    return Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 100,
+                            padding: EdgeInsets.fromLTRB(22, 20, 22, 0),
+                            decoration: BoxDecoration(
+                              gradient: primaryGradient(),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Registered(),
-                                Favorites(),
-                                // SavedNews(),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 38,
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              snapshot.data.picture),
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.all(10),
+                                        elevation: 0,
+                                        backgroundColor: Color(0x20fcd1cc),
+                                        shape: CircleBorder(
+                                          side: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.logout,
+                                        size: 25,
+                                        color: Color(0xffFD7B69),
+                                      ),
+                                      onPressed: () {
+                                        logOutConfirmation();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  snapshot.data.name,
+                                  style: TextStyle(
+                                    fontFamily: pfontFamily,
+                                    fontSize: 20,
+                                    color: white100,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  snapshot.data.institutionName
+                                      .toString()
+                                      .replaceAll(
+                                          "null", "No Institution Name"),
+                                  style: TextStyle(
+                                    fontFamily: pfontFamily,
+                                    fontSize: 11,
+                                    color: white100,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 14,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    showQRButton(context, snapshot.data),
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    editProfileButton(context, snapshot.data),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                TabBar(
+                                    indicatorColor: primaryPink,
+                                    indicatorPadding:
+                                        EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    labelColor: primaryPink,
+                                    labelStyle: TextStyle(
+                                      decorationColor: primaryPink,
+                                    ),
+                                    unselectedLabelColor: secondaryColor,
+                                    controller: tabController,
+                                    dividerColor: Colors.black,
+                                    tabs: [
+                                      Tab(
+                                        child: Text(
+                                          "Registered",
+                                          style: TextStyle(
+                                            fontFamily: "mulish",
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          "Favorites",
+                                          style: TextStyle(
+                                            fontFamily: "mulish",
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                      ),
+                                      // Tab(
+                                      //   child: Text(
+                                      //     "Saved News",
+                                      //     style: TextStyle(
+                                      //       fontFamily: "mulish",
+                                      //       fontSize: 13,
+                                      //       fontWeight: FontWeight.w800,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    ]),
                               ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: TabBarView(
+                                controller: tabController,
+                                physics: BouncingScrollPhysics(),
+                                children: [
+                                  Registered(),
+                                  Favorites(),
+                                  // SavedNews(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                } else {
+                  return LoadingAnimation();
                 }
-              } else {
-                return LoadingAnimation();
-              }
-            }),
+              }),
+        ),
       ),
     );
   }
@@ -461,10 +466,11 @@ class _ProfilePageState extends State<ProfilePage>
         child: Text(
           "Show Profile",
           style: TextStyle(
-              color: Colors.white,
-              fontFamily: pfontFamily,
-              fontWeight: FontWeight.w700,
-              fontSize: 11),
+            color: Colors.black,
+            fontFamily: pfontFamily,
+            fontWeight: FontWeight.w700,
+            fontSize: 11,
+          ),
         ),
         onPressed: () {
           Navigator.push(
@@ -495,8 +501,8 @@ class _ProfilePageState extends State<ProfilePage>
       //minWidth: MediaQuery.of(context).size.width / 2,
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
-          backgroundColor: Color(0xffE4EDEF),
+          padding: EdgeInsets.fromLTRB(24, 14, 24, 14),
+          backgroundColor: Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
@@ -504,7 +510,7 @@ class _ProfilePageState extends State<ProfilePage>
         child: Text(
           "Edit Profile",
           style: TextStyle(
-              color: Colors.black,
+              color: primaryColor,
               fontFamily: pfontFamily,
               fontWeight: FontWeight.w700,
               fontSize: 11),
