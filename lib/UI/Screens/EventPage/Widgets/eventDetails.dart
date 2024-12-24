@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -54,7 +55,6 @@ late  TabController _controller;
     double height = lines < 25 ? 640 : lines * 30;
     height += lines < 30 ? (content.split("\n").length) : 0;
     return height;
-      return 580.0;
   }
 
   @override
@@ -68,7 +68,7 @@ late  TabController _controller;
       initialIndex: 0,
       length: 4,
       child: Container(
-        color: white200,
+        color: Color(0xFF000000),
         height: height,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -82,7 +82,7 @@ late  TabController _controller;
               indicatorColor: primaryColor,
               // labelColor: Color(0xFF3D4747),
               labelColor: primaryColor,
-              unselectedLabelColor: Color(0xFF3D4747),
+              unselectedLabelColor: Color(0xFFE4EDEF),
               labelStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: pfontFamily,
@@ -104,7 +104,9 @@ late  TabController _controller;
             ),
             Expanded(
               child: Container(
-                color: white100,
+                decoration: BoxDecoration(
+                  gradient: primaryGradient()
+                ),
                 child: TabBarView(
                   controller: _controller,
                   physics: BouncingScrollPhysics(),
@@ -163,25 +165,25 @@ late  TabController _controller;
                   fontFamily: pfontFamily,
                   fontSize: 18,
                   height: 1.3,
-                  color: Color(0xff3D4747));
+                  color: Color(0xFFE4EDEF));
             case "p":
               return TextStyle(
                   fontFamily: pfontFamily,
                   fontSize: 14.7,
                   height: 1.5,
-                  color: Color(0xff3D4747));
+                  color: Color(0xFFE4EDEF));
             case "li":
               return TextStyle(
                   fontFamily: pfontFamily,
                   fontSize: 14.7,
                   height: 1.7,
-                  color: Color(0xff3D4747));
+                  color: Color(0xFFE4EDEF));
           }
         return TextStyle(
             fontFamily: pfontFamily,
             fontSize: 14.7,
             height: 1.5,
-            color: Color(0xff3D4747));
+            color: Color(0xFFE4EDEF));
       }
 
   Widget contactTab() {
@@ -224,7 +226,7 @@ late  TabController _controller;
                     fontFamily: pfontFamily,
                     fontSize: 16,
                     height: 1.3,
-                    color: black400,
+                    color: Color(0xFFE4EDEF),
                     fontWeight: FontWeight.w700,
                   )),
               // SizedBox(
@@ -263,7 +265,7 @@ late  TabController _controller;
                       await launchUrl(launchUri);
                                         },
                     icon: Image.asset("assets/icons/message.png", height: 24),
-                    color: Colors.blue,
+                    color: Colors.white,
                     iconSize: 28),
               ],
             ),
