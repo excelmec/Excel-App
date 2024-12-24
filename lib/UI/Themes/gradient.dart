@@ -14,6 +14,15 @@ Gradient primaryGradient() {
 
 Gradient primaryGradientHorizontal() {
   return const LinearGradient(
+      colors: [const Color(0xFFFD95FF), const Color(0xFF2C1B77)],
+      begin: FractionalOffset.topRight,
+      end: FractionalOffset.bottomLeft,
+      stops: [0.01, 1.0],
+      transform: GradientRotation(-50));
+}
+
+Gradient primaryGradientHorizontal() {
+  return const LinearGradient(
     colors: [
       Color(0xFF2C1B77),
       Color(0xFF000000),
