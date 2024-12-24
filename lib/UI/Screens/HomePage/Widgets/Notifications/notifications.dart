@@ -1,5 +1,7 @@
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +45,9 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 236, 244, 245),
+      backgroundColor: backgroundBlue,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 251, 255, 255),
+        backgroundColor: backgroundBlue,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -63,50 +65,60 @@ class NotificationsPage extends StatelessWidget {
         title: Text("Notifications"),
         actions: [],
       ),
-      body: FutureBuilder(
-          future: notifications(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final notificationMappedData =
-                  Map<String, dynamic>.from(snapshot.data as Map);
-              List notificationData = notificationMappedData['notifications'];
-              int unread = 14;
-              notificationData = notificationData.reversed.toList();
-              if (notificationData.length == 0) {
-                return Center(
-                    child: Text("Seems like you have no new notifcations"));
-              }
-              return SingleChildScrollView(
-                child: Column(
-                  children: List.generate(
-                    notificationData.length,
-                    (index) {
-                      // return FlutterLogo();
-                      // notificationData[index]['data'] =
-                      //     notificationData[index]['data'] ?? {};
-                      return NotificationCard(
-                        title: notificationData[index]['title'],
-                        time: notificationData[index]['time'] ?? "error",
-                        description: notificationData[index]['body'],
-                        //link: "https://www.google.com",
-                        link: "",
-                        outline: (index < unread) ? true : false,
-                        icon: "",
-                        id: 14,
-                      );
-                    },
+      body: Container(
+        decoration: BoxDecoration(
+          color: backgroundBlue,
+        ),
+        child: FutureBuilder(
+            future: notifications(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final notificationMappedData =
+                    Map<String, dynamic>.from(snapshot.data as Map);
+                List notificationData = notificationMappedData['notifications'];
+                int unread = 14;
+                notificationData = notificationData.reversed.toList();
+                if (notificationData.length == 0) {
+                  return Center(
+                      child: Text(
+                    "Seems like you have no new notifcations",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ));
+                }
+                return SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(
+                      notificationData.length,
+                      (index) {
+                        // return FlutterLogo();
+                        // notificationData[index]['data'] =
+                        //     notificationData[index]['data'] ?? {};
+                        return NotificationCard(
+                          title: notificationData[index]['title'],
+                          time: notificationData[index]['time'] ?? "error",
+                          description: notificationData[index]['body'],
+                          //link: "https://www.google.com",
+                          link: "",
+                          outline: (index < unread) ? true : false,
+                          icon: "",
+                          id: 14,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              );
-            } else if (snapshot.hasError) {
-              {
-                return Center(
-                    child: Text("Seems like you have no new notifcations"));
+                );
+              } else if (snapshot.hasError) {
+                {
+                  return Center(
+                      child: Text("Seems like you have no new notifcations"));
+                }
               }
-            }
 
-            return Center(child: LoadingAnimation());
-          }),
+              return Center(child: LoadingAnimation());
+            }),
+      ),
     );
   }
 }

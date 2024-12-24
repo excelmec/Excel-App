@@ -2,6 +2,7 @@ import 'package:excelapp/Providers/favouritesProvider.dart';
 import 'package:excelapp/Providers/loginStatusProvider.dart';
 import 'package:excelapp/Providers/navigationProvider.dart';
 import 'package:excelapp/UI/Screens/LandingPage/landingPage.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:excelapp/UI/Components/Navigation/customNavigation.dart';
@@ -60,7 +61,7 @@ class _SplashscreenState extends State<Splashscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: backgroundBlue,
         child: Center(
           child: Container(
             width: 100,

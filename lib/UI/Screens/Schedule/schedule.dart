@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:excelapp/Services/API/schedule_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,12 @@ class _ScheduleState extends State<Schedule> {
               fit: StackFit.expand,
               children: <Widget>[
                 //Background Image
-                LoadingAnimation()
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: primaryGradient(),
+                  ),
+                  child: LoadingAnimation(),
+                )
               ],
             );
           }
