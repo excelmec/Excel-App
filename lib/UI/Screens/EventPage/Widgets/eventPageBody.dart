@@ -7,6 +7,7 @@ import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
+import 'package:hive/hive.dart';
 
 class EventPageBody extends StatelessWidget {
   final EventDetails eventDetails;
@@ -52,6 +53,9 @@ class EventPageBody extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
+              decoration: BoxDecoration(
+                color: backgroundBlue
+              ),
               height: deviceHeight,
               child: Column(
                 children: <Widget>[
@@ -95,7 +99,7 @@ class EventPageBody extends StatelessWidget {
                                           fontFamily: pfontFamily,
                                           fontSize: 32.0,
                                           fontWeight: FontWeight.w900,
-                                          color: textColor,
+                                          color: Color(0xFFD3E1E4),
                                         ),
                                       ),
                                     ),
@@ -108,7 +112,7 @@ class EventPageBody extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(21),
-                                          color: red100,
+                                          color: Color(0xFFAD59AE),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.all(12.25),
@@ -170,7 +174,7 @@ class EventPageBody extends StatelessWidget {
             child: Container(
               padding: EdgeInsetsDirectional.only(bottom: 20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: backgroundBlue,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40)),

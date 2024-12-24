@@ -24,3 +24,15 @@ Gradient landingGradient() {
     transform: GradientRotation(-50)
   );
 }
+
+Gradient drawerGradient() {
+  return const LinearGradient(
+    colors: [
+      const Color(0xFF2C1B77),
+      const Color(0xFFAD59AE),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomRight,
+    stops: [0.4, 1.0],
+  );
+}
