@@ -1,4 +1,5 @@
 import 'package:excelapp/Services/Notifications/firebase_messaging.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +38,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'mulish',
         primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(backgroundColor: Color(0xffe4edef)),
+        appBarTheme: AppBarTheme(
+          backgroundColor: backgroundBlue,
+        ),
       ),
       home: Splashscreen(),
       //Landingscreen
