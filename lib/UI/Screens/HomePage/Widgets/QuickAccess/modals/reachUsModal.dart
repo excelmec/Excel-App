@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,6 +30,7 @@ Widget ReachUsModal(context) {
                 style: TextStyle(
                     fontFamily: "mulish",
                     fontSize: 16,
+                    color: secondaryColor,
                     fontWeight: FontWeight.w800),
               )),
           Padding(
@@ -54,7 +56,7 @@ Widget ReachUsModal(context) {
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: red100,
+                      color: primaryColor,
                     ),
                     alignment: Alignment.center,
                     child: Row(
@@ -63,7 +65,7 @@ Widget ReachUsModal(context) {
                           Text(
                             'View on Google Maps',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontFamily: "mulish",
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14),
@@ -72,7 +74,7 @@ Widget ReachUsModal(context) {
                             width: 10,
                           ),
                           Icon(Icons.arrow_forward,
-                              size: 19, color: Colors.white)
+                              size: 19, color: Colors.black)
                         ]),
                   ),
                 ),

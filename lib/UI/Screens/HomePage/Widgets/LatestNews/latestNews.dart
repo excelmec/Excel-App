@@ -76,13 +76,17 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
               children: [
                 Row(
                   children: [
-                    Image.asset("assets/icons/news.png", height: 24, color: Colors.white,),
+                    Image.asset(
+                      "assets/icons/news.png",
+                      height: 24,
+                      color: Colors.white,
+                    ),
                     SizedBox(width: 8),
                     Text("Latest News", style: headingStyle),
                   ],
                 ),
                 Text(
-                  "from Excel 2023",
+                  "from Excel 2024",
                   style: TextStyle(
                       color: white200,
                       fontWeight: FontWeight.w600,
