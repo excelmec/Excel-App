@@ -18,12 +18,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: white100,
+      backgroundColor: backgroundBlue,
       body: Container(
         decoration: BoxDecoration(
           gradient: primaryGradient()
         ),
-
         child: Column(
           children: [
             SafeArea(

@@ -200,8 +200,8 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
         height: 140,
         margin: EdgeInsets.fromLTRB(24, 0, 24, 20),
       ),
-      baseColor: white300,
-      highlightColor: white400,
+      baseColor: backgroundBlue,
+      highlightColor: primaryColor,
     );
   }
 }
