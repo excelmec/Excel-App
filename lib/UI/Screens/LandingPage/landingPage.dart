@@ -35,8 +35,7 @@ class _LandingPageState extends State<LandingPage> {
             context,
             data[1]["title"],
             data[1]["description"],
-            Image.asset('assets/mascot.png',
-                height: 256, fit: BoxFit.contain),
+            Image.asset('assets/mascot.png', height: 256, fit: BoxFit.contain),
           ),
         ),
         PageViewModel(
@@ -112,7 +111,7 @@ class _LandingPageState extends State<LandingPage> {
 
   var data = [
     {
-      "title": "Welcome to Excel 2023",
+      "title": "Welcome to Excel 2024",
       "description":
           "Excel is the annual techno-managerial fest of Govt. Model Enginnering College. It’s the Nation’s second and South India’s first ever fest of it’s kind!"
     },

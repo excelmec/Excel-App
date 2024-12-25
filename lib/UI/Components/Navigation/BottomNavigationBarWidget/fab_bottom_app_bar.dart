@@ -121,9 +121,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                           ? "assets/icons/${item.iconName}_filled.png"
                           : "assets/icons/${item.iconName}.png",
                       height: 20,
-                      color: _selectedIndex == index 
-                      ? Color(0xFF2C1B77)
-                      : Color(0xFFAD59AE)),
+                      color: _selectedIndex == index
+                          ? Color(0xFF2C1B77)
+                          : Color(0xFFAD59AE)),
                 ),
               ],
             ),

@@ -708,220 +708,220 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
                   // SizedBox(height: 20),
                   // Select Category
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: DropdownButtonFormField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: primaryColor),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: secondaryColor),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: primaryColor),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          labelText: "Institute Type",
-                          icon: Icon(Icons.location_on_outlined),
-                          iconColor: secondaryColor,
-                          labelStyle: TextStyle(
-                            color: secondaryColor,
-                            fontSize: 14,
-                          ),
-                          fillColor: backgroundBlue,
-                          filled: true,
-                          contentPadding: EdgeInsets.all(16),
-                        ),
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        dropdownColor: backgroundBlue,
-                        //border: OutlineInputBorder()),
-                        items: _categories.map<DropdownMenuItem<String>>((val) {
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(
-                              val,
-                              style: TextStyle(
-                                color: secondaryColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        hint: Text(
-                          _categories[_categoryId] ?? "Select Category",
-                          style: TextStyle(color: secondaryColor),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _categoryId = _categories.indexOf(value.toString());
-                            if (kDebugMode) {
-                              print("Category ID: $_categoryId");
-                            }
-                            //measureList.add(measure);
-                          });
-                          getInstitutions();
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _categoryId = _categories.indexOf(value.toString());
-                            if (kDebugMode) {
-                              print("Category ID: $_categoryId");
-                            }
-                          });
-                        }),
-                  ),
-                  SizedBox(height: 16),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width,
+                  //   child: DropdownButtonFormField(
+                  //       decoration: InputDecoration(
+                  //         border: OutlineInputBorder(
+                  //           borderSide: BorderSide(color: primaryColor),
+                  //           borderRadius: BorderRadius.circular(20),
+                  //         ),
+                  //         enabledBorder: OutlineInputBorder(
+                  //           borderSide: BorderSide(color: secondaryColor),
+                  //           borderRadius: BorderRadius.circular(20),
+                  //         ),
+                  //         focusedBorder: OutlineInputBorder(
+                  //           borderSide: BorderSide(color: primaryColor),
+                  //           borderRadius: BorderRadius.circular(20),
+                  //         ),
+                  //         labelText: "Institute Type",
+                  //         icon: Icon(Icons.location_on_outlined),
+                  //         iconColor: secondaryColor,
+                  //         labelStyle: TextStyle(
+                  //           color: secondaryColor,
+                  //           fontSize: 14,
+                  //         ),
+                  //         fillColor: backgroundBlue,
+                  //         filled: true,
+                  //         contentPadding: EdgeInsets.all(16),
+                  //       ),
+                  //       icon: Icon(Icons.keyboard_arrow_down),
+                  //       dropdownColor: backgroundBlue,
+                  //       //border: OutlineInputBorder()),
+                  //       items: _categories.map<DropdownMenuItem<String>>((val) {
+                  //         return DropdownMenuItem<String>(
+                  //           value: val,
+                  //           child: Text(
+                  //             val,
+                  //             style: TextStyle(
+                  //               color: secondaryColor,
+                  //               fontSize: 14,
+                  //             ),
+                  //           ),
+                  //         );
+                  //       }).toList(),
+                  //       hint: Text(
+                  //         _categories[_categoryId] ?? "Select Category",
+                  //         style: TextStyle(color: secondaryColor),
+                  //       ),
+                  //       onChanged: (value) {
+                  //         setState(() {
+                  //           _categoryId = _categories.indexOf(value.toString());
+                  //           if (kDebugMode) {
+                  //             print("Category ID: $_categoryId");
+                  //           }
+                  //           //measureList.add(measure);
+                  //         });
+                  //         getInstitutions();
+                  //       },
+                  //       onSaved: (value) {
+                  //         setState(() {
+                  //           _categoryId = _categories.indexOf(value.toString());
+                  //           if (kDebugMode) {
+                  //             print("Category ID: $_categoryId");
+                  //           }
+                  //         });
+                  //       }),
+                  // ),
+                  // SizedBox(height: 16),
                   // Select Institution
 
-                  (_categoryId != 2 &&
-                          ((_categoryId == 0)
-                              ? (collegeInstitutions.length > 0)
-                              : (schoolInstitutions.length > 0)))
-                      ? Container(
-                          margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: black200),
-                            borderRadius: BorderRadius.circular(24),
-                            color: backgroundBlue,
-                          ),
+                  // (_categoryId != 2 &&
+                  //         ((_categoryId == 0)
+                  //             ? (collegeInstitutions.length > 0)
+                  //             : (schoolInstitutions.length > 0)))
+                  //     ? Container(
+                  //         margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  //         padding: EdgeInsets.all(8),
+                  //         decoration: BoxDecoration(
+                  //           border: Border.all(color: black200),
+                  //           borderRadius: BorderRadius.circular(24),
+                  //           color: backgroundBlue,
+                  //         ),
+                  //
+                  //         // child: SearchableDropdown.single(
+                  //         //   underline: Center(),
+                  //         //   readOnly: _categoryId == null || _categoryId == 2,
+                  //         //   items: institutions
+                  //         //       .map<DropdownMenuItem<String>>((val) {
+                  //         //     return DropdownMenuItem<String>(
+                  //         //       value: val.name,
+                  //         //       child: Text(
+                  //         //         val.name.toString(),
+                  //         //         style: TextStyle(
+                  //         //           color: Colors.black87,
+                  //         //           fontSize: 14,
+                  //         //         ),
+                  //         //       ),
+                  //         //     );
+                  //         //   }).toList(),
+                  //         //   displayClearIcon: false,
+                  //         //   hint: _institutionName ?? 'Select Institution',
+                  //         //   style: TextStyle(fontSize: 14),
+                  //         //   icon: Icon(Icons.keyboard_arrow_down),
+                  //         //   searchHint: 'Enter Institution Name',
+                  //         //   onChanged: (value) {
+                  //         //     setState(() {
+                  //         //       _institutionName = value;
+                  //         //     });
+                  //         //   },
+                  //         //   isExpanded: true,
+                  //         // ),
+                  //         child: SearchableDropdown(
+                  //           hintText:
+                  //               Text(_institutionName ?? 'Select Institution'),
+                  //           searchHintText: 'Enter Institution Name',
+                  //           items: (_categoryId == 0)
+                  //               ? collegeInstitutions
+                  //                   .map<SearchableDropdownMenuItem<String>>(
+                  //                       (val) {
+                  //                   return SearchableDropdownMenuItem<String>(
+                  //                     value: val.id.toString(),
+                  //                     label: val.name,
+                  //                     child: Text(
+                  //                       val.name.toString(),
+                  //                       style: TextStyle(
+                  //                         color: secondaryColor,
+                  //                         fontSize: 14,
+                  //                       ),
+                  //                     ),
+                  //                   );
+                  //                 }).toList()
+                  //               : schoolInstitutions
+                  //                   .map<SearchableDropdownMenuItem<String>>(
+                  //                       (val) {
+                  //                   return SearchableDropdownMenuItem<String>(
+                  //                     value: val.id.toString(),
+                  //                     label: val.name,
+                  //                     child: Text(
+                  //                       val.name.toString(),
+                  //                       style: TextStyle(
+                  //                         color: secondaryColor,
+                  //                         fontSize: 14,
+                  //                       ),
+                  //                     ),
+                  //                   );
+                  //                 }).toList(),
+                  //           onChanged: (value) {
+                  //             print(int.parse('14'));
+                  //             setState(() {
+                  //               _institutionId = int.parse('14');
+                  //               _institutionName = (_categoryId == 0)
+                  //                   ? collegeInstitutions
+                  //                       .firstWhere((element) =>
+                  //                           element.id == _institutionId)
+                  //                       .name
+                  //                   : schoolInstitutions
+                  //                       .firstWhere((element) =>
+                  //                           element.id == _institutionId)
+                  //                       .name;
+                  //             });
+                  //           },
+                  //         ))
+                  //     : Center(),
 
-                          // child: SearchableDropdown.single(
-                          //   underline: Center(),
-                          //   readOnly: _categoryId == null || _categoryId == 2,
-                          //   items: institutions
-                          //       .map<DropdownMenuItem<String>>((val) {
-                          //     return DropdownMenuItem<String>(
-                          //       value: val.name,
-                          //       child: Text(
-                          //         val.name.toString(),
-                          //         style: TextStyle(
-                          //           color: Colors.black87,
-                          //           fontSize: 14,
-                          //         ),
-                          //       ),
-                          //     );
-                          //   }).toList(),
-                          //   displayClearIcon: false,
-                          //   hint: _institutionName ?? 'Select Institution',
-                          //   style: TextStyle(fontSize: 14),
-                          //   icon: Icon(Icons.keyboard_arrow_down),
-                          //   searchHint: 'Enter Institution Name',
-                          //   onChanged: (value) {
-                          //     setState(() {
-                          //       _institutionName = value;
-                          //     });
-                          //   },
-                          //   isExpanded: true,
-                          // ),
-                          child: SearchableDropdown(
-                            hintText:
-                                Text(_institutionName ?? 'Select Institution'),
-                            searchHintText: 'Enter Institution Name',
-                            items: (_categoryId == 0)
-                                ? collegeInstitutions
-                                    .map<SearchableDropdownMenuItem<String>>(
-                                        (val) {
-                                    return SearchableDropdownMenuItem<String>(
-                                      value: val.id.toString(),
-                                      label: val.name,
-                                      child: Text(
-                                        val.name.toString(),
-                                        style: TextStyle(
-                                          color: secondaryColor,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList()
-                                : schoolInstitutions
-                                    .map<SearchableDropdownMenuItem<String>>(
-                                        (val) {
-                                    return SearchableDropdownMenuItem<String>(
-                                      value: val.id.toString(),
-                                      label: val.name,
-                                      child: Text(
-                                        val.name.toString(),
-                                        style: TextStyle(
-                                          color: secondaryColor,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                            onChanged: (value) {
-                              print(int.parse('14'));
-                              setState(() {
-                                _institutionId = int.parse('14');
-                                _institutionName = (_categoryId == 0)
-                                    ? collegeInstitutions
-                                        .firstWhere((element) =>
-                                            element.id == _institutionId)
-                                        .name
-                                    : schoolInstitutions
-                                        .firstWhere((element) =>
-                                            element.id == _institutionId)
-                                        .name;
-                              });
-                            },
-                          ))
-                      : Center(),
-
-                  (_institutionName == notInListOptionName && _categoryId != 2)
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
-                          child: TextFormField(
-                            style: TextStyle(
-                              fontFamily: pfontFamily,
-                              fontSize: 15,
-                              color: secondaryColor,
-                            ),
-                            onSaved: (value) {
-                              setState(() {
-                                _customInstitutionName = value!.trim();
-                              });
-                            },
-                            onChanged: (String value) {
-                              setState(() {
-                                _customInstitutionName = value.trim();
-                              });
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter your Institute Name";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              iconColor: secondaryColor,
-                              labelStyle: TextStyle(
-                                color: secondaryColor,
-                                fontSize: 14,
-                              ),
-                              filled: true,
-                              fillColor: backgroundBlue,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: secondaryColor),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              labelText: "Institute Name",
-                              icon: Icon(Icons.location_on_outlined),
-                              contentPadding: EdgeInsets.all(16),
-                            ),
-                          ),
-                        )
-                      : Center(),
+                  // (_institutionName == notInListOptionName && _categoryId != 2)
+                  //     ? Padding(
+                  //         padding: const EdgeInsets.only(top: 15.0),
+                  //         child: TextFormField(
+                  //           style: TextStyle(
+                  //             fontFamily: pfontFamily,
+                  //             fontSize: 15,
+                  //             color: secondaryColor,
+                  //           ),
+                  //           onSaved: (value) {
+                  //             setState(() {
+                  //               _customInstitutionName = value!.trim();
+                  //             });
+                  //           },
+                  //           onChanged: (String value) {
+                  //             setState(() {
+                  //               _customInstitutionName = value.trim();
+                  //             });
+                  //           },
+                  //           validator: (value) {
+                  //             if (value!.isEmpty) {
+                  //               return "Please enter your Institute Name";
+                  //             }
+                  //             return null;
+                  //           },
+                  //           decoration: InputDecoration(
+                  //             iconColor: secondaryColor,
+                  //             labelStyle: TextStyle(
+                  //               color: secondaryColor,
+                  //               fontSize: 14,
+                  //             ),
+                  //             filled: true,
+                  //             fillColor: backgroundBlue,
+                  //             border: OutlineInputBorder(
+                  //               borderSide: BorderSide(color: primaryColor),
+                  //               borderRadius: BorderRadius.circular(20),
+                  //             ),
+                  //             enabledBorder: OutlineInputBorder(
+                  //               borderSide: BorderSide(color: secondaryColor),
+                  //               borderRadius: BorderRadius.circular(20),
+                  //             ),
+                  //             focusedBorder: OutlineInputBorder(
+                  //               borderSide: BorderSide(color: primaryColor),
+                  //               borderRadius: BorderRadius.circular(20),
+                  //             ),
+                  //             labelText: "Institute Name",
+                  //             icon: Icon(Icons.location_on_outlined),
+                  //             contentPadding: EdgeInsets.all(16),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Center(),
 
                   SizedBox(height: _categoryId != null ? 25 : 90),
                   // Submit button

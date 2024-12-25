@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Excel 2023',
+      title: 'Excel 2024',
       theme: ThemeData(
         fontFamily: 'mulish',
         primarySwatch: Colors.blue,
