@@ -1,9 +1,7 @@
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
-import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Notifications/notificationCard.dart';
 import 'package:clear_all_notifications/clear_all_notifications.dart';

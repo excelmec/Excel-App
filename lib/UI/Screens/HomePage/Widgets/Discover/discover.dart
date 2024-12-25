@@ -1,7 +1,5 @@
 import 'package:excelapp/UI/Themes/colors.dart';
-import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../Providers/navigationProvider.dart';

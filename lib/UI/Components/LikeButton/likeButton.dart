@@ -74,14 +74,13 @@ class _LikeButton extends State<LikeButton> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       height: 25,
       width: 25,
-      color: white200,
+      color: Colors.transparent,
       child: isLoading
           ? Container(
-              color: Color(0xffECF4F5),
+              color: Colors.transparent,
               height: 25,
               width: 25,
               padding: const EdgeInsets.all(2.0),
@@ -94,11 +93,11 @@ class _LikeButton extends State<LikeButton> {
               child: !likeState
                   ? Center(
                       child: FaIcon(FontAwesomeIcons.heart,
-                          color: Color.fromARGB(255, 179, 193, 197), size: 20),
+                          color: primaryColor, size: 20),
                     )
                   : Center(
                       child: FaIcon(FontAwesomeIcons.solidHeart,
-                          color: Colors.redAccent, size: 20),
+                          color: primaryColor, size: 20),
                     ),
               onTap: () {
                 // final myProvider = Provider.of<FavoritesProvider>(context,listen: false);

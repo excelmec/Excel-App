@@ -2,7 +2,6 @@ import '../../Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'Widgets/pages.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatefulWidget {

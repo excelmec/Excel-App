@@ -35,9 +35,9 @@ class AboutExcelPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(32), topRight: Radius.circular(32)),
-        gradient: drawerGradient()
-      ),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32), topRight: Radius.circular(32)),
+          gradient: drawerGradient()),
       child: Column(
         children: [
           SizedBox(height: 8),
@@ -189,13 +189,13 @@ class AboutExcelPopUp extends StatelessWidget {
   }
 }
 
-MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
-  final getColor = (Set<MaterialState> states) {
-    if (states.contains(MaterialState.pressed)) {
+WidgetStateProperty<Color> getColor(Color color, Color colorPressed) {
+  final getColor = (Set<WidgetState> states) {
+    if (states.contains(WidgetState.pressed)) {
       return colorPressed;
     }
     // Return the default color if no other condition matches
-    return color; 
+    return color;
   };
-  return MaterialStateProperty.resolveWith(getColor);
+  return WidgetStateProperty.resolveWith(getColor);
 }
