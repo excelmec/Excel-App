@@ -53,9 +53,7 @@ class EventPageBody extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              decoration: BoxDecoration(
-                color: backgroundBlue
-              ),
+              decoration: BoxDecoration(color: backgroundBlue),
               height: deviceHeight,
               child: Column(
                 children: <Widget>[
@@ -151,10 +149,11 @@ class EventPageBody extends StatelessWidget {
                           //Event Details
 
                           getEventDetails(
-                              eventDetails: eventDetails,
-                              detailed: true,
-                              height: deviceHeight / 12.681,
-                              width: deviceWidth / 2.477),
+                            eventDetails: eventDetails,
+                            detailed: true,
+                            height: deviceHeight / 12.681,
+                            width: deviceWidth / 2.477,
+                          ),
 
                           Container(
                             child: MoreEventDetails(

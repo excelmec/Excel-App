@@ -7,6 +7,7 @@ import 'package:excelapp/UI/Components/LoadingUI/alertDialog.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
@@ -755,15 +756,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         ),
                         onChanged: (value) {
                           setState(() {
-                            _categoryId = _categories.indexOf("14");
-
+                            _categoryId = _categories.indexOf(value.toString());
+                            if (kDebugMode) {
+                              print("Category ID: $_categoryId");
+                            }
                             //measureList.add(measure);
                           });
                           getInstitutions();
                         },
                         onSaved: (value) {
                           setState(() {
-                            _categoryId = _categories.indexOf('14');
+                            _categoryId = _categories.indexOf(value.toString());
+                            if (kDebugMode) {
+                              print("Category ID: $_categoryId");
+                            }
                           });
                         }),
                   ),

@@ -4,7 +4,7 @@ Gradient primaryGradient() {
   return const LinearGradient(
     colors: [
       const Color(0xFF2C1B77),
-      const Color(0xFF1D1C22),
+      const Color(0xFF000000),
     ],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
