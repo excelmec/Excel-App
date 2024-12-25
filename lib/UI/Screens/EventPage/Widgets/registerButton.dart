@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:excelapp/Accounts/refreshToken.dart';
 import 'package:excelapp/Models/event_details.dart';
-import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
@@ -12,14 +10,11 @@ import 'package:excelapp/UI/Screens/EventPage/Widgets/createTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/joinTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/viewTeam.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
-import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:social_share/social_share.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../HomePage/Widgets/socialIcons.dart';
 
@@ -98,6 +93,7 @@ class _RegisterButtonState extends State<RegisterButton> {
       if (widget.eventDetails.isTeam == true) {
         await showModalBottomSheet(
           useRootNavigator: true,
+          backgroundColor: backgroundBlue,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40), topRight: Radius.circular(40))),
@@ -118,95 +114,102 @@ class _RegisterButtonState extends State<RegisterButton> {
                 SizedBox(
                   height: 20,
                 ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            // Register as team page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateTeamPage(
-                                  eventDetails: widget.eventDetails,
-                                  refreshIsRegistered: refreshIsRegistered,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  // Register as team page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateTeamPage(
+                                        eventDetails: widget.eventDetails,
+                                        refreshIsRegistered:
+                                            refreshIsRegistered,
+                                      ),
+                                    ),
+                                  ).then((_) async {
+                                    reloadPage();
+                                    return;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: primaryColor,
+                                  ),
+                                  // width: MediaQuery.of(context).size.width * 0.4,
+                                  height: 60,
+                                  child: Center(
+                                    child: Text(
+                                      "Register new team",
+                                      style: TextStyle(
+                                          fontFamily: "mulish",
+                                          fontSize: 14,
+                                          color: backgroundBlue,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ).then((_) async {
-                              reloadPage();
-                              return;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: primaryColor,
-                            ),
-                            // width: MediaQuery.of(context).size.width * 0.4,
-                            height: 60,
-                            child: Center(
-                              child: Text(
-                                "Register new team",
-                                style: TextStyle(
-                                    fontFamily: "mulish",
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 251, 255, 255),
-                                    fontWeight: FontWeight.w700),
+                              SizedBox(
+                                height: 20,
                               ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            // Register as team page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => JoinTeamPage(
-                                  eventDetails: widget.eventDetails,
-                                  refreshIsRegistered: refreshIsRegistered,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  // Register as team page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => JoinTeamPage(
+                                        eventDetails: widget.eventDetails,
+                                        refreshIsRegistered:
+                                            refreshIsRegistered,
+                                      ),
+                                    ),
+                                  ).then((_) async {
+                                    reloadPage();
+                                    return;
+                                  });
+                                  return;
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Color.fromARGB(255, 228, 237, 239),
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 211, 225, 228),
+                                    ),
+                                  ),
+                                  // width: MediaQuery.of(context).size.width * 0.4,
+                                  height: 60,
+                                  child: Center(
+                                    child: Text(
+                                      "Join existing team",
+                                      style: TextStyle(
+                                          fontFamily: "mulish",
+                                          fontSize: 14,
+                                          color:
+                                              Color.fromARGB(255, 61, 71, 71),
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ).then((_) async {
-                              reloadPage();
-                              return;
-                            });
-                            return;
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Color.fromARGB(255, 228, 237, 239),
-                              border: Border.all(
-                                color: Color.fromARGB(255, 211, 225, 228),
-                              ),
-                            ),
-                            // width: MediaQuery.of(context).size.width * 0.4,
-                            height: 60,
-                            child: Center(
-                              child: Text(
-                                "Join existing team",
-                                style: TextStyle(
-                                    fontFamily: "mulish",
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 61, 71, 71),
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ])
+                        )
+                      ]),
+                )
               ],
             ));
 
@@ -270,6 +273,7 @@ class _RegisterButtonState extends State<RegisterButton> {
         await showModalBottomSheet(
           useRootNavigator: true,
           isScrollControlled: true,
+          backgroundColor: backgroundBlue,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40), topRight: Radius.circular(40))),
@@ -301,9 +305,11 @@ class _RegisterButtonState extends State<RegisterButton> {
                               child: Text(
                                 "Are you sure you want to register ?",
                                 style: TextStyle(
-                                    fontFamily: "mulish",
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800),
+                                  fontFamily: "mulish",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                  color: secondaryColor,
+                                ),
                               )),
                           SizedBox(
                             height: 20,
@@ -312,9 +318,14 @@ class _RegisterButtonState extends State<RegisterButton> {
                             padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                             child: TextFormField(
                               controller: _controller,
-                              decoration: InputDecoration(
-                                hintText: "Enter Referral ID (optional)",
+                              style: TextStyle(
+                                color: secondaryColor,
                               ),
+                              decoration: InputDecoration(
+                                  hintText: "Enter Referral ID (optional)",
+                                  hintStyle: TextStyle(
+                                    color: secondaryColor,
+                                  )),
                             ),
                           ),
                           SizedBox(
@@ -334,12 +345,11 @@ class _RegisterButtonState extends State<RegisterButton> {
                                       });
 
                                       await RegistrationAPI.registerEvent(
-                                        id: widget.eventDetails.id,
-                                        refreshFunction: refreshIsRegistered,
-                                        context: context,
-                                        teamId:null ,
-                                        ambassadorId:_controller.text
-                                      );
+                                          id: widget.eventDetails.id,
+                                          refreshFunction: refreshIsRegistered,
+                                          context: context,
+                                          teamId: null,
+                                          ambassadorId: _controller.text);
 
                                       // Ends Loading
                                       setState(() {
@@ -363,8 +373,7 @@ class _RegisterButtonState extends State<RegisterButton> {
                                         style: TextStyle(
                                             fontFamily: "mulish",
                                             fontSize: 14,
-                                            color: Color.fromARGB(
-                                                255, 251, 255, 255),
+                                            color: Colors.black,
                                             fontWeight: FontWeight.w700),
                                       ),
                                     ),
@@ -380,10 +389,9 @@ class _RegisterButtonState extends State<RegisterButton> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
-                                      color: Color.fromARGB(255, 228, 237, 239),
+                                      color: Colors.black,
                                       border: Border.all(
-                                        color:
-                                            Color.fromARGB(255, 211, 225, 228),
+                                        color: Colors.black,
                                       ),
                                     ),
                                     width:
@@ -395,8 +403,7 @@ class _RegisterButtonState extends State<RegisterButton> {
                                         style: TextStyle(
                                             fontFamily: "mulish",
                                             fontSize: 14,
-                                            color:
-                                                Color.fromARGB(255, 61, 71, 71),
+                                            color: secondaryColor,
                                             fontWeight: FontWeight.w700),
                                       ),
                                     ),
@@ -803,7 +810,7 @@ class _RegisterButtonState extends State<RegisterButton> {
         buttonColor = primaryColor;
       } else {
         buttonText = "Registration Closed";
-        buttonColor = Color(0xff7d141d);
+        buttonColor = primaryColor;
       }
     } else {
       buttonText = widget.eventDetails.button.toString();
@@ -839,10 +846,10 @@ class _RegisterButtonState extends State<RegisterButton> {
                 height: 50,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: registered ? white200 : red100,
+                    color: registered ? Colors.black : primaryColor,
                     border: Border.all(
                       width: registered ? 1.2 : 0,
-                      color: white300,
+                      color: Colors.black,
                     )),
                 alignment: Alignment.center,
                 child:
@@ -854,7 +861,9 @@ class _RegisterButtonState extends State<RegisterButton> {
                             Text(
                               buttonText ?? '',
                               style: TextStyle(
-                                  color: registered ? black300 : white100,
+                                  color: registered
+                                      ? secondaryColor
+                                      : Colors.black,
                                   fontFamily: "mulish",
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14),
@@ -864,7 +873,8 @@ class _RegisterButtonState extends State<RegisterButton> {
                             ),
                             Icon(Icons.arrow_forward,
                                 size: 19,
-                                color: registered ? black300 : white100)
+                                color:
+                                    registered ? secondaryColor : Colors.black)
                           ],
                         ),
                   // Text(

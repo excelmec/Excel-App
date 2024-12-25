@@ -31,12 +31,10 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
   String referralID = "";
   bool isLoading = false;
 
-
-
   createTeam() async {
     TeamDetails teamdetails =
         await RegistrationAPI.createTeam(teamName, widget.eventDetails.id);
-        
+
     var registered = await RegistrationAPI.registerEvent(
       id: widget.eventDetails.id,
       teamId: teamdetails.id,
@@ -63,7 +61,9 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
           });
       print(response.statusCode);
       // If token has expired, rfresh it
-      if (response.statusCode == 455 || response.statusCode == 500 || response.statusCode == 401) {
+      if (response.statusCode == 455 ||
+          response.statusCode == 500 ||
+          response.statusCode == 401) {
         // Refreshes Token & gets JWT
         jwt = await refreshToken();
         var body = {
@@ -104,7 +104,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
       Navigator.pop(context);
       return;
     }
-      setState(() {
+    setState(() {
       isLoading = false;
     });
   }
@@ -120,8 +120,9 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundBlue,
       appBar: AppBar(
-        backgroundColor: Colors.white70,
+        backgroundColor: backgroundBlue,
         shadowColor: null,
         elevation: 1,
         leading: IconButton(
@@ -154,7 +155,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(21),
-                      color: red100,
+                      color: primaryPink,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(12.25),
@@ -189,7 +190,10 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                   "You are about to create a team for the event " +
                       widget.eventDetails.name.toString() +
                       ".",
-                  style: TextStyle(fontSize: 15.0),
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.white,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20),
@@ -197,7 +201,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                   "If there is an existing team which you wish to join, go back and enter the team code of the team to join.",
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: lightTextColor,
+                    color: Colors.white,
                     fontStyle: FontStyle.italic,
                   ),
                   textAlign: TextAlign.center,
@@ -208,7 +212,11 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                   child: Column(
                     children: [
                       TextFormField(
-                        style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                        style: TextStyle(
+                          fontFamily: pfontFamily,
+                          fontSize: 15,
+                          color: secondaryColor,
+                        ),
                         onChanged: (String value) {
                           setState(() {
                             teamName = value.trim();
@@ -225,22 +233,34 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                         },
                         decoration: InputDecoration(
                           labelText: "Enter Team Name",
-                          icon: Icon(Icons.edit),
+                          icon: Icon(
+                            Icons.edit,
+                            color: secondaryColor,
+                          ),
+                          labelStyle: TextStyle(
+                            color: white100,
+                          ),
                           contentPadding: EdgeInsets.zero,
                         ),
                       ),
                       SizedBox(height: 20),
                       TextFormField(
-                        style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                        style: TextStyle(
+                          fontFamily: pfontFamily,
+                          fontSize: 15,
+                          color: secondaryColor,
+                        ),
                         onChanged: (String value) {
                           setState(() {
                             referralID = value.trim();
                           });
                         },
                         decoration: InputDecoration(
-                          labelText: "Enter Referral ID (Optional)",
-                          contentPadding: EdgeInsets.zero,
-                        ),
+                            labelText: "Enter Referral ID (Optional)",
+                            contentPadding: EdgeInsets.zero,
+                            labelStyle: TextStyle(
+                              color: white100,
+                            )),
                       ),
                     ],
                   ),
@@ -262,16 +282,16 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                             onSubmit();
                           },
                     child: isLoading
-                      ? LoadingAnimation(color: Colors.white)
-                      : Text(
-                      "Submit",
-                      style: TextStyle(
-                          fontFamily: "mulish",
-                          fontSize: 14,
-                          color: Color.fromARGB(255, 251, 255, 255),
-                          fontWeight: FontWeight.w700),
-                      ),
-                    ),
+                        ? LoadingAnimation(color: Colors.white)
+                        : Text(
+                            "Submit",
+                            style: TextStyle(
+                                fontFamily: "mulish",
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700),
+                          ),
+                  ),
                 ),
                 SizedBox(height: 100),
               ],

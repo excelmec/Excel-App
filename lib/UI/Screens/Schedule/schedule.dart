@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Providers/scheduleProvider.dart';
-import '../../Themes/colors.dart';
 
 class Schedule extends StatefulWidget {
   @override

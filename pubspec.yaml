@@ -46,10 +46,13 @@ dependencies:
   flutter_guid: ^0.3.1
 
 
+  path_provider: any
+  html: any
+  flutter_cache_manager: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1  
+  flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
   android: "launcher_icon"
