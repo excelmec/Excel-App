@@ -21,12 +21,12 @@ class MoreEventDetails extends StatefulWidget {
 
 class _MoreEventDetailsState extends State<MoreEventDetails>
     with TickerProviderStateMixin {
-late  double height = 800.0;
-late  int selectedIndex;
-late  String content;
-late  List<String> contents = [];
-late  double lines;
-late  TabController _controller;
+  late double height = 800.0;
+  late int selectedIndex;
+  late String content;
+  late List<String> contents = [];
+  late double lines;
+  late TabController _controller;
 
   @override
   void initState() {
@@ -104,9 +104,7 @@ late  TabController _controller;
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  gradient: primaryGradient()
-                ),
+                decoration: BoxDecoration(gradient: primaryGradient()),
                 child: TabBarView(
                   controller: _controller,
                   physics: BouncingScrollPhysics(),
@@ -146,6 +144,11 @@ late  TabController _controller;
       padding: padding,
       child: Html(
         data: content,
+        style: {
+          "body": Style(
+            color: Colors.white,
+          )
+        },
         // customTextStyle: customTextstyle,
         // defaultTextStyle: TextStyle(
         //     color: Color.fromARGB(255, 61, 71, 71),
@@ -158,33 +161,33 @@ late  TabController _controller;
   }
 
   customTextstyle(node, baseStyle) {
-        if (node is dom.Element)
-          switch (node.localName) {
-            case "h2":
-              return TextStyle(
-                  fontFamily: pfontFamily,
-                  fontSize: 18,
-                  height: 1.3,
-                  color: Color(0xFFE4EDEF));
-            case "p":
-              return TextStyle(
-                  fontFamily: pfontFamily,
-                  fontSize: 14.7,
-                  height: 1.5,
-                  color: Color(0xFFE4EDEF));
-            case "li":
-              return TextStyle(
-                  fontFamily: pfontFamily,
-                  fontSize: 14.7,
-                  height: 1.7,
-                  color: Color(0xFFE4EDEF));
-          }
-        return TextStyle(
-            fontFamily: pfontFamily,
-            fontSize: 14.7,
-            height: 1.5,
-            color: Color(0xFFE4EDEF));
+    if (node is dom.Element)
+      switch (node.localName) {
+        case "h2":
+          return TextStyle(
+              fontFamily: pfontFamily,
+              fontSize: 18,
+              height: 1.3,
+              color: Color(0xFFE4EDEF));
+        case "p":
+          return TextStyle(
+              fontFamily: pfontFamily,
+              fontSize: 14.7,
+              height: 1.5,
+              color: Color(0xFFE4EDEF));
+        case "li":
+          return TextStyle(
+              fontFamily: pfontFamily,
+              fontSize: 14.7,
+              height: 1.7,
+              color: Color(0xFFE4EDEF));
       }
+    return TextStyle(
+        fontFamily: pfontFamily,
+        fontSize: 14.7,
+        height: 1.5,
+        color: Color(0xFFE4EDEF));
+  }
 
   Widget contactTab() {
     var eventhead1 = json.decode(widget.eventDetails.eventHead1);
@@ -263,7 +266,7 @@ late  TabController _controller;
                         path: eventHeadEmail,
                       );
                       await launchUrl(launchUri);
-                                        },
+                    },
                     icon: Image.asset("assets/icons/message.png", height: 24),
                     color: Colors.white,
                     iconSize: 28),

@@ -25,8 +25,7 @@ class _FilterTabState extends State<FilterTab> {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color:
-                widget.isSelected ? red100 : Color.fromARGB(255, 255, 255, 255),
+            color: widget.isSelected ? primaryPink : Color(0xFF1C1F20),
             border: Border.all(color: ExcelTheme.aevaDark.withOpacity(0.1))),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -37,7 +36,7 @@ class _FilterTabState extends State<FilterTab> {
               style: TextStyle(
                   fontFamily: "mulish",
                   fontSize: 12,
-                  color: widget.isSelected ? Colors.white : Colors.black,
+                  color: widget.isSelected ? Colors.black : Colors.white,
                   fontWeight: FontWeight.w700),
             ),
           ),

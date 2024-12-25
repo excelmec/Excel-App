@@ -5,6 +5,7 @@ import 'package:excelapp/Services/API/favourites_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -120,7 +121,7 @@ _buildCard(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(width: 0.5, color: Colors.black.withOpacity(0.1)),
-          color: Colors.white,
+          gradient: primaryGradient(),
         ),
         child: InkWell(
           onTap: () {
@@ -145,7 +146,7 @@ _buildCard(
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(21),
-                      color: red100,
+                      color: primaryPink,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(10),
@@ -177,7 +178,7 @@ _buildCard(
                         Text(
                           event.name,
                           style: TextStyle(
-                              color: Color.fromARGB(255, 28, 31, 32),
+                              color: white100,
                               fontWeight: FontWeight.w800,
                               fontFamily: "mulish",
                               fontSize: 14),
@@ -195,7 +196,7 @@ _buildCard(
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 119, 133, 133),
+                                      color: white100,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: "mulish",
                                       fontSize: 11),
@@ -246,7 +247,7 @@ _buildCard(
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: red100.withOpacity(0.2),
+                                color: primaryPink,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -266,7 +267,7 @@ _buildCard(
                                     child: Text(
                                       'View',
                                       style: TextStyle(
-                                          color: red100,
+                                          color: Colors.black,
                                           fontWeight: FontWeight.w700,
                                           fontFamily: "mulish",
                                           fontSize: 11),
@@ -289,7 +290,7 @@ _buildCard(
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Color(0xffECF4F5),
+                                        color: Colors.transparent,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(10),
@@ -304,7 +305,7 @@ _buildCard(
                                   : Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Color(0xffECF4F5),
+                                        color: Colors.transparent,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(10),
@@ -328,7 +329,7 @@ _buildCard(
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      color: green100,
+                      color: backgroundBlue,
                       borderRadius: BorderRadiusDirectional.only(
                           topStart: Radius.circular(24),
                           bottomStart: Radius.circular(24))),
