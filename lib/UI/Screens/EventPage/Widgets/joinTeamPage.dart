@@ -7,6 +7,7 @@ import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,8 +18,7 @@ import 'package:excelapp/Services/API/api_config.dart';
 class JoinTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
   final Function refreshIsRegistered;
-  JoinTeamPage(
-      {required this.eventDetails, required this.refreshIsRegistered});
+  JoinTeamPage({required this.eventDetails, required this.refreshIsRegistered});
   @override
   _JoinTeamPageState createState() => _JoinTeamPageState();
 }
@@ -38,48 +38,48 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
     );
     print(registered);
     if (referralID != "") {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String? jwt = prefs.getString('jwt');
-        print(jwt);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? jwt = prefs.getString('jwt');
+      print(jwt);
+      var body = {
+        "eventId": widget.eventDetails.id,
+        "referrerId": int.parse(referralID),
+        "accessToken": jwt,
+        "point": 10
+      };
+      print(json.encode(body));
+      var response = await http.post(
+          Uri.parse(APIConfig.cabaseUrl + "addTransactionByToken"),
+          body: json.encode(body),
+          headers: {
+            "content-type": "application/json",
+          });
+      print(response.statusCode);
+      // If token has expired, rfresh it
+      if (response.statusCode == 455 || response.statusCode == 500) {
+        // Refreshes Token & gets JWT
+        jwt = await refreshToken();
         var body = {
           "eventId": widget.eventDetails.id,
           "referrerId": int.parse(referralID),
           "accessToken": jwt,
           "point": 10
         };
-        print(json.encode(body));
-        var response = await http.post(
+        // Retrying Request
+        response = await http.post(
             Uri.parse(APIConfig.cabaseUrl + "addTransactionByToken"),
             body: json.encode(body),
             headers: {
               "content-type": "application/json",
             });
-        print(response.statusCode);
-        // If token has expired, rfresh it
-        if (response.statusCode == 455 || response.statusCode == 500) {
-          // Refreshes Token & gets JWT
-          jwt = await refreshToken();
-          var body = {
-            "eventId": widget.eventDetails.id,
-            "referrerId": int.parse(referralID),
-            "accessToken": jwt,
-            "point": 10
-          };
-          // Retrying Request
-          response = await http.post(
-              Uri.parse(APIConfig.cabaseUrl + "addTransactionByToken"),
-              body: json.encode(body),
-              headers: {
-                "content-type": "application/json",
-              });
-        }
-        if (response.statusCode == 200) {
-          print("Transaction added");
-          print(response.body);
-        } else {
-          print("Transaction not added");
-        }
       }
+      if (response.statusCode == 200) {
+        print("Transaction added");
+        print(response.body);
+      } else {
+        print("Transaction not added");
+      }
+    }
     if (registered == -1) {
       print("Joining failed");
     } else if (registered != null && registered.statusCode != 200) {
@@ -113,8 +113,9 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundBlue,
       appBar: AppBar(
-        backgroundColor: Colors.white70,
+        backgroundColor: backgroundBlue,
         shadowColor: null,
         elevation: 1,
         leading: IconButton(
@@ -147,7 +148,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(21),
-                      color: Color.fromARGB(255, 14, 152, 232),
+                      color: primaryColor,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(12.25),
@@ -159,19 +160,20 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                         //   width: 31.5,
                         //   height: 31.5,
                         // ),
-                        child:(widget.eventDetails.icon.startsWith("Microsoft"))?(
-                          Image.asset(
-                            "assets/events/eventLogo.png",
-                            //event.icon,
-                            width: 31.5,
-                            height: 31.5,
-                          )
-                        ): CachedNetworkImage(
-                          imageUrl: widget.eventDetails.icon,
-                          width: 31.5,
-                          height: 31.5,
-                          fit: BoxFit.cover,
-                        ),
+                        child:
+                            (widget.eventDetails.icon.startsWith("Microsoft"))
+                                ? (Image.asset(
+                                    "assets/events/eventLogo.png",
+                                    //event.icon,
+                                    width: 31.5,
+                                    height: 31.5,
+                                  ))
+                                : CachedNetworkImage(
+                                    imageUrl: widget.eventDetails.icon,
+                                    width: 31.5,
+                                    height: 31.5,
+                                    fit: BoxFit.cover,
+                                  ),
                       ),
                     ),
                   ),
@@ -181,7 +183,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                   "You are about to join a team for the event " +
                       widget.eventDetails.name.toString() +
                       ".",
-                  style: TextStyle(fontSize: 15.0),
+                  style: TextStyle(fontSize: 15.0, color: secondaryColor),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20),
@@ -189,7 +191,7 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                   "You can get the team code by asking other team members.",
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: lightTextColor,
+                    color: secondaryColor,
                     fontStyle: FontStyle.italic,
                   ),
                   textAlign: TextAlign.center,
@@ -198,31 +200,46 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: [TextFormField(
-                      style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp("[0-9]"))
-                      ],
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        setState(() {
-                          teamID = int.parse(value);
-                        });
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter ID of the required team to join";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: "Enter ID of team to join",
-                        icon: Icon(Icons.edit),
-                        contentPadding: EdgeInsets.zero,
+                    children: [
+                      TextFormField(
+                        style: TextStyle(
+                          fontFamily: pfontFamily,
+                          fontSize: 15,
+                          color: secondaryColor,
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                        ],
+                        keyboardType: TextInputType.number,
+                        onChanged: (String value) {
+                          setState(() {
+                            teamID = int.parse(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Enter ID of the required team to join";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Enter ID of team to join",
+                          labelStyle: TextStyle(
+                            color: secondaryColor,
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: secondaryColor,
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                        ),
                       ),
-                    ),SizedBox(height: 20),
-                    TextFormField(
-                        style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        style: TextStyle(
+                            fontFamily: pfontFamily,
+                            fontSize: 15,
+                            color: secondaryColor),
                         onChanged: (String value) {
                           setState(() {
                             referralID = value.trim();
@@ -231,8 +248,11 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                         decoration: InputDecoration(
                           labelText: "Enter Referral ID (Optional)",
                           contentPadding: EdgeInsets.zero,
+                          labelStyle: TextStyle(
+                            color: secondaryColor,
+                          ),
                         ),
-                      ),  
+                      ),
                     ],
                   ),
                 ),
@@ -259,10 +279,10 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                             style: TextStyle(
                                 fontFamily: "mulish",
                                 fontSize: 14,
-                                color: Color.fromARGB(255, 251, 255, 255),
+                                color: Colors.black,
                                 fontWeight: FontWeight.w700),
                           ),
-                    ),
+                  ),
                 ),
               ],
             ),

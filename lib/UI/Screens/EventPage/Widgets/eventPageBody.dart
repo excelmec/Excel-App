@@ -7,7 +7,6 @@ import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:excelapp/UI/Components/LikeButton/likeButton.dart';
-import 'package:hive/hive.dart';
 
 class EventPageBody extends StatelessWidget {
   final EventDetails eventDetails;
@@ -47,7 +46,7 @@ class EventPageBody extends StatelessWidget {
     return Scaffold(
       //backgroundColor: Color(0xffECF4F5),
       resizeToAvoidBottomInset: true,
-      backgroundColor: white200,
+      backgroundColor: backgroundBlue,
       body: Stack(
         children: [
           Align(
@@ -74,7 +73,7 @@ class EventPageBody extends StatelessWidget {
                                 child: IconButton(
                                   icon: new Icon(Icons.arrow_back),
                                   iconSize: 30.0,
-                                  color: Color(0xFF1C1F20),
+                                  color: white100,
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -196,7 +195,7 @@ class EventPageBody extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: white200,
+                        color: Colors.black,
                       ),
                       child: Padding(
                           padding: EdgeInsets.all(10),

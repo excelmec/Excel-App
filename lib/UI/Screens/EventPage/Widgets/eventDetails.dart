@@ -83,6 +83,7 @@ class _MoreEventDetailsState extends State<MoreEventDetails>
               // labelColor: Color(0xFF3D4747),
               labelColor: primaryColor,
               unselectedLabelColor: Color(0xFFE4EDEF),
+              dividerColor: Colors.transparent,
               labelStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: pfontFamily,

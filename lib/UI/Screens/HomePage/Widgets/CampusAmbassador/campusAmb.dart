@@ -1,6 +1,4 @@
-import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/drawer.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
-import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
 
 import '../socialIcons.dart';
