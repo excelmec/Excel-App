@@ -30,7 +30,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //quickAccessButton(context, FontAwesomeIcons.qrcode, "Scan QR", null),
         quickAccessButton(context, "assets/icons/about.png", "Excel",
-            AboutExcelPopUp(), Colors.white,
+            AboutExcelPopUp(), Color(0xFF3D4747),
             inverted: true),
         quickAccessButton(
           context,
@@ -98,7 +98,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                     ),
                   ),
                   backgroundColor: WidgetStateProperty.all(
-                      inverted ? red100 : Color(0xFF1C1F20)),
+                      inverted ? primaryPink : Color(0xFF1C1F20)),
                   shape: WidgetStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)))),
             ),
