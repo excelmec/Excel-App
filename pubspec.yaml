@@ -60,6 +60,7 @@ flutter_icons:
   image_path: "assets/appicon/fullicon.png"
   adaptive_icon_background: "assets/appicon/whitebg2.png"
   adaptive_icon_foreground: "assets/appicon/excelforeground.png"
+  adaptive_icon_monochrome: "assets/appicon/monochrome.png"
 
 flutter:
 
