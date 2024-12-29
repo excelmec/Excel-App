@@ -234,25 +234,25 @@ class _JoinTeamPageState extends State<JoinTeamPage> {
                           contentPadding: EdgeInsets.zero,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        style: TextStyle(
-                            fontFamily: pfontFamily,
-                            fontSize: 15,
-                            color: secondaryColor),
-                        onChanged: (String value) {
-                          setState(() {
-                            referralID = value.trim();
-                          });
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Enter Referral ID (Optional)",
-                          contentPadding: EdgeInsets.zero,
-                          labelStyle: TextStyle(
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ),
+                      // SizedBox(height: 20),
+                      // TextFormField(
+                      //   style: TextStyle(
+                      //       fontFamily: pfontFamily,
+                      //       fontSize: 15,
+                      //       color: secondaryColor),
+                      //   onChanged: (String value) {
+                      //     setState(() {
+                      //       referralID = value.trim();
+                      //     });
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     labelText: "Enter Referral ID (Optional)",
+                      //     contentPadding: EdgeInsets.zero,
+                      //     labelStyle: TextStyle(
+                      //       color: secondaryColor,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

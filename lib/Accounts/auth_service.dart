@@ -6,8 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:convert';
 
 class AuthService {
-
-  
   Future<String> login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     late String accessToken;

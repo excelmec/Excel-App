@@ -314,23 +314,23 @@ class _RegisterButtonState extends State<RegisterButton> {
                           SizedBox(
                             height: 20,
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                            child: TextFormField(
-                              controller: _controller,
-                              style: TextStyle(
-                                color: secondaryColor,
-                              ),
-                              decoration: InputDecoration(
-                                  hintText: "Enter Referral ID (optional)",
-                                  hintStyle: TextStyle(
-                                    color: secondaryColor,
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          //   child: TextFormField(
+                          //     controller: _controller,
+                          //     style: TextStyle(
+                          //       color: secondaryColor,
+                          //     ),
+                          //     decoration: InputDecoration(
+                          //         hintText: "Enter Referral ID (optional)",
+                          //         hintStyle: TextStyle(
+                          //           color: secondaryColor,
+                          //         )),
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 20,
+                          // ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                             child: Row(
