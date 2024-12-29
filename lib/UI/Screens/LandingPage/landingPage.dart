@@ -15,7 +15,7 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
-      globalBackgroundColor: blue700,
+      globalBackgroundColor: Color(0xFF1C1F20),
       key: introKey,
       pages: [
         PageViewModel(
@@ -25,7 +25,7 @@ class _LandingPageState extends State<LandingPage> {
             context,
             data[0]["title"],
             data[0]["description"],
-            Image.asset('assets/Excel Logo23.png', height: 240),
+            Image.asset('assets/icons/about.png', height: 240),
           ),
         ),
         PageViewModel(

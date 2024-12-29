@@ -74,12 +74,12 @@ class NotificationsPage extends StatelessWidget {
                 final notificationMappedData =
                     Map<String, dynamic>.from(snapshot.data as Map);
                 List notificationData = notificationMappedData['notifications'];
-                int unread = 14;
+                int unread = notificationMappedData['count'];
                 notificationData = notificationData.reversed.toList();
                 if (notificationData.length == 0) {
                   return Center(
                       child: Text(
-                    "Seems like you have no new notifcations",
+                    "Seems like you have no new notifications",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -110,7 +110,12 @@ class NotificationsPage extends StatelessWidget {
               } else if (snapshot.hasError) {
                 {
                   return Center(
-                      child: Text("Seems like you have no new notifcations"));
+                      child: Text(
+                    "Seems like you have no new notifications",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ));
                 }
               }
 
