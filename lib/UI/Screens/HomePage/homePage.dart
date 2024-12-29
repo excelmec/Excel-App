@@ -20,9 +20,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: true,
       backgroundColor: backgroundBlue,
       body: Container(
-        decoration: BoxDecoration(
-          gradient: primaryGradient()
-        ),
+        decoration: BoxDecoration(gradient: primaryGradient()),
         child: Column(
           children: [
             SafeArea(
@@ -36,9 +34,7 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
                   child: Container(
-                    decoration: BoxDecoration(
-                      gradient: primaryGradient()
-                    ),
+                    decoration: BoxDecoration(gradient: primaryGradient()),
                     // color: white200,
                     child: Column(
                       children: <Widget>[
@@ -56,9 +52,9 @@ class _HomePageState extends State<HomePage> {
                                     BorderSide(color: white300, width: 1.2)),
                           ),
                         ),
-                        
+
                         Discover(),
-                        CampusAmbassador(),
+                        // CampusAmbassador(),
                         LatestNewsSection(
                           key: globalKey,
                         ),
