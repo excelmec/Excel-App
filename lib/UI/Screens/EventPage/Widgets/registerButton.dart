@@ -81,6 +81,11 @@ class _RegisterButtonState extends State<RegisterButton> {
     });
   }
 
+  void redirectOnIncompleteProfile() {
+    launchURL(
+        "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
+  }
+
   register(context) async {
     String response = await RegistrationAPI.preRegistration(
         id: widget.eventDetails.id, context: context);
@@ -554,9 +559,11 @@ class _RegisterButtonState extends State<RegisterButton> {
                             child: Text(
                               "Share this Team ID with your teammates to add them to team",
                               style: TextStyle(
-                                  fontFamily: "mulish",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800),
+                                fontFamily: "mulish",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: secondaryColor,
+                              ),
                             )),
                         SizedBox(
                           height: 20,
@@ -615,7 +622,7 @@ class _RegisterButtonState extends State<RegisterButton> {
                                 style: TextStyle(
                                     fontFamily: "mulish",
                                     fontSize: 14,
-                                    color: Color.fromARGB(255, 251, 255, 255),
+                                    color: Colors.black,
                                     fontWeight: FontWeight.w700),
                               ),
                             ),
