@@ -92,7 +92,10 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
     if (registered == -1) {
       print("Error occured");
       if (registered.statusCode == 469) {
-        Fluttertoast.showToast(msg: "Complete your profile to register");
+        Fluttertoast.showToast(
+          msg: "Complete your profile to register",
+          toastLength: Toast.LENGTH_LONG,
+        );
         launchURL(
             "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
       }

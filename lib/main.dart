@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     // Set status bar color
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
         statusBarColor: Color(0x07000033),
       ),
     );
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Excel 2024',
       theme: ThemeData(
         fontFamily: 'mulish',
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
         appBarTheme: AppBarTheme(
           backgroundColor: backgroundBlue,
         ),
