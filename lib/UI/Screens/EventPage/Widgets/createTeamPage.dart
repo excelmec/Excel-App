@@ -9,8 +9,10 @@ import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -87,9 +89,14 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
         print("Transaction not added");
       }
     }
-    if (registered == -1)
+    if (registered == -1) {
       print("Error occured");
-    else if (registered != null && registered.statusCode != 200) {
+      if (registered.statusCode == 469) {
+        Fluttertoast.showToast(msg: "Complete your profile to register");
+        launchURL(
+            "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
+      }
+    } else if (registered != null && registered.statusCode != 200) {
       try {
         alertDialog(
           text: jsonDecode(registered.body)["error"].toString(),
