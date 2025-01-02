@@ -32,12 +32,12 @@ class ViewUser {
 
   ViewUser.fromJson(json) {
     id = json['id'] ?? 0;
-    name = json['name']??"Not added";
-    email = json['email']??"Not added";
-    picture = json['picture']??"Not added";
-    qrCodeUrl = json['qrCodeUrl']??"Not added";
+    name = json['name'] ?? "Not added";
+    email = json['email'] ?? "Not added";
+    picture = json['picture'] ?? "Not added";
+    qrCodeUrl = json['qrCodeUrl'] ?? "Not added";
     institutionId = json['institutionId'] ?? 0;
-    institutionName = json['insituitionName'] ?? "Not mentioned";
+    institutionName = json['institutionName'] ?? "Not mentioned";
     gender = json['gender'] ?? "---";
     mobileNumber = json['mobileNumber'] ?? "Not mentioned";
     category = json['category'] ?? "NA";
@@ -51,10 +51,10 @@ class ViewUser {
     //   "freeMembership": 0,
     //   "paidMembership": 0
     // });
-  
+
     referrerAmbassadorId = json['referrerAmbassadorId'] ?? 0;
     // referrer = jsonEncode(json['referrer']) ?? "NA";
-   
+
     isPaid = (json['isPaid'] == true || json['isPaid'] == 1) ? true : false;
   }
 
