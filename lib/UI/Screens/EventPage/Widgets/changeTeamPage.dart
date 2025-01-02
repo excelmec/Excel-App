@@ -41,7 +41,12 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
 
     if (response.statusCode != 200) {
       if (response.statusCode == 469) {
-        Fluttertoast.showToast(msg: "Please Complete Profile to continue");
+        Fluttertoast.showToast(
+          msg: "Please retry after completing the profile",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          fontSize: 16,
+        );
         launchURL(
             "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
         return;
