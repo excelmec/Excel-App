@@ -563,12 +563,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               style: TextStyle(color: secondaryColor)),
                           onChanged: (value) {
                             setState(() {
-                              _gender = "male";
+                              _gender = value.toString();
                             });
                           },
                           onSaved: (value) {
                             setState(() {
-                              _gender = 'male';
+                              _gender = value.toString();
                             });
                           }),
                     ),

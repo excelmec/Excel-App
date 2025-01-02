@@ -12,9 +12,9 @@ class AccountConfig {
   // static final String url = 'https://staging.accounts.excelmec.org/api/';
   static final String url = 'https://accounts.excelmec.org/api/';
 
-  // static final String newUrl = 'https://accounts-api.excelmec.org/api/';
-  static final String newUrl =
-      'https://excel-accounts-backend-42324430635.asia-south1.run.app/api/';
+  static final String newUrl = 'https://accounts-api.excelmec.org/api/';
+  // static final String newUrl =
+  //     'https://excel-accounts-backend-42324430635.asia-south1.run.app/api/';
 
   //header -- GET request
   static Map<String, String> getHeader(String token) {
