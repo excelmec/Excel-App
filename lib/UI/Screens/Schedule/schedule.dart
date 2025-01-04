@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:excelapp/Services/API/schedule_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
@@ -85,34 +86,37 @@ class _ScheduleState extends State<Schedule> {
   }
 
   Widget errorRetry() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Couldn't fetch Schedule",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(height: 30),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+    return Container(
+      color: backgroundBlue,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Couldn't fetch Schedule",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
               ),
             ),
-            onPressed: () {
-              fetchScheduleDetails();
-            },
-            child: Text(
-              "Retry",
-              style: TextStyle(color: Colors.white),
-            ),
-          )
-        ],
+            SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                fetchScheduleDetails();
+              },
+              child: Text(
+                "Retry",
+                style: TextStyle(color: Colors.black),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

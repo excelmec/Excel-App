@@ -116,9 +116,9 @@ class _LandingPageState extends State<LandingPage> {
           "Excel is the annual techno-managerial fest of Govt. Model Enginnering College. It’s the Nation’s second and South India’s first ever fest of it’s kind!"
     },
     {
-      "title": "Hi! I\'m JUNO",
+      "title": "Hi! I\'m NOVA",
       "description":
-          "Meet Excel\'s bubbly, pointy-eared mascot that is hyper-excited about all things tech and fun, Juno! Unable to sit still due to unbridled excitement, she is excited to have a blast at Excel with you!"
+          "Meet Nova, Excel\'s adventurous astronaut mascot with a passion for all things tech and exploration! Always ready to blast off into action, Nova’s boundless energy and excitement are contagious. Gear up to join Nova on an out-of-this-world adventure and make unforgettable memories at Excel!"
     },
     {
       "title": "Let\'s get into it!",
