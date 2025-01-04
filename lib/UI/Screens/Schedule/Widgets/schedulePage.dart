@@ -45,9 +45,9 @@ class SchedulePage extends StatelessWidget {
                   unselectedLabelColor: secondaryColor,
                   tabs: [
                     // dayTab('Oct-Nov', 'Pre Events'),
-                    dayTab('Mar 1', 'Day 1'),
-                    dayTab('Mar 2', 'Day 2'),
-                    dayTab('Mar 3', 'Day 3'),
+                    dayTab('Jan 24', 'Day 1'),
+                    dayTab('Jan 24', 'Day 2'),
+                    dayTab('Jan 24', 'Day 3'),
                   ],
                 ),
               ),

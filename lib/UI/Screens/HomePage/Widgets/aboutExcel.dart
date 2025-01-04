@@ -66,7 +66,7 @@ class AboutExcelPopUp extends StatelessWidget {
                   children: const <TextSpan>[
                     TextSpan(
                       text:
-                          "\n\nExcel, the nation’s second and South India’s first ever fest of its kind, was started in 2001 by the students of Govt. Model Engineering College. Over the years, Excel has grown exponentially, consistently playing host to some of the most talented students, the most illustrious speakers and the most reputed companies. \n\nNow gearing towards the landmark 23rd edition, Excel continues to march forward. Join us this December to experience the magic of Excel!.",
+                          "\n\nExcel, the nation’s second and South India’s first ever fest of its kind, was started in 2001 by the students of Govt. Model Engineering College. Over the years, Excel has grown exponentially, consistently playing host to some of the most talented students, the most illustrious speakers and the most reputed companies. \n\nNow gearing towards the landmark 24rd edition, Excel continues to march forward. Join us this December to experience the magic of Excel!.",
                       style: TextStyle(
                         color: Color(0xFFE4EDEF),
                         fontWeight: FontWeight.w400,

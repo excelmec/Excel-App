@@ -36,6 +36,7 @@ Widget ReachUsModal(context) {
           Padding(
             padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(24),
