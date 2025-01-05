@@ -67,11 +67,20 @@ class RegistrationAPI {
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();
   }
 
+  static confirmLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jwt = prefs.getString('jwt');
+    if (jwt == "null") {
+      return false;
+    }
+    return true;
+  }
+
 // Check if an event is registered
   static isRegistered(id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jwt = prefs.getString('jwt');
-    if (jwt == "null")
+    bool isLogged = prefs.getBool('isLogged') ?? false;
+    if (!isLogged)
       return false;
     else if (RegistrationStatus.instance.registrationIDs.contains(id))
       return true;
