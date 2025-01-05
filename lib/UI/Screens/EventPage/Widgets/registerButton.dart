@@ -4,16 +4,19 @@ import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Components/Navigation/pageNavigator.dart';
 import 'package:excelapp/UI/Components/dialogWithContent/dialogWithContent.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/changeTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/createTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/joinTeamPage.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/viewTeam.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
+import 'package:excelapp/UI/Screens/ProfilePage/profile_main.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_share/social_share.dart';
 
 import '../../HomePage/Widgets/socialIcons.dart';
@@ -32,6 +35,15 @@ class RegisterButton extends StatefulWidget {
 class _RegisterButtonState extends State<RegisterButton> {
   bool registered = false;
   bool isLoading = false;
+  bool isLoggedIn = false;
+
+  void checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('isLogged') == false || prefs.getBool('isLogged') == null)
+      isLoggedIn = false;
+    else
+      isLoggedIn = true;
+  }
 
   reloadPage() {
     EventsAPI.fetchAndStoreEventDetailsFromNet(widget.eventDetails.id);
@@ -92,10 +104,10 @@ class _RegisterButtonState extends State<RegisterButton> {
     TextEditingController _controller = TextEditingController();
     print("response ${response}");
     if (response == "proceed") {
-      // Registers for event
-      // If team event, goto join team or create team
-      // Else confirmation to registration is asked.
-      if (widget.eventDetails.isTeam == true) {
+      if (widget.eventDetails.registrationLink != "NA" ||
+          widget.eventDetails.registrationLink != " ") {
+        launchURL(widget.eventDetails.registrationLink);
+      } else if (widget.eventDetails.isTeam == true) {
         await showModalBottomSheet(
           useRootNavigator: true,
           backgroundColor: backgroundBlue,
@@ -792,6 +804,7 @@ class _RegisterButtonState extends State<RegisterButton> {
   @override
   void initState() {
     refreshIsRegistered();
+    checkLogin();
     super.initState();
   }
 
@@ -832,7 +845,14 @@ class _RegisterButtonState extends State<RegisterButton> {
             InkWell(
               onTap: () {
                 print("Clicked Button");
-                if (widget.eventDetails.needRegistration == true) {
+                if (!isLoggedIn) {
+                  Fluttertoast.showToast(
+                    msg: "Please login to register for events",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.TOP,
+                    fontSize: 16,
+                  );
+                } else if (widget.eventDetails.needRegistration == true) {
                   print("Clicked and need registration true");
                   if (registered) {
                     print("Clicked and need registration true and registered");
