@@ -45,10 +45,30 @@ class DevCreditsState extends State<DevCredits>
       "image": "assets/devs/alfred.jpg"
     },
     {
-      "name": "Sreehari K N",
-      "email": "knsreehari2001@gmail.com",
-      "image": "assets/devs/sreehari.jpg"
+      "name": "Nived R S",
+      "email": "nivedrsalini@gmail.com",
     },
+    {
+      "name": "Pranav M",
+      "email": "pranavm265@gmail.com",
+    },
+    {
+      "name": "Archit P B",
+      "email": "realarchit7@gmail.com",
+    },
+    {
+      "name": "Jaimy Renji",
+      "email": "jaimyrenji@gmail.com",
+    },
+    {
+      "name": "Aadithya Madhav",
+      "email": "aadithya.m22@gmail.com",
+    }
+    // {
+    //   "name": "Sreehari K N",
+    //   "email": "knsreehari2001@gmail.com",
+    //   "image": "assets/devs/sreehari.jpg"
+    // },
     // {
     //   "name": "Jaison Dennis",
     //   "email": "jaisondennis080@gmail.com",
@@ -98,7 +118,7 @@ class DevCreditsState extends State<DevCredits>
             child: Column(
               children: [
                 Text(
-                  "Core Developers",
+                  "Core Developers & Designers",
                   style: TextStyle(
                     fontSize: 20,
                     color: primaryColor,
@@ -132,11 +152,11 @@ class DevCreditsState extends State<DevCredits>
                                   color: secondaryColor.withAlpha(95)),
                             ),
                             dense: true,
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage(
-                                developers[index]["image"]!,
-                              ),
-                            ),
+                            // leading: CircleAvatar(
+                            //   backgroundImage: AssetImage(
+                            //     developers[index]["image"]!,
+                            //   ),
+                            // ),
                           ),
                         ),
                       ) +
