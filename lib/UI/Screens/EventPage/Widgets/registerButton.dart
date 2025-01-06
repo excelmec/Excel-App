@@ -4,6 +4,7 @@ import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/Services/API/registration_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Components/LoginScreen/login_screen.dart';
 import 'package:excelapp/UI/Components/Navigation/pageNavigator.dart';
 import 'package:excelapp/UI/Components/dialogWithContent/dialogWithContent.dart';
 import 'package:excelapp/UI/Screens/EventPage/Widgets/changeTeamPage.dart';
@@ -851,6 +852,12 @@ class _RegisterButtonState extends State<RegisterButton> {
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.TOP,
                     fontSize: 16,
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
                   );
                 } else if (widget.eventDetails.needRegistration == true) {
                   print("Clicked and need registration true");

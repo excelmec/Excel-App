@@ -24,10 +24,10 @@ class Event {
     name = json['name'] ?? "NA";
     icon = json['icon'] ?? "NA";
     eventType = json['eventType'] ?? "NA";
-    category = json['category'] ??'NA';
-    about = json['about'] ?? 'Excel 2023';
+    category = json['category'] ?? 'NA';
+    about = json['about'] ?? 'Excel 2024';
     date = json['datetime'] ?? "NA";
-    isCompetition = json['needRegistration'] ?? false;
+    isCompetition = json['eventType'] == 'competition' ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -54,7 +54,6 @@ class Event {
 //     return result;
 //   }
 // }
-
 
 // class Event {
 //   late int id;
@@ -89,7 +88,6 @@ class Event {
 //     isCompetition: json['isCompetition'] ?? false, // Providing a default value if 'isCompetition' is null
 //   );
 // }
-
 
 //   Map<String, dynamic> toJson() {
 //     final Map<String, dynamic> data = {
