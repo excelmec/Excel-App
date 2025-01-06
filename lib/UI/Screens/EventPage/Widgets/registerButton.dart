@@ -855,7 +855,7 @@ class _RegisterButtonState extends State<RegisterButton> {
                     msg: "Please login to register for events",
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.TOP,
-                    fontSize: 16,
+                    fontSize: 12,
                   );
                   Navigator.push(
                     context,

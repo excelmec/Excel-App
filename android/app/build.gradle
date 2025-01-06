@@ -63,7 +63,7 @@ android {
         applicationId "org.excelmec"
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 28
+        versionCode 30
         versionName flutterVersionName
         multiDexEnabled true
 

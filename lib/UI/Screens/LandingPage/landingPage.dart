@@ -35,7 +35,7 @@ class _LandingPageState extends State<LandingPage> {
             context,
             data[1]["title"],
             data[1]["description"],
-            Image.asset('assets/mascot.png', height: 256, fit: BoxFit.contain),
+            Image.asset('assets/mascot.png', height: 180, fit: BoxFit.contain),
           ),
         ),
         PageViewModel(
