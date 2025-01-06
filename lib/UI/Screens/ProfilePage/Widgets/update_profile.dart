@@ -48,9 +48,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
   @override
   void initState() {
     super.initState();
-    print(widget.user);
+    print(widget.user.institutionName);
+    print(widget.user.institutionId);
     initialiseUserDetails(widget.user);
-    //initialiseUserDetails();
   }
 
   // Initialize form fields
@@ -67,14 +67,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _gender = user.gender;
     _emailId = user.email;
     _categoryId = 0;
-    if (_categoryId == 1 || _categoryId == 0) {
-      await getInstitutions(loading: false);
-      _institutionName = await getInstitutionName(_institutionId);
-      print("Institution Name: $_institutionName");
-      setState(() {
-        _institutionName = _institutionName;
-      });
-    }
+    // if (_categoryId == 1 || _categoryId == 0) {
+    //   await getInstitutions(loading: false);
+    //   _institutionName = await getInstitutionName(_institutionId);
+    //   print("Institution Name: $_institutionName");
+    //   setState(() {
+    //     _institutionName = _institutionName;
+    //   });
+    // }
   }
 
   backConfirmation() {
@@ -249,13 +249,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
     );
 
     // // get institutionId only if category is school or college & not in list
-    if (_categoryId != 2 && _institutionName != notInListOptionName) {
-      _institutionId = await getInstitutionId(_institutionName);
-    }
-    // Set institution if to 0 if its custom entered
-    if (_institutionName == notInListOptionName) {
-      _institutionId = 0;
-    }
+    // if (_categoryId != 2 && _institutionName != notInListOptionName) {
+    //   _institutionId = await getInstitutionId(_institutionName);
+    // }
+    // // Set institution if to 0 if its custom entered
+    // if (_institutionName == notInListOptionName) {
+    //   _institutionId = 0;
+    // }
     if (_institutionId == null && _categoryId != 2) {
       Navigator.of(context, rootNavigator: true).pop();
       return "One or more fields are invalid!";
@@ -282,7 +282,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
     Map<String, dynamic> userInfo = {
       "name": _name,
       "institutionId": _institutionId,
-      "institutionName": finalInstitutionName,
+      // "institutionName": finalInstitutionName,
+      "institutionName": _institutionName,
       "gender": _gender,
       "mobileNumber": _mobileNumber.toString(),
       "categoryId": _categoryId.toString()

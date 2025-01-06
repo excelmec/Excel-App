@@ -517,7 +517,7 @@ class _ProfilePageState extends State<ProfilePage>
         ),
         onPressed: () async {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return UpdateProfile(_user);
+            return UpdateProfile(user);
           })).then((value) {
             setState(() {
               userDetails = viewUserProfile();
