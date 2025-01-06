@@ -824,10 +824,14 @@ class _RegisterButtonState extends State<RegisterButton> {
                 : 'Registered';
         buttonColor = registered ? Color(0xff335533) : primaryColor;
       } else if (widget.eventDetails.registrationOpen == true) {
-        buttonText =
-                (widget.eventDetails.entryFee == 0) ? 'Register' : 'Register'
-            // : 'Register for ₹ ${widget.eventDetails.entryFee}'
-            ;
+        if (widget.eventDetails.registrationLink == "NA" ||
+            widget.eventDetails.registrationLink == " ") {
+          buttonText = 'Registration Form';
+        } else {
+          buttonText = 'Register';
+        }
+        // : 'Register for ₹ ${widget.eventDetails.entryFee}'
+        ;
         buttonColor = primaryColor;
       } else {
         buttonText = "Registration Closed";
