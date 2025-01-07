@@ -105,8 +105,7 @@ class _RegisterButtonState extends State<RegisterButton> {
     TextEditingController _controller = TextEditingController();
     print("response ${response}");
     if (response == "proceed") {
-      if (widget.eventDetails.registrationLink != "NA" ||
-          widget.eventDetails.registrationLink != " ") {
+      if (widget.eventDetails.registrationLink.length > 5) {
         launchURL(widget.eventDetails.registrationLink);
       } else if (widget.eventDetails.isTeam == true) {
         await showModalBottomSheet(
@@ -824,8 +823,7 @@ class _RegisterButtonState extends State<RegisterButton> {
                 : 'Registered';
         buttonColor = registered ? Color(0xff335533) : primaryColor;
       } else if (widget.eventDetails.registrationOpen == true) {
-        if (widget.eventDetails.registrationLink == "NA" ||
-            widget.eventDetails.registrationLink == " ") {
+        if (widget.eventDetails.registrationLink.length > 5) {
           buttonText = 'Registration Form';
         } else {
           buttonText = 'Register';
