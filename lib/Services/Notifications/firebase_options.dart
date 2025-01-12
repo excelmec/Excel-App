@@ -44,7 +44,8 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBKVnsz2nu3-EULR9iX1l_ehbdVm7a74P4',
+    //AIzaSyBKVnsz2nu3-EULR9iX1l_ehbdVm7a74P4
+    apiKey: '',
     appId: '1:602359993946:web:9eb69c0f246b045dce6a63',
     messagingSenderId: '602359993946',
     projectId: 'excel-notification',
@@ -54,7 +55,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCX_91EyrsxB353OxoE5ek1my1pwe8AE2U',
+    //AIzaSyCX_91EyrsxB353OxoE5ek1my1pwe8AE2U
+    apiKey: '',
     appId: '1:602359993946:android:e138f22cdbd10256ce6a63',
     messagingSenderId: '602359993946',
     projectId: 'excel-notification',
@@ -62,7 +64,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB9z-J27upKC-7RROxiy62-jJL13QwVYOw',
+    //AIzaSyB9z-J27upKC-7RROxiy62-jJL13QwVYOw
+    apiKey: '',
     appId: '1:602359993946:ios:1ae0307d8ea08bc8ce6a63',
     messagingSenderId: '602359993946',
     projectId: 'excel-notification',
@@ -75,7 +78,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBd0mSO51OLPfwHQKjg2lvE1cxJ9Hx4yjg',
+    //AIzaSyBd0mSO51OLPfwHQKjg2lvE1cxJ9Hx4yjg
+    apiKey: '',
     appId: '1:602359993946:web:bb1a32ee466db63bce6a63',
     messagingSenderId: '602359993946',
     projectId: 'excel-notification',
