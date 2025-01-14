@@ -12,7 +12,7 @@ Gradient primaryGradient() {
   );
 }
 
-Gradient primaryGradientHorizontal() {
+Gradient landingGradient() {
   return const LinearGradient(
       colors: [const Color(0xFFFD95FF), const Color(0xFF2C1B77)],
       begin: FractionalOffset.topRight,
@@ -33,7 +33,7 @@ Gradient primaryGradientHorizontal() {
   );
 }
 
-Gradient landingGradient() {
+Gradient drawerGradient() {
   return const LinearGradient(
     colors: [
       const Color(0xFF2C1B77),
