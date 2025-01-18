@@ -1,0 +1,4 @@
+firebase_keys.dart
+
+# Add your firebase keys to this dart file as static strings and
+# import and use them in the firebase_options.dart

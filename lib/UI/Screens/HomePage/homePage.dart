@@ -46,11 +46,6 @@ class _HomePageState extends State<HomePage> {
                               HighlightsSection(),
                             ],
                           ),
-                          decoration: BoxDecoration(
-                            border: Border(
-                                bottom:
-                                    BorderSide(color: white300, width: 1.2)),
-                          ),
                         ),
 
                         Discover(),

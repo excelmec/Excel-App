@@ -8,11 +8,12 @@ import '../Stories/fullPageView.dart';
 
 // ignore: must_be_immutable
 class HighlightsCard extends StatelessWidget {
+  final List<Highlights> highLightsMap;
   final Highlights highlights;
   final int index;
   final List<Map<String,dynamic>> storiesMapList;
   late Color firstColor;
-  HighlightsCard(this.highlights, this.index,this.storiesMapList) {
+  HighlightsCard(this.highLightsMap, this.highlights, this.index,this.storiesMapList) {
     int v =this.index;
     if(v==this.storiesMapList.length-1){
       if(v%3==0){
@@ -37,7 +38,9 @@ class HighlightsCard extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => FullPageView(
                       storiesMapList: storiesMapList,
-                      storyNumber: index),
+                      storyNumber: index,
+                      highLightsMap: highLightsMap,
+                    ),
                 ),
               );
         },
