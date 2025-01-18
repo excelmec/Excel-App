@@ -356,16 +356,30 @@ class FullPageViewState extends State<FullPageView> {
             ),
           ),
           // The progress bar (now not required, as only one image per highlight)
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              ' ' * 5 + highLightsMap[selectedIndex].name,
-              style: TextStyle(
-                  color: Colors.white,
-                  shadows: [Shadow(blurRadius: 10, color: Colors.black)],
-                  fontFamily: pfontFamily,
-                  fontSize: 16),
-            ),
+          Column(
+            children: [
+              Container(
+                color: Colors.black,
+                child: SafeArea(
+                  child: Center(),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  ' ' * 5 + highLightsMap[selectedIndex].name,
+                  style: TextStyle(
+                      color: Colors.white,
+                      shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+                      fontFamily: pfontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
+            ],
           ),
         ],
       ),

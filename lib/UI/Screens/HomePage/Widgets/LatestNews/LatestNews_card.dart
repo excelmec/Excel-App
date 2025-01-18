@@ -134,6 +134,7 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
                     children: [
                       InkWell(
                         onTap: () {
+                          // ignore: unnecessary_null_comparison
                           if (widget.news.link != null ||
                               widget.news.link != "") {
                             if (widget.news.link.length >= 3)
@@ -165,6 +166,7 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
                         // dateMsgGenerator(widget.news.date),
                         new DateFormat.MMM()
                                 .format(DateTime.parse(widget.news.date)) +
+                                " " +
                             new DateFormat.d()
                                 .format(DateTime.parse(widget.news.date)),
                         style: TextStyle(

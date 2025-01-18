@@ -51,6 +51,7 @@ class HighlightsCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
+                      // ignore: unnecessary_null_comparison
                       image: CachedNetworkImageProvider((highlights.image != null)
                           ? highlights.image
                           : "http://greatcatwalk.com/images/service2.jpg"),
