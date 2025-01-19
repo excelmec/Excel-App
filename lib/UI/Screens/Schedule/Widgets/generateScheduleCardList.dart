@@ -159,7 +159,7 @@ class ScheduleEvent extends StatelessWidget {
                               children: [
                                 Text(
                                   eventSchedule.name +
-                                          (eventSchedule.round != null
+                                          (eventSchedule.round != ""
                                               ? " (${eventSchedule.round})"
                                               : "") ??
                                       "",
