@@ -46,8 +46,8 @@ class SchedulePage extends StatelessWidget {
                   tabs: [
                     // dayTab('Oct-Nov', 'Pre Events'),
                     dayTab('Jan 24', 'Day 1'),
-                    dayTab('Jan 24', 'Day 2'),
-                    dayTab('Jan 24', 'Day 3'),
+                    dayTab('Jan 25', 'Day 2'),
+                    dayTab('Jan 26', 'Day 3'),
                   ],
                 ),
               ),

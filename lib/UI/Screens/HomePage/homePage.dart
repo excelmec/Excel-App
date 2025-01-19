@@ -6,7 +6,6 @@ import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/QuickAccess/quickAccess.dart';
 import 'Widgets/LatestNews/latestNews.dart';
-import 'Widgets/CampusAmbassador/campusAmb.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -45,11 +44,6 @@ class _HomePageState extends State<HomePage> {
                               QuickAccessBar(),
                               HighlightsSection(),
                             ],
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border(
-                                bottom:
-                                    BorderSide(color: white300, width: 1.2)),
                           ),
                         ),
 

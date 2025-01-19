@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:excelapp/Models/highlights_model.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -7,15 +8,16 @@ import 'package:flutter/material.dart';
 class FullPageView extends StatefulWidget {
   final List<Map<String, dynamic>> storiesMapList;
   final int storyNumber;
+  final List<Highlights> highLightsMap;
 
   FullPageView(
-      {Key? key, required this.storiesMapList, required this.storyNumber})
+      {Key? key, required this.storiesMapList, required this.storyNumber, required this.highLightsMap})
       : super(key: key);
   @override
   FullPageViewState createState() =>
-      FullPageViewState(storiesMapList, storyNumber);
+      FullPageViewState(highLightsMap, storyNumber);
 }
-
+/*
 class FullPageViewState extends State<FullPageView> {
   final List<Map<String, dynamic>> storiesMapList;
   late int storyNumber;
@@ -88,11 +90,11 @@ class FullPageViewState extends State<FullPageView> {
                     width: double.infinity,
                     // Placeholder when it doesnt Load
                     placeholder: (context, url) => Container(
-                      color: red100,
+                      color: backgroundBlue,
                       height: double.infinity,
                       width: double.infinity,
                       child: Center(
-                        child: LoadingAnimation(color: Colors.white),
+                        child: LoadingAnimation(color: primaryPink),
                       ),
                     ),
                   ),
@@ -125,7 +127,7 @@ class FullPageViewState extends State<FullPageView> {
               ),
             ),
           ),
-          // The progress of story indicator
+          // The progress of story indicator - Now deprecated since API gives only one img/highlight
           Column(
             children: <Widget>[
               Container(
@@ -134,47 +136,46 @@ class FullPageViewState extends State<FullPageView> {
                   child: Center(),
                 ),
               ),
-              Row(
-                children: List.generate(
-                      numOfCompleted(listLengths, selectedIndex),
-                      (index) => Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(2),
-                          height: 2.5,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(blurRadius: 2, color: primaryColor)
-                              ]),
-                        ),
-                      ),
-                    ) +
-                    List.generate(
-                      (10),
-                      (index) => Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(2),
-                          height: 2.5,
-                          decoration: BoxDecoration(
-                            color: Color(0xff444444),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(blurRadius: 2, color: primaryColor)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-              ),
-              SizedBox(height: 5),
+              // Row(
+              //   children: List.generate(
+              //         numOfCompleted(listLengths, selectedIndex),
+              //         (index) => Expanded(
+              //           child: Container(
+              //             margin: EdgeInsets.all(2),
+              //             height: 2.5,
+              //             decoration: BoxDecoration(
+              //                 color: Colors.white,
+              //                 borderRadius: BorderRadius.circular(20),
+              //                 boxShadow: [
+              //                   BoxShadow(blurRadius: 2, color: primaryColor)
+              //                 ]),
+              //           ),
+              //         ),
+              //       ) +
+              //       List.generate(
+              //         (10),
+              //         (index) => Expanded(
+              //           child: Container(
+              //             margin: EdgeInsets.all(2),
+              //             height: 2.5,
+              //             decoration: BoxDecoration(
+              //               color: Color(0xff444444),
+              //               borderRadius: BorderRadius.circular(20),
+              //               boxShadow: [
+              //                 BoxShadow(blurRadius: 2, color: primaryColor)
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              // ),
+              SizedBox(height: 15),
               // Story name
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   ' ' * 5 +
-                      newList[getStoryIndex(
-                          listLengths, selectedIndex, newList)]['name'],
+                      newList[0]['name'],
                   style: TextStyle(
                       color: Colors.white,
                       shadows: [Shadow(blurRadius: 10, color: Colors.black)],
@@ -246,4 +247,142 @@ int getStoryIndex(listLengths, index, storiesMapList) {
     temp = listLengths[i];
   }
   return val;
+}
+*/
+
+class FullPageViewState extends State<FullPageView> {
+  final List<Highlights> highLightsMap; // List of all highlights (one per page)
+  late int storyNumber; // The index of the currently selected highlight
+
+  FullPageViewState(this.highLightsMap, this.storyNumber);
+
+  late int selectedIndex;
+  late PageController _pageController;
+
+  nextPage(index) {
+    if (index == highLightsMap.length - 1) {
+      Navigator.pop(context);
+      return;
+    }
+    setState(() {
+      selectedIndex = index + 1;
+    });
+    _pageController.animateToPage(selectedIndex,
+        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+  }
+
+  prevPage(index) {
+    if (index == 0) return;
+    setState(() {
+      selectedIndex = index - 1;
+    });
+    _pageController.animateToPage(selectedIndex,
+        duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = storyNumber;
+    _pageController = PageController(initialPage: selectedIndex);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          PageView(
+            onPageChanged: (page) {
+              setState(() {
+                selectedIndex = page;
+              });
+            },
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            children: List.generate(
+              highLightsMap.length, // Use the list of highlights directly
+              (index) => GestureDetector(
+                onTap: () {
+                  if (index < highLightsMap.length - 1) {
+                    nextPage(index);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Stack(
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: highLightsMap[index].image,
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                      placeholder: (context, url) => Container(
+                        color: backgroundBlue,
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: Center(
+                          child: LoadingAnimation(color: primaryPink),
+                        ),
+                      ),
+                    ),
+                    // Tap area for next/previous page
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              prevPage(index);
+                            },
+                            child: Center(),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 3,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              nextPage(index);
+                            },
+                            child: Center(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // The progress bar (now not required, as only one image per highlight)
+          Column(
+            children: [
+              Container(
+                color: Colors.black,
+                child: SafeArea(
+                  child: Center(),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  ' ' * 5 + highLightsMap[selectedIndex].name,
+                  style: TextStyle(
+                      color: Colors.white,
+                      shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+                      fontFamily: pfontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
