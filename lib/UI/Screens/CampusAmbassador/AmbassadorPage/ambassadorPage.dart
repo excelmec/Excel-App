@@ -5,7 +5,7 @@ import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/shareOptions.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:social_share/social_share.dart';
+//import 'package:social_share/social_share.dart';
 
 import '../../../../Models/view_user.dart';
 
@@ -84,9 +84,9 @@ class _AmbassadorPageState extends State<AmbassadorPage> {
                         color: Colors.grey,
                       ),
                       onPressed: () async {
-                        await SocialShare.copyToClipboard(
-                          text: ambassadorData["id"].toString(),
-                        );
+                        // await SocialShare.copyToClipboard(
+                        //   text: ambassadorData["id"].toString(),
+                        // );
                         // ScaffoldMessenger.of(context).showSnackBar(
                         //   snackBar("Copied"),
                         // );

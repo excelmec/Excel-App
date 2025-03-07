@@ -17,7 +17,7 @@ class QuickAccessBar extends StatefulWidget {
 
 class _QuickAccessBarState extends State<QuickAccessBar> {
   final labelStyle = TextStyle(
-    color: black300,
+    color: Color(0xFFE4EDEF),
     fontFamily: pfontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w500,
@@ -29,20 +29,30 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
     return Container(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //quickAccessButton(context, FontAwesomeIcons.qrcode, "Scan QR", null),
-        quickAccessButton(
-            context, "assets/icons/about.png", "Excel", AboutExcelPopUp(),
+        quickAccessButton(context, "assets/icons/about.png", "Excel",
+            AboutExcelPopUp(), Color(0xFF3D4747),
             inverted: true),
-        quickAccessButton(context, "assets/icons/call.png", "Contact",
-            ContactUsModal(context)),
-        quickAccessButton(context, "assets/icons/location.png", "Reach Us",
-            ReachUsModal(context)),
+        quickAccessButton(
+          context,
+          "assets/icons/call.png",
+          "Contact",
+          ContactUsModal(context),
+          Color(0xFFFD95FF),
+        ),
+        quickAccessButton(
+          context,
+          "assets/icons/location.png",
+          "Reach Us",
+          ReachUsModal(context),
+          Color(0xFFFD95FF),
+        ),
         notificationButton(context),
       ]),
     );
   }
 
   Widget quickAccessButton(BuildContext context, String iconName,
-      String buttonName, Widget modalSheet,
+      String buttonName, Widget modalSheet, Color needColor,
       {bool inverted = false}) {
     return Container(
         //decoration: BoxDecoration(color: Colors.brown),
@@ -65,6 +75,7 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                 showModalBottomSheet<dynamic>(
                   isScrollControlled: true,
                   useRootNavigator: true,
+                  backgroundColor: backgroundBlue,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
@@ -76,19 +87,19 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                   builder: (context) => Wrap(children: <Widget>[modalSheet]),
                 );
               },
-              child: Image.asset(iconName, height: 28),
+              child: Image.asset(iconName, height: 28, color: needColor),
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(const Size(60, 60)),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
-                  side: MaterialStateProperty.all(
+                  fixedSize: WidgetStateProperty.all(const Size(60, 60)),
+                  padding: WidgetStateProperty.all(const EdgeInsets.all(16)),
+                  side: WidgetStateProperty.all(
                     BorderSide(
-                      color: white300,
+                      color: Color(0xFF1C1F20),
                       width: inverted ? 1.2 : 0,
                     ),
                   ),
-                  backgroundColor:
-                      MaterialStateProperty.all(inverted ? red100 : white200),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  backgroundColor: WidgetStateProperty.all(
+                      inverted ? primaryPink : Color(0xFF1C1F20)),
+                  shape: WidgetStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)))),
             ),
             SizedBox(
@@ -123,20 +134,22 @@ class _QuickAccessBarState extends State<QuickAccessBar> {
                       setState(() {});
                     });
                   },
-                  child:
-                      Image.asset("assets/icons/Notification.png", height: 28),
+                  child: Image.asset(
+                    "assets/icons/notification.png",
+                    height: 28,
+                    color: Color(0xFFFD95FF),
+                  ),
                   style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(const Size(60, 60)),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(15)),
-                    backgroundColor: MaterialStateProperty.all(white200),
-                    side: MaterialStateProperty.all(
+                    fixedSize: WidgetStateProperty.all(const Size(60, 60)),
+                    padding: WidgetStateProperty.all(const EdgeInsets.all(15)),
+                    backgroundColor: WidgetStateProperty.all(Color(0xFF1C1F20)),
+                    side: WidgetStateProperty.all(
                       BorderSide(
-                        color: white300,
+                        color: Color(0xFF1C1F20),
                         width: 1.2,
                       ),
                     ),
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
                     ),

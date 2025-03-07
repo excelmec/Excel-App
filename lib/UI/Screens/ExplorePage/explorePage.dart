@@ -60,7 +60,6 @@ class _ExplorePageState extends State<ExplorePage>
   fetchfromNet() async {
     dataFromNet = await EventsAPI.fetchAndStoreEventsandCompetitionsFromNet();
     if (!dataLoaded || dataFromNet != "error") {
-
       // print(CompetitionsData);
       estream.add(dataFromNet);
       //  estream.add(CompetitionsData);
@@ -86,12 +85,12 @@ class _ExplorePageState extends State<ExplorePage>
     _tabcontroller.index = _myNavIndex.getExplorePageNumber;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: white200,
+      backgroundColor: Colors.black,
       body: Container(
         child: Column(
           children: [
             Container(
-              color: white100,
+              color: Color(0xFF1C1F20),
               padding: const EdgeInsets.only(top: 16),
               child: ClipRRect(
                 child: Column(
@@ -113,11 +112,18 @@ class _ExplorePageState extends State<ExplorePage>
                           fontFamily: "mulish",
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color.fromARGB(70, 208, 224, 231),
-                          prefixIcon: Icon(Icons.search),
+                          fillColor: Color(0xFF1C1F20),
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.white,
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: white300),
                             borderRadius:
@@ -125,6 +131,11 @@ class _ExplorePageState extends State<ExplorePage>
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: white300),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: primaryPink),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0)),
                           ),
@@ -137,12 +148,13 @@ class _ExplorePageState extends State<ExplorePage>
                     Padding(
                       padding: EdgeInsets.fromLTRB(30, 3, 30, 3),
                       child: TabBar(
-                        indicatorColor: red100,
+                        indicatorColor: primaryPink,
                         controller: _tabcontroller,
                         indicatorPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        labelColor: red100,
+                        labelColor: primaryPink,
+                        dividerColor: Colors.transparent,
                         labelStyle: TextStyle(
-                          decorationColor: red100,
+                          decorationColor: primaryPink,
                         ),
                         unselectedLabelColor:
                             Color.fromARGB(235, 119, 133, 133),
@@ -191,7 +203,7 @@ class _ExplorePageState extends State<ExplorePage>
                               SizedBox(height: 20),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: red100,
+                                  backgroundColor: primaryPink,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                   ),

@@ -76,15 +76,19 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
               children: [
                 Row(
                   children: [
-                    Image.asset("assets/icons/news.png", height: 24),
+                    Image.asset(
+                      "assets/icons/news.png",
+                      height: 24,
+                      color: Colors.white,
+                    ),
                     SizedBox(width: 8),
                     Text("Latest News", style: headingStyle),
                   ],
                 ),
                 Text(
-                  "from Excel 2023",
+                  "from Excel 2024",
                   style: TextStyle(
-                      color: black200,
+                      color: white200,
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
                       fontFamily: pfontFamily),
@@ -200,8 +204,8 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
         height: 140,
         margin: EdgeInsets.fromLTRB(24, 0, 24, 20),
       ),
-      baseColor: white300,
-      highlightColor: white400,
+      baseColor: backgroundBlue,
+      highlightColor: primaryColor,
     );
   }
 }

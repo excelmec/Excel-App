@@ -1,6 +1,8 @@
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../Themes/colors.dart';
+
 class DevCredits extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => DevCreditsState();
@@ -43,10 +45,30 @@ class DevCreditsState extends State<DevCredits>
       "image": "assets/devs/alfred.jpg"
     },
     {
-      "name": "Sreehari K N",
-      "email": "knsreehari2001@gmail.com",
-      "image": "assets/devs/sreehari.jpg"
+      "name": "Nived R S",
+      "email": "nivedrsalini@gmail.com",
     },
+    {
+      "name": "Pranav M",
+      "email": "pranavm265@gmail.com",
+    },
+    {
+      "name": "Archit P B",
+      "email": "realarchit7@gmail.com",
+    },
+    {
+      "name": "Jaimy Renji",
+      "email": "jaimyrenji@gmail.com",
+    },
+    {
+      "name": "Aadithya Madhav",
+      "email": "aadithya.m22@gmail.com",
+    }
+    // {
+    //   "name": "Sreehari K N",
+    //   "email": "knsreehari2001@gmail.com",
+    //   "image": "assets/devs/sreehari.jpg"
+    // },
     // {
     //   "name": "Jaison Dennis",
     //   "email": "jaisondennis080@gmail.com",
@@ -84,18 +106,19 @@ class DevCreditsState extends State<DevCredits>
     return ScaleTransition(
       scale: scaleAnimation,
       child: Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         insetPadding: EdgeInsets.all(13),
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
+            color: backgroundBlue,
           ),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Text(
-                  "Core Developers",
+                  "Core Developers & Designers",
                   style: TextStyle(
                     fontSize: 20,
                     color: primaryColor,
@@ -119,18 +142,21 @@ class DevCreditsState extends State<DevCredits>
                           child: ListTile(
                             title: Text(
                               developers[index]["name"]!,
-                              style: TextStyle(fontSize: 14.5),
+                              style: TextStyle(
+                                  fontSize: 14.5, color: secondaryColor),
                             ),
                             subtitle: Text(
                               developers[index]["email"]!,
-                              style: TextStyle(fontSize: 13),
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: secondaryColor.withAlpha(95)),
                             ),
                             dense: true,
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage(
-                                developers[index]["image"]!,
-                              ),
-                            ),
+                            // leading: CircleAvatar(
+                            //   backgroundImage: AssetImage(
+                            //     developers[index]["image"]!,
+                            //   ),
+                            // ),
                           ),
                         ),
                       ) +

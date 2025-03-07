@@ -9,9 +9,9 @@ import 'package:firebase_core/firebase_core.dart';
 // final _messageStreamController = BehaviorSubject<RemoteMessage>();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-if (Firebase.apps.isEmpty) {
+  if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(name: 'Excel Services');
- }
+  }
   if (kDebugMode) {
     print("Handling a background message: ${message.messageId}");
     print('Message data: ${message.data}');
@@ -35,25 +35,28 @@ if (Firebase.apps.isEmpty) {
 
 void initiliaseNotificationServices() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //Using this to temporarily patch Notification Duplication issue
+  //TODO : Look for proper fix
+  int duplicatedNotificationHandler = 0;
   await Firebase.initializeApp(
     name: 'Excel Services',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final messaging = FirebaseMessaging.instance;
 
-  // final settings = await messaging.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
+  final settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
 
-//   if (kDebugMode) {
-//     print('Permission granted: ${settings.authorizationStatus}');
-//   }
+  if (kDebugMode) {
+    print('Permission granted: ${settings.authorizationStatus}');
+  }
   String? token = await messaging.getToken();
 
   if (kDebugMode) {
@@ -62,6 +65,7 @@ void initiliaseNotificationServices() async {
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     print('Got a message whilst in the foreground!');
+    duplicatedNotificationHandler++;
     print('Message data: ${message.data}');
     if (kDebugMode) {
       print("Handling a background message: ${message.messageId}");
@@ -69,7 +73,8 @@ void initiliaseNotificationServices() async {
       print('Message notification: ${message.notification?.title}');
       print('Message notification: ${message.notification?.body}');
     }
-    if (message.notification != null) {
+    if (message.notification != null &&
+        duplicatedNotificationHandler % 2 == 0) {
       print(
           'Message also contained a notification: ${message.notification?.title}');
 

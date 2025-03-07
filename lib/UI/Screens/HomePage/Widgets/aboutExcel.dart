@@ -1,5 +1,6 @@
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Drawer/DevCredits/devCredits.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,10 @@ class AboutExcelPopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32), topRight: Radius.circular(32)),
+          gradient: drawerGradient()),
       child: Column(
         children: [
           SizedBox(height: 8),
@@ -53,7 +58,7 @@ class AboutExcelPopUp extends StatelessWidget {
                 text: TextSpan(
                   text: 'Inspire. Innovate. Engineer ',
                   style: TextStyle(
-                    color: Color(0xDD000000),
+                    color: Color(0xFFD3E1E4),
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                     fontFamily: "mulish",
@@ -61,9 +66,9 @@ class AboutExcelPopUp extends StatelessWidget {
                   children: const <TextSpan>[
                     TextSpan(
                       text:
-                          "\n\nExcel, the nation’s second and South India’s first ever fest of its kind, was started in 2001 by the students of Govt. Model Engineering College. Over the years, Excel has grown exponentially, consistently playing host to some of the most talented students, the most illustrious speakers and the most reputed companies. \n\n Now gearing towards the landmark 23rd edition, Excel continues to march forward. Join us this December to experience the magic of Excel!.",
+                          "\n\nExcel, the nation's second and South India's first ever techno-managerial fest of its kind was started in 2001 by the students of Govt. Model Engineering College, Kochi. Over the years, Excel has grown exponentially, consistently playing host to some of the most talented students, the most coveted guests and the most reputed companies.\nAs we gear up for our 25th edition, Excel continues to push boundaries. Join us this January and experience the magic of a legacy in the making.",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 61, 71, 71),
+                        color: Color(0xFFE4EDEF),
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
                         fontFamily: pfontFamily,
@@ -88,7 +93,7 @@ class AboutExcelPopUp extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: red100,
+                        color: primaryPink,
                       ),
                       height: 50,
                       alignment: Alignment.center,
@@ -98,7 +103,7 @@ class AboutExcelPopUp extends StatelessWidget {
                           Text(
                             'View Website',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: backgroundBlue,
                                 fontFamily: "mulish",
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14),
@@ -107,7 +112,7 @@ class AboutExcelPopUp extends StatelessWidget {
                             width: 10,
                           ),
                           Icon(Icons.arrow_forward,
-                              size: 19, color: Colors.white)
+                              size: 19, color: backgroundBlue)
                         ],
                       ),
                     ),
@@ -130,7 +135,7 @@ class AboutExcelPopUp extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Color(0xFf2C1B77),
                       ),
                       height: 50,
                       alignment: Alignment.center,
@@ -140,7 +145,7 @@ class AboutExcelPopUp extends StatelessWidget {
                           Text(
                             'Developer Credits',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 61, 71, 71),
+                                color: Color(0xFFE4EDEF),
                                 fontFamily: "mulish",
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14),
@@ -151,7 +156,7 @@ class AboutExcelPopUp extends StatelessWidget {
                           Icon(
                             Icons.arrow_forward,
                             size: 19,
-                            color: Color.fromARGB(255, 61, 71, 71),
+                            color: Color(0xFFE4EDEF),
                           )
                         ],
                       ),
@@ -184,13 +189,13 @@ class AboutExcelPopUp extends StatelessWidget {
   }
 }
 
-MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
-  final getColor = (Set<MaterialState> states) {
-    if (states.contains(MaterialState.pressed)) {
+WidgetStateProperty<Color> getColor(Color color, Color colorPressed) {
+  final getColor = (Set<WidgetState> states) {
+    if (states.contains(WidgetState.pressed)) {
       return colorPressed;
     }
     // Return the default color if no other condition matches
-    return color; 
+    return color;
   };
-  return MaterialStateProperty.resolveWith(getColor);
+  return WidgetStateProperty.resolveWith(getColor);
 }

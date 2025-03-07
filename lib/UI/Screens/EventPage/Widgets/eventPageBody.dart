@@ -46,12 +46,13 @@ class EventPageBody extends StatelessWidget {
     return Scaffold(
       //backgroundColor: Color(0xffECF4F5),
       resizeToAvoidBottomInset: true,
-      backgroundColor: white200,
+      backgroundColor: backgroundBlue,
       body: Stack(
         children: [
           Align(
             alignment: Alignment.topCenter,
             child: Container(
+              decoration: BoxDecoration(color: backgroundBlue),
               height: deviceHeight,
               child: Column(
                 children: <Widget>[
@@ -72,7 +73,7 @@ class EventPageBody extends StatelessWidget {
                                 child: IconButton(
                                   icon: new Icon(Icons.arrow_back),
                                   iconSize: 30.0,
-                                  color: Color(0xFF1C1F20),
+                                  color: white100,
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -95,7 +96,7 @@ class EventPageBody extends StatelessWidget {
                                           fontFamily: pfontFamily,
                                           fontSize: 32.0,
                                           fontWeight: FontWeight.w900,
-                                          color: textColor,
+                                          color: Color(0xFFD3E1E4),
                                         ),
                                       ),
                                     ),
@@ -108,7 +109,7 @@ class EventPageBody extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(21),
-                                          color: red100,
+                                          color: Color(0xFFAD59AE),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.all(12.25),
@@ -147,10 +148,11 @@ class EventPageBody extends StatelessWidget {
                           //Event Details
 
                           getEventDetails(
-                              eventDetails: eventDetails,
-                              detailed: true,
-                              height: deviceHeight / 12.681,
-                              width: deviceWidth / 2.477),
+                            eventDetails: eventDetails,
+                            detailed: true,
+                            height: deviceHeight / 12.681,
+                            width: deviceWidth / 2.477,
+                          ),
 
                           Container(
                             child: MoreEventDetails(
@@ -170,7 +172,7 @@ class EventPageBody extends StatelessWidget {
             child: Container(
               padding: EdgeInsetsDirectional.only(bottom: 20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: backgroundBlue,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40)),
@@ -193,7 +195,7 @@ class EventPageBody extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: white200,
+                        color: Colors.black,
                       ),
                       child: Padding(
                           padding: EdgeInsets.all(10),

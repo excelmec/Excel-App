@@ -2,12 +2,13 @@ import 'dart:async';
 import 'package:excelapp/Services/API/schedule_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/schedulePage.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Providers/scheduleProvider.dart';
-import '../../Themes/colors.dart';
 
 class Schedule extends StatefulWidget {
   @override
@@ -50,7 +51,7 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: white100,
+        backgroundColor: Colors.black,
         toolbarHeight: 0,
         elevation: 0,
       ),
@@ -70,7 +71,12 @@ class _ScheduleState extends State<Schedule> {
               fit: StackFit.expand,
               children: <Widget>[
                 //Background Image
-                LoadingAnimation()
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: primaryGradient(),
+                  ),
+                  child: LoadingAnimation(),
+                )
               ],
             );
           }
@@ -80,34 +86,37 @@ class _ScheduleState extends State<Schedule> {
   }
 
   Widget errorRetry() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Couldn't fetch Schedule",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(height: 30),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+    return Container(
+      color: backgroundBlue,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Couldn't fetch Schedule",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
               ),
             ),
-            onPressed: () {
-              fetchScheduleDetails();
-            },
-            child: Text(
-              "Retry",
-              style: TextStyle(color: Colors.white),
-            ),
-          )
-        ],
+            SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                fetchScheduleDetails();
+              },
+              child: Text(
+                "Retry",
+                style: TextStyle(color: Colors.black),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

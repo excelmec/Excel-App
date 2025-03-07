@@ -41,12 +41,15 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        color: white100,
+        color: backgroundBlue,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(
-          color: white300,
-          width: 1.6,
-        ),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.3),
+            blurRadius: 20,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Container(
         padding: EdgeInsets.all(24),
@@ -108,7 +111,7 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
                     trimExpandedText: "\nshow less",
                     style: TextStyle(
                       fontSize: 14,
-                      color: black300,
+                      color: Color(0xFFE4EDEF),
                       height: 1.5,
                     ),
                     colorClickableText: black400,
@@ -131,6 +134,7 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
                     children: [
                       InkWell(
                         onTap: () {
+                          // ignore: unnecessary_null_comparison
                           if (widget.news.link != null ||
                               widget.news.link != "") {
                             if (widget.news.link.length >= 3)
@@ -162,10 +166,11 @@ class _LastestNewsCardState extends State<LastestNewsCard> {
                         // dateMsgGenerator(widget.news.date),
                         new DateFormat.MMM()
                                 .format(DateTime.parse(widget.news.date)) +
+                                " " +
                             new DateFormat.d()
                                 .format(DateTime.parse(widget.news.date)),
                         style: TextStyle(
-                          color: black100,
+                          color: Color(0xFFE4EDEF),
                           fontSize: 12,
                           fontFamily: pfontFamily,
                         ),

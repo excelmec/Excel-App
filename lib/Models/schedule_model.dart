@@ -1,28 +1,28 @@
 import 'package:intl/intl.dart';
 
 class ScheduleModel {
- late int id;
- late String name;
- late String icon;
- late String eventType;
- late String category;
- late bool needRegistration;
- late String round;
- late int roundId;
- late int day;
- late String datetime;
+  late int id;
+  late String name;
+  late String icon;
+  late String eventType;
+  late String category;
+  late bool needRegistration;
+  late String round;
+  late int roundId;
+  late int day;
+  late String datetime;
 
   ScheduleModel(
-   { required  this.id,
-    required  this.name,
-    required  this.icon,
-    required  this.eventType,
-    required  this.category,
-    required  this.needRegistration,
-    required  this.round,
-    required  this.roundId,
-    required  this.day,
-    required  this.datetime});
+      {required this.id,
+      required this.name,
+      required this.icon,
+      required this.eventType,
+      required this.category,
+      required this.needRegistration,
+      required this.round,
+      required this.roundId,
+      required this.day,
+      required this.datetime});
 
   ScheduleModel.fromJson(json) {
     id = json['id'];
@@ -30,8 +30,8 @@ class ScheduleModel {
     icon = json['icon'];
     eventType = json['eventType'];
     category = json['category'];
-    needRegistration = json['needRegistration']??false;
-    round = json['round']??"Fullday";
+    needRegistration = json['needRegistration'] ?? false;
+    round = json['round'] ?? "";
     roundId = json['roundId'];
     day = json['day'];
     datetime = json['datetime'];

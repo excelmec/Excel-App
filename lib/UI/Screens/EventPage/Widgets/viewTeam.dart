@@ -3,9 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../../Accounts/getAuthorisedData.dart';
@@ -45,8 +45,9 @@ class _ViewTeamState extends State<ViewTeam> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundBlue,
       appBar: AppBar(
-        backgroundColor: Colors.white70,
+        backgroundColor: Colors.black,
         shadowColor: null,
         elevation: 1,
         leading: IconButton(
@@ -102,7 +103,7 @@ class _ViewTeamState extends State<ViewTeam> {
                           "ID: " + teamDetails["id"].toString(),
                           style: TextStyle(
                             fontSize: 15,
-                            color: lightTextColor,
+                            color: Colors.white,
                             fontStyle: FontStyle.italic,
                           ),
                         ),
@@ -111,7 +112,7 @@ class _ViewTeamState extends State<ViewTeam> {
                           "Event name: " + widget.eventDetails.name.toString(),
                           style: TextStyle(
                             fontSize: 14,
-                            color: lightTextColor,
+                            color: Colors.white,
                             fontStyle: FontStyle.italic,
                           ),
                           textAlign: TextAlign.center,
@@ -124,7 +125,7 @@ class _ViewTeamState extends State<ViewTeam> {
                               .toString(),
                           style: TextStyle(
                             fontSize: 14,
-                            color: lightTextColor,
+                            color: Colors.white,
                             fontStyle: FontStyle.italic,
                           ),
                           textAlign: TextAlign.center,
@@ -140,7 +141,7 @@ class _ViewTeamState extends State<ViewTeam> {
                         SizedBox(height: 25),
                         Text(
                           "Team Members",
-                          style: TextStyle(fontSize: 21, color: lightTextColor),
+                          style: TextStyle(fontSize: 21, color: Colors.white),
                         ),
                         SizedBox(height: 20),
                       ] +
@@ -157,9 +158,13 @@ class _ViewTeamState extends State<ViewTeam> {
                             //     teamDetails["members"][index]["picture"],
                             //   ),
                             // ),
-                            title: Text(teamDetails["members"][index]["name"]),
-                            subtitle:
-                                Text(teamDetails["members"][index]["email"]),
+                            title: Text(
+                              teamDetails["members"][index]["name"],
+                              style: TextStyle(color: primaryColor),
+                            ),
+                            subtitle: Text(
+                                teamDetails["members"][index]["email"],
+                                style: TextStyle(color: Colors.white)),
                           ),
                         ),
                       ) +

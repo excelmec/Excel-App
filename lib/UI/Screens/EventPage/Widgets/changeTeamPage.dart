@@ -6,9 +6,13 @@ import 'package:excelapp/Services/API/api_config.dart';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/UI/Components/AlertDialog/alertDialog.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../HomePage/Widgets/socialIcons.dart';
 
 class ChangeTeamPage extends StatefulWidget {
   final EventDetails eventDetails;
@@ -36,6 +40,17 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
         response.statusCode.toString());
 
     if (response.statusCode != 200) {
+      if (response.statusCode == 469) {
+        Fluttertoast.showToast(
+          msg: "Please retry after completing the profile",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          fontSize: 16,
+        );
+        launchURL(
+            "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
+        return;
+      }
       try {
         alertDialog(text: jsonDecode(response.body)["error"], context: context);
       } catch (_) {
@@ -71,6 +86,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: customappbar("Change Team"),
+      backgroundColor: backgroundBlue,
       body: Theme(
         data: Theme.of(context).copyWith(
           primaryColor: primaryColor,
@@ -87,7 +103,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(21),
-                        color: Color.fromARGB(255, 14, 152, 232),
+                        color: primaryColor,
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(12.25),
@@ -122,7 +138,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                     "You will be removed from the current team if you change team." +
                         widget.eventDetails.name.toString() +
                         ".",
-                    style: TextStyle(fontSize: 15.0),
+                    style: TextStyle(fontSize: 15.0, color: secondaryColor),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 20),
@@ -130,7 +146,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                     "Enter the ID of the team you wish to join.",
                     style: TextStyle(
                       fontSize: 14.0,
-                      color: lightTextColor,
+                      color: secondaryColor,
                       fontStyle: FontStyle.italic,
                     ),
                     textAlign: TextAlign.center,
@@ -139,7 +155,10 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                   Form(
                     key: _formKey,
                     child: TextFormField(
-                      style: TextStyle(fontFamily: pfontFamily, fontSize: 15),
+                      style: TextStyle(
+                          fontFamily: pfontFamily,
+                          fontSize: 15,
+                          color: secondaryColor),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp("[0-9]"))
                       ],
@@ -157,7 +176,11 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                       },
                       decoration: InputDecoration(
                         labelText: "Enter ID of new team",
-                        icon: Icon(Icons.edit),
+                        labelStyle: TextStyle(color: secondaryColor),
+                        icon: Icon(
+                          Icons.edit,
+                          color: secondaryColor,
+                        ),
                         contentPadding: EdgeInsets.zero,
                       ),
                     ),
@@ -185,7 +208,7 @@ class _ChangeTeamPageState extends State<ChangeTeamPage> {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 251, 255, 255),
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700),
                             ),
                     ),

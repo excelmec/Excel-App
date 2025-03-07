@@ -1,3 +1,4 @@
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,13 +11,12 @@ class NotificationCard extends StatelessWidget {
   final String icon;
   final bool outline;
   NotificationCard(
-      {
-     required   this.id,
-     required this.title,
-     required this.time,
-     required this.description,
-     required this.link,
-    this.outline = true,
+      {required this.id,
+      required this.title,
+      required this.time,
+      required this.description,
+      required this.link,
+      this.outline = true,
       this.icon = "icon"});
 
   getTime(time) {
@@ -123,9 +123,7 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: !outline
-          ? Color.fromARGB(255, 236, 244, 245)
-          : Color.fromARGB(255, 251, 255, 255),
+      color: !outline ? backgroundBlue : backgroundBlue,
       margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -133,25 +131,24 @@ class NotificationCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           launchUrl(Uri.parse(link));
-                },
+        },
         child: Container(
           decoration: BoxDecoration(
-            border:
-                Border.all(width: 0.5, color: Colors.black.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(20),
+            color: Color(0xFF0000000),
           ),
           padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(21),
-                color: Color.fromARGB(255, 14, 152, 232),
+                color: primaryPink,
               ),
               child: Padding(
                 padding: EdgeInsets.all(12.25),
                 child: ClipRRect(
                   //Change this to Image.network when image server is up
-                  child: icon == null
+                  child: icon == ""
                       ? Image.asset(
                           "assets/icons/excel logo.png",
                           //event.icon,
@@ -177,7 +174,7 @@ class NotificationCard extends StatelessWidget {
                     child: Text(
                       title,
                       style: TextStyle(
-                          color: Color.fromARGB(255, 28, 31, 32),
+                          color: Colors.white,
                           fontWeight: FontWeight.w800,
                           fontFamily: "mulish",
                           fontSize: 14),

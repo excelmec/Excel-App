@@ -1,5 +1,7 @@
 import 'package:excelapp/Models/schedule_model.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/Schedule/Widgets/generateScheduleCardList.dart';
 
@@ -23,13 +25,13 @@ class SchedulePage extends StatelessWidget {
                     child: Text(
                       "Event Schedule",
                       style: TextStyle(
-                          color: Color(0xff1C1F20),
+                          color: white100,
                           fontWeight: FontWeight.w800,
                           fontSize: 20),
                     ),
                   ),
                 ),
-                backgroundColor: Color(0xffFBFFFF),
+                backgroundColor: Color(0xFF000000),
                 floating: true,
                 pinned: true,
                 snap: true,
@@ -37,21 +39,24 @@ class SchedulePage extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorWeight: 3,
-                  indicatorColor: red100,
-                  labelColor: red100,
-                  unselectedLabelColor: Color(0xff778585),
+                  indicatorColor: primaryPink,
+                  dividerColor: Colors.black,
+                  labelColor: primaryPink,
+                  unselectedLabelColor: secondaryColor,
                   tabs: [
                     // dayTab('Oct-Nov', 'Pre Events'),
-                    dayTab('Mar 1', 'Day 1'),
-                    dayTab('Mar 2', 'Day 2'),
-                    dayTab('Mar 3', 'Day 3'),
+                    dayTab('Jan 24', 'Day 1'),
+                    dayTab('Jan 25', 'Day 2'),
+                    dayTab('Jan 26', 'Day 3'),
                   ],
                 ),
               ),
             ];
           },
           body: Container(
-            color: white200,
+            decoration: BoxDecoration(
+              gradient: primaryGradient(),
+            ),
             child: new TabBarView(
               physics: BouncingScrollPhysics(),
               children: [

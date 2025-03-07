@@ -52,7 +52,8 @@ class StoryCircle extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => FullPageView(
                       storiesMapList: storiesMapList,
-                      storyNumber: selectedIndex),
+                      storyNumber: selectedIndex,
+                      highLightsMap: [],),
                 ),
               );
               // ).then((_) => showBottomNav());

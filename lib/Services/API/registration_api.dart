@@ -5,7 +5,8 @@ import 'package:excelapp/Models/event_Team.dart';
 import 'package:excelapp/Models/event_card.dart';
 import 'package:excelapp/Models/view_user.dart';
 import 'package:excelapp/Services/API/api_config.dart';
-import 'package:excelapp/UI/Screens/CampusAmbassador/AmbassadorPage/ambassadorPage.dart';
+import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:excelapp/Services/Database/hive_operations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,11 +67,20 @@ class RegistrationAPI {
     return responseData.map<Event>((event) => Event.fromJson(event)).toList();
   }
 
+  static confirmLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jwt = prefs.getString('jwt');
+    if (jwt == "null") {
+      return false;
+    }
+    return true;
+  }
+
 // Check if an event is registered
   static isRegistered(id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jwt = prefs.getString('jwt');
-    if (jwt == "null")
+    bool isLogged = prefs.getBool('isLogged') ?? false;
+    if (!isLogged)
       return false;
     else if (RegistrationStatus.instance.registrationIDs.contains(id))
       return true;
@@ -102,7 +112,8 @@ class RegistrationAPI {
 
     var user = await HiveDB.retrieveData(valueName: "user");
     if (user == null) return "Login";
-    if (ViewUser.fromJson(user).gender == "null") {
+    if (ViewUser.fromJson(user).gender == "null" ||
+        ViewUser.fromJson(user).institutionName == "null") {
       return "Update profile to register for events.";
     }
 
@@ -117,8 +128,9 @@ class RegistrationAPI {
       @required refreshFunction,
       @required context}) async {
     var requestBody;
-    requestBody = json.encode({"eventId": id, "teamId": teamId,"ambassadorId":ambassadorId});
-      try {
+    requestBody = json.encode(
+        {"eventId": id, "teamId": teamId, "ambassadorId": ambassadorId});
+    try {
       print(requestBody);
       var response = await postAuthorisedData(
         url: APIConfig.baseUrl + 'registration',
@@ -127,7 +139,16 @@ class RegistrationAPI {
       print(response.body);
       print("Registration over with status code " +
           response.statusCode.toString());
-
+      if (response.statusCode == 469) {
+        Fluttertoast.showToast(
+          msg: "Please retry after completing the profile",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          fontSize: 16,
+        );
+        launchURL(
+            "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
+      }
       if (response.statusCode != 200) return response;
 
       RegistrationStatus.instance.registrationIDs.add(id);
@@ -148,6 +169,16 @@ class RegistrationAPI {
         body: json.encode({"name": teamName, "eventId": eventId}),
       );
       print("Create team status code " + response.statusCode.toString());
+      if (response.statusCode == 469) {
+        Fluttertoast.showToast(
+          msg: "Please Retry after completing the profile",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          fontSize: 16,
+        );
+        launchURL(
+            "https://auth.excelmec.org/auth/logout?redirect_to=https://accounts.excelmec.org/complete-profile");
+      }
       if (response.statusCode != 200) return;
       TeamDetails teamDetails = TeamDetails.fromJson(jsonDecode(response.body));
       return teamDetails;

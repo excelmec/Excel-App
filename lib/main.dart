@@ -1,3 +1,5 @@
+import 'package:excelapp/Services/Notifications/firebase_messaging.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,7 @@ void main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  initiliaseNotificationServices();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
@@ -25,17 +28,19 @@ class MyApp extends StatelessWidget {
     // Set status bar color
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
         statusBarColor: Color(0x07000033),
       ),
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Excel 2023',
+      title: 'Excel 2024',
       theme: ThemeData(
         fontFamily: 'mulish',
-        primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(backgroundColor: Color(0xffe4edef)),
+        primarySwatch: Colors.deepPurple,
+        appBarTheme: AppBarTheme(
+          backgroundColor: backgroundBlue,
+        ),
       ),
       home: Splashscreen(),
       //Landingscreen

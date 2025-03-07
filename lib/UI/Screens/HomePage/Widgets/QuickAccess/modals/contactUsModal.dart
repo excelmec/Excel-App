@@ -1,4 +1,5 @@
 import 'package:excelapp/UI/Screens/HomePage/Widgets/socialIcons.dart';
+import 'package:excelapp/UI/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,9 +24,11 @@ Widget ContactUsModal(context) {
               child: Text(
                 "Stay In Touch",
                 style: TextStyle(
-                    fontFamily: "mulish",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800),
+                  fontFamily: "mulish",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: secondaryColor,
+                ),
               )),
           Padding(
             padding: EdgeInsets.all(20),
@@ -34,12 +37,12 @@ Widget ContactUsModal(context) {
                 children: [
                   InkWell(
                     onTap: () {
-                      launch('tel:+918921545611');
+                      launch('tel:+919744872696');
                     },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 60,
@@ -62,7 +65,7 @@ Widget ContactUsModal(context) {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 61, 71, 71),
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -77,7 +80,7 @@ Widget ContactUsModal(context) {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 60,
@@ -100,7 +103,7 @@ Widget ContactUsModal(context) {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 61, 71, 71),
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -117,6 +120,7 @@ Widget ContactUsModal(context) {
                 style: TextStyle(
                     fontFamily: "mulish",
                     fontSize: 16,
+                    color: secondaryColor,
                     fontWeight: FontWeight.w800),
               )),
           Padding(
@@ -131,7 +135,7 @@ Widget ContactUsModal(context) {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 60,
@@ -154,7 +158,7 @@ Widget ContactUsModal(context) {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 61, 71, 71),
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -169,7 +173,7 @@ Widget ContactUsModal(context) {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 60,
@@ -192,7 +196,7 @@ Widget ContactUsModal(context) {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 61, 71, 71),
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -214,7 +218,7 @@ Widget ContactUsModal(context) {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 60,
@@ -237,7 +241,7 @@ Widget ContactUsModal(context) {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 61, 71, 71),
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
@@ -252,7 +256,7 @@ Widget ContactUsModal(context) {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 228, 237, 239),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: 60,
@@ -275,7 +279,7 @@ Widget ContactUsModal(context) {
                               style: TextStyle(
                                   fontFamily: "mulish",
                                   fontSize: 14,
-                                  color: Color.fromARGB(255, 61, 71, 71),
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.w700),
                             ),
                           ],

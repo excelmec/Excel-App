@@ -25,7 +25,7 @@ class FavouritesStatus with ChangeNotifier {
         break;
       }
     }
-   instance.notifyListeners();
+    instance.notifyListeners();
     print("has listeners");
     print(instance.hasListeners);
   }
@@ -95,8 +95,7 @@ class FavouritesAPI {
   static Future deleteFavourite({required int id}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jwt = prefs.getString('jwt');
-    if (jwt == "null")
-      return "Log in to remove favourite events";
+    if (jwt == "null") return "Log in to remove favourite events";
     if (FavouritesStatus.instance.favouritesStatus == 0)
       return 'Network not available';
     if (!await isFavourited(id)) return "Already Unfavourited";
@@ -126,7 +125,7 @@ class FavouritesAPI {
     if (jwt == "null")
       return "Log in to add favourite events";
     else if (FavouritesStatus.instance.favouritesStatus == 0)
-      return "Network not Aailable";
+      return "Network not Available";
     else if (await isFavourited(id)) return "Already in Favourites";
     try {
       var response = await postAuthorisedData(
@@ -135,8 +134,9 @@ class FavouritesAPI {
       );
       print("Adding to favourites attempted with status code" +
           response.statusCode.toString());
- 
-      if (response.statusCode != 200) return "An error occured+${response.statusCode}";
+
+      if (response.statusCode != 200)
+        return "An error occured+${response.statusCode}";
       FavouritesStatus.instance.favouritesIDs.add(id);
       // Converts event details model to event model to add to favourites
       Event eventDetailsToEvent = Event.fromJson(eventDetails.toJson());

@@ -8,11 +8,12 @@ import '../Stories/fullPageView.dart';
 
 // ignore: must_be_immutable
 class HighlightsCard extends StatelessWidget {
+  final List<Highlights> highLightsMap;
   final Highlights highlights;
   final int index;
   final List<Map<String,dynamic>> storiesMapList;
   late Color firstColor;
-  HighlightsCard(this.highlights, this.index,this.storiesMapList) {
+  HighlightsCard(this.highLightsMap, this.highlights, this.index,this.storiesMapList) {
     int v =this.index;
     if(v==this.storiesMapList.length-1){
       if(v%3==0){
@@ -37,7 +38,9 @@ class HighlightsCard extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => FullPageView(
                       storiesMapList: storiesMapList,
-                      storyNumber: index),
+                      storyNumber: index,
+                      highLightsMap: highLightsMap,
+                    ),
                 ),
               );
         },
@@ -48,6 +51,7 @@ class HighlightsCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
+                      // ignore: unnecessary_null_comparison
                       image: CachedNetworkImageProvider((highlights.image != null)
                           ? highlights.image
                           : "http://greatcatwalk.com/images/service2.jpg"),

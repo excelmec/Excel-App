@@ -3,7 +3,8 @@ class AccountConfig {
   static final String baseUrl = 'https://ajeshkumar.eu.auth0.com/';
   static final String clientId = 'Xcmx1whIj6t4qEUvzYkoXz1Icq3hHD3B';
 
-  static final String newClientId = '347228001421-u27ghprpsqocf51b8g8ot71qta0inhgq.apps.googleusercontent.com';
+  static final String newClientId =
+      '347228001421-u27ghprpsqocf51b8g8ot71qta0inhgq.apps.googleusercontent.com';
 
   // static final String redirect = 'com.excelmec.app.excelapp://ajeshkumar.eu.auth0.com/android/com.excelmec.app.excelapp/callback';
 
@@ -12,6 +13,8 @@ class AccountConfig {
   static final String url = 'https://accounts.excelmec.org/api/';
 
   static final String newUrl = 'https://accounts-api.excelmec.org/api/';
+  // static final String newUrl =
+  //     'https://excel-accounts-backend-42324430635.asia-south1.run.app/api/';
 
   //header -- GET request
   static Map<String, String> getHeader(String token) {

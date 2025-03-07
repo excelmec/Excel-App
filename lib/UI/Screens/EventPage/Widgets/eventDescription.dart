@@ -1,4 +1,4 @@
-import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/Models/event_details.dart';
 import 'package:excelapp/UI/constants.dart';
@@ -6,7 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Widget getEventDetails(
-    {required EventDetails eventDetails, required bool detailed, required double height, required double width}) {
+    {required EventDetails eventDetails,
+    required bool detailed,
+    required double height,
+    required double width}) {
   List<Widget> children = [];
 
   if (eventDetails.isTeam) {
@@ -14,19 +17,18 @@ Widget getEventDetails(
         eventDetails.teamSize.toString(), height, width));
   }
 
-  if(eventDetails.prizeMoney != 0) 
-  children.add(detailBox(FontAwesomeIcons.trophy, "Prize pool",
-     "₹"+ eventDetails.prizeMoney.toString(), height, width));
+  if (eventDetails.prizeMoney != 0)
+    children.add(detailBox(FontAwesomeIcons.trophy, "Prize pool",
+        "₹" + eventDetails.prizeMoney.toString(), height, width));
 
-  
-  if(eventDetails.entryFee != 0) 
-  children.add(detailBox(FontAwesomeIcons.moneyBill, "Entry Fee",
-     "₹"+ eventDetails.entryFee.toString(), height, width));
+  if (eventDetails.entryFee != 0)
+    children.add(detailBox(FontAwesomeIcons.moneyBill, "Entry Fee",
+        "₹" + eventDetails.entryFee.toString(), height, width));
 
   return Hero(
     tag: 'EventDescription',
     child: Container(
-      color: white200,
+      decoration: BoxDecoration(gradient: primaryGradient()),
       child: Column(
         children: <Widget>[
           Row(
@@ -68,9 +70,10 @@ Widget getEventDetails(
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-                child: 
-                children.length > 0 ? children[0] : SizedBox(height:height,width:width),
-                
+                child: children.length > 0
+                    ? children[0]
+                    : SizedBox(height: height, width: width),
+
                 // (eventDetails.isTeam == false)
                 //     ? eventDetails.prizeMoney != null && eventDetails.prizeMoney != 0
                 //         ? children[0]
@@ -93,11 +96,12 @@ Widget getEventDetails(
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                      child: children.length > 2 ? children[2] :
-                      SizedBox(
-                        height: height,
-                        width: width,
-                      ),
+                      child: children.length > 2
+                          ? children[2]
+                          : SizedBox(
+                              height: height,
+                              width: width,
+                            ),
                     )
                   ]
                 : [],
@@ -117,7 +121,7 @@ Widget detailBox(
     width: width,
 
     decoration: BoxDecoration(
-        color: white100, borderRadius: BorderRadius.circular(24)),
+        color: Color(0xFF000000), borderRadius: BorderRadius.circular(24)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -126,7 +130,7 @@ Widget detailBox(
           child: FaIcon(
             icon,
             size: 20.0,
-            color: red100,
+            color: Color(0xFFAD59AE),
           ),
         ),
         Expanded(
@@ -141,7 +145,7 @@ Widget detailBox(
                 Text(
                   title,
                   style: TextStyle(
-                    color: Color(0xFF778585),
+                    color: Color(0xFFE7F1F3),
                     fontSize: 11,
                     fontFamily: pfontFamily,
                     fontWeight: FontWeight.w500,
@@ -150,8 +154,9 @@ Widget detailBox(
                 SizedBox(height: 5),
                 Text(
                   data,
+                  maxLines: 2,
                   style: TextStyle(
-                    color: Color(0xFF3D4747),
+                    color: Color(0xFFE4EDEF),
                     fontSize: 14,
                     fontFamily: pfontFamily,
                     fontWeight: FontWeight.bold,

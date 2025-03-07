@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:excelapp/Models/schedule_model.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:excelapp/UI/Themes/profile_themes.dart';
 import 'package:intl/intl.dart';
 import 'package:excelapp/UI/Screens/EventPage/eventPage.dart';
@@ -77,9 +78,10 @@ class ScheduleEvent extends StatelessWidget {
                               .toLowerCase(),
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: ExcelTheme.textGrey),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: secondaryColor,
+                      ),
                     )),
               ],
             ),
@@ -104,7 +106,7 @@ class ScheduleEvent extends StatelessWidget {
                     padding: EdgeInsets.all(17),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Color(0xffFBFFFF),
+                        gradient: primaryGradientHorizontal(),
                         border: Border.all(
                             color: ExcelTheme.aevaDark.withOpacity(0.1))),
                     margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -126,7 +128,7 @@ class ScheduleEvent extends StatelessWidget {
                             child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(21),
-                            color: red100,
+                            color: tertiaryPurple,
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(12.25),
@@ -157,13 +159,15 @@ class ScheduleEvent extends StatelessWidget {
                               children: [
                                 Text(
                                   eventSchedule.name +
-                                          (eventSchedule.round != null
+                                          (eventSchedule.round != ""
                                               ? " (${eventSchedule.round})"
                                               : "") ??
                                       "",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 14),
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
+                                    color: secondaryColor,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 8,
@@ -182,7 +186,7 @@ class ScheduleEvent extends StatelessWidget {
                                     "View Event",
                                     style: TextStyle(
                                         fontSize: 11,
-                                        color: red100,
+                                        color: primaryPink,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),

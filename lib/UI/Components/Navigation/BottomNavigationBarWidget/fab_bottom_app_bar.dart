@@ -112,15 +112,19 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                   padding: EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
                       color: _selectedIndex == index
-                          ? red100.withOpacity(0.2)
+                          ? Color(0xFFFC95FE)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(30)),
                   alignment: Alignment.center,
                   child: Image.asset(
-                      _selectedIndex == index
-                          ? "assets/icons/${item.iconName}_filled.png"
-                          : "assets/icons/${item.iconName}.png",
-                      height: 20),
+                    _selectedIndex == index
+                        ? "assets/icons/${item.iconName}_filled.png"
+                        : "assets/icons/${item.iconName}.png",
+                    height: 20,
+                    // color: _selectedIndex == index
+                    //     ? Color(0xFF2C1B77)
+                    //     : Color(0xFFAD59AE),
+                  ),
                 ),
               ],
             ),

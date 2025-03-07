@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:excelapp/Services/API/events_api.dart';
 import 'package:excelapp/UI/Components/LoadingUI/loadingAnimation.dart';
+import 'package:excelapp/UI/Themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,7 @@ import 'Widgets/eventPageBody.dart';
 class EventPage extends StatefulWidget {
   final int eventId;
   final String heroname;
-  EventPage(this.eventId,{this.heroname='eventIcon'});
+  EventPage(this.eventId, {this.heroname = 'eventIcon'});
   @override
   _EventPageState createState() => _EventPageState();
 }
@@ -36,7 +37,6 @@ class _EventPageState extends State<EventPage> {
     // // Fetch from net & update
     var result2 = await EventsAPI.fetchAndStoreEventDetailsFromNet(id);
     if (result2 == "error" && result1 == null) {
- 
       return;
     }
     if (result2 == "error") return;
@@ -65,19 +65,24 @@ class _EventPageState extends State<EventPage> {
               );
             }
             return MultiProvider(
-              providers: [
-                
-                  ChangeNotifierProvider<FavouritesStatus>(create: (c)=>FavouritesStatus.instance),
-              ],
-              child: EventPageBody(eventDetails: snapshot.data!,heroname: widget.heroname,)
-              );
+                providers: [
+                  ChangeNotifierProvider<FavouritesStatus>(
+                      create: (c) => FavouritesStatus.instance),
+                ],
+                child: EventPageBody(
+                  eventDetails: snapshot.data!,
+                  heroname: widget.heroname,
+                ));
           } else {
-            return Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                //Background Image
-                LoadingAnimation()
-              ],
+            return Container(
+              color: backgroundBlue,
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  //Background Image
+                  LoadingAnimation()
+                ],
+              ),
             );
           }
         },

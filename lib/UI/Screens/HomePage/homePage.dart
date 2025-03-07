@@ -2,10 +2,10 @@ import 'package:excelapp/UI/Screens/HomePage/Widgets/Discover/discover.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/Highlights/highlights.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/home_appBar.dart';
 import 'package:excelapp/UI/Themes/colors.dart';
+import 'package:excelapp/UI/Themes/gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp/UI/Screens/HomePage/Widgets/QuickAccess/quickAccess.dart';
 import 'Widgets/LatestNews/latestNews.dart';
-import 'Widgets/CampusAmbassador/campusAmb.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,9 +17,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: white100,
+      backgroundColor: backgroundBlue,
       body: Container(
-        color: white100,
+        decoration: BoxDecoration(gradient: primaryGradient()),
         child: Column(
           children: [
             SafeArea(
@@ -33,7 +33,8 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
                   child: Container(
-                    color: white200,
+                    decoration: BoxDecoration(gradient: primaryGradient()),
+                    // color: white200,
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -44,15 +45,10 @@ class _HomePageState extends State<HomePage> {
                               HighlightsSection(),
                             ],
                           ),
-                          decoration: BoxDecoration(
-                            color: white100,
-                            border: Border(
-                                bottom:
-                                    BorderSide(color: white300, width: 1.2)),
-                          ),
                         ),
+
                         Discover(),
-                        CampusAmbassador(),
+                        // CampusAmbassador(),
                         LatestNewsSection(
                           key: globalKey,
                         ),
