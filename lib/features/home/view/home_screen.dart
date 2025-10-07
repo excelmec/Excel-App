@@ -10,13 +10,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
+  int? _selectedButtonIndex;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(
       viewportFraction: 0.6,
-      initialPage: 1000 * 3 ~/ 2, 
+      initialPage: 1000 * 3 ~/ 2,
     );
   }
 
@@ -91,22 +92,51 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildCircleButton(icon: Icons.close, label: 'Excel', onTap: () {}),
-        _buildCircleButton(icon: Icons.phone, label: 'Contact Us', onTap: () {}),
-        _buildCircleButton(icon: Icons.location_on, label: 'Reach Us', onTap: () {}),
-        _buildCircleButton(icon: Icons.notifications, label: 'Notifications', onTap: () {}, hasBadge: true),
+        _buildCircleButton(
+          index: 0,
+          imagePath: 'assets/icons/excel.png',
+          label: 'Excel',
+          onTap: () {},
+        ),
+        _buildCircleButton(
+          index: 1,
+          imagePath: 'assets/icons/contacts.png',
+          label: 'Contact Us',
+          onTap: () {},
+        ),
+        _buildCircleButton(
+          index: 2,
+          imagePath: 'assets/icons/reachus.png',
+          label: 'Reach Us',
+          onTap: () {},
+        ),
+        _buildCircleButton(
+          index: 3,
+          imagePath: 'assets/icons/noti.png',
+          label: 'Notifications',
+          onTap: () {},
+          hasBadge: true,
+        ),
       ],
     );
   }
 
   Widget _buildCircleButton({
-    required IconData icon,
+    required int index,
+    required String imagePath,
     required String label,
     required VoidCallback onTap,
     bool hasBadge = false,
   }) {
+    final bool isSelected = _selectedButtonIndex == index;
+
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        setState(() {
+          _selectedButtonIndex = index;
+        });
+        onTap();
+      },
       child: Column(
         children: [
           Stack(
@@ -115,29 +145,56 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.red.withOpacity(0.25),
-                  border: Border.all(color: Colors.red.withOpacity(0.5), width: 1),
+                  borderRadius: BorderRadius.circular(25),
+
+                  color: isSelected
+                      ? const Color(0xFF691701)
+                      : Colors.white.withOpacity(0.25),
                 ),
-                child: Icon(icon, color: Colors.white, size: 28),
+                child: Image.asset(
+                  imagePath,
+                  width: 28,
+                  height: 28,
+                  color: const Color(0xFFFCF0A6),
+                ),
               ),
+
               if (hasBadge)
                 Positioned(
-                  top: 0,
+                  top: 5,
                   right: 0,
                   child: Container(
                     width: 10,
                     height: 10,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.yellow,
+                      gradient: RadialGradient(
+                        center: Alignment.center,
+                        radius: 0.5,
+                        colors: [
+                          Color.fromRGBO(247, 184, 63, 0.7),
+                          Color.fromRGBO(252, 240, 166, 0.7),
+                        ],
+                        stops: [0.0, 1.0],
+                      ),
                     ),
                   ),
                 ),
             ],
           ),
           const SizedBox(height: 8),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.mulish(
+              fontWeight: FontWeight.w500,
+              fontSize: 11,
+              height: 1.4,
+              letterSpacing: 0,
+              color: const Color(0xFFE4EDEF),
+            ),
+          ),
         ],
       ),
     );
@@ -159,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           final actualIndex = index % highlights.length;
           final highlight = highlights[actualIndex];
-          
+
           return AnimatedBuilder(
             animation: _pageController,
             builder: (context, child) {
@@ -168,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 value = _pageController.page! - index;
                 value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
               }
-              
+
               return Center(
                 child: SizedBox(
                   height: Curves.easeInOut.transform(value) * 280,
@@ -187,15 +244,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCarouselCard({required String title, required String imagePath}) {
+  Widget _buildCarouselCard({
+    required String title,
+    required String imagePath,
+  }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
-        ),
+        image: DecorationImage(image: AssetImage(imagePath), fit: BoxFit.cover),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
@@ -220,8 +277,18 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('HIGHLIGHTS', style: TextStyle(color: Colors.white70, fontSize: 10)),
-              Text(title, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              const Text(
+                'HIGHLIGHTS',
+                style: TextStyle(color: Colors.white70, fontSize: 10),
+              ),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ),
@@ -266,7 +333,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   end: Alignment.bottomRight,
                 ),
                 boxShadow: [
-                  BoxShadow(color: Colors.amber.withOpacity(0.5), blurRadius: 10, spreadRadius: 2),
+                  BoxShadow(
+                    color: Colors.amber.withOpacity(0.5),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
                 ],
               ),
               child: const Icon(Icons.flash_on, color: Colors.white, size: 30),
