@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      viewportFraction: 0.6,
+      initialPage: 1000 * 3 ~/ 2, // Start in middle for infinite scroll
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,70 +32,66 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          
           Image.asset(
-            'assets/images/welcome_background.png', 
+            'assets/images/welcome_background.png',
             fit: BoxFit.cover,
           ),
-
           SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  
                   _buildTopHeader(),
                   const SizedBox(height: 30),
-                  
                   _buildActionButtons(),
                   const SizedBox(height: 40),
-                  
                   _buildHighlightsCarousel(),
                 ],
               ),
             ),
           ),
-          
           _buildCustomBottomNavBar(),
         ],
       ),
     );
   }
 
-
   Widget _buildTopHeader() {
-  return ShaderMask(
-    shaderCallback: (bounds) => const RadialGradient(
-      center: Alignment(0.33, -0.15), 
-      radius: 0.8,
-      colors: [
-        Color(0xFFFFE44A),
-        Color(0xFFFDDD4F),
-        Color(0xFFFFB946),
-        Color(0xFFFFB02F),
-        Color(0xFFFFDD3A),
-        Color(0xFFF8B22A),
-      ],
-      stops: [0.0, 0.1816, 0.4087, 0.6538, 0.8706, 1.0],
-    ).createShader(bounds),
-    child: Text(
-      'EXCEL 2025',
-      style: GoogleFonts.montserrat(
-        fontWeight: FontWeight.w300, 
-        fontSize: 27,
-        height: 1.0, 
-        letterSpacing: 0.12 * 27,
-        color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: ShaderMask(
+        shaderCallback: (bounds) => const RadialGradient(
+          center: Alignment(0.33, -0.15),
+          radius: 0.8,
+          colors: [
+            Color(0xFFFFE44A),
+            Color(0xFFFDDD4F),
+            Color(0xFFFFB946),
+            Color(0xFFFFB02F),
+            Color(0xFFFFDD3A),
+            Color(0xFFF8B22A),
+          ],
+          stops: [0.0, 0.1816, 0.4087, 0.6538, 0.8706, 1.0],
+        ).createShader(bounds),
+        child: Text(
+          'EXCEL 2025',
+          style: GoogleFonts.montserrat(
+            fontWeight: FontWeight.w300,
+            fontSize: 27,
+            height: 1.0,
+            letterSpacing: 0.12 * 27,
+            color: Colors.white,
+          ),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildActionButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildCircleButton(icon: Icons.close, label: 'Excel', onTap: () {}), 
+        _buildCircleButton(icon: Icons.close, label: 'Excel', onTap: () {}),
         _buildCircleButton(icon: Icons.phone, label: 'Contact Us', onTap: () {}),
         _buildCircleButton(icon: Icons.location_on, label: 'Reach Us', onTap: () {}),
         _buildCircleButton(icon: Icons.notifications, label: 'Notifications', onTap: () {}, hasBadge: true),
@@ -125,7 +143,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-
   Widget _buildHighlightsCarousel() {
     final List<Map<String, String>> highlights = [
       {'title': 'Tug Of War', 'image': 'assets/images/tow.png'},
@@ -134,16 +151,36 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 220, 
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: highlights.length,
+      height: 300,
+      child: PageView.builder(
+        controller: _pageController,
+        physics: const BouncingScrollPhysics(),
+        itemCount: null,
         itemBuilder: (context, index) {
-          final highlight = highlights[index];
-          final isFirst = index == 0;
-          return Padding(
-            padding: EdgeInsets.only(left: isFirst ? 20 : 8, right: 8),
-            child: _buildCarouselCard(title: highlight['title']!, imagePath: highlight['image']!),
+          final actualIndex = index % highlights.length;
+          final highlight = highlights[actualIndex];
+          
+          return AnimatedBuilder(
+            animation: _pageController,
+            builder: (context, child) {
+              double value = 1.0;
+              if (_pageController.position.haveDimensions) {
+                value = _pageController.page! - index;
+                value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
+              }
+              
+              return Center(
+                child: SizedBox(
+                  height: Curves.easeInOut.transform(value) * 280,
+                  width: Curves.easeInOut.transform(value) * 200,
+                  child: child,
+                ),
+              );
+            },
+            child: _buildCarouselCard(
+              title: highlight['title']!,
+              imagePath: highlight['image']!,
+            ),
           );
         },
       ),
@@ -152,23 +189,31 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildCarouselCard({required String title, required String imagePath}) {
     return Container(
-      width: 160,
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
-          image: AssetImage(imagePath), 
+          image: AssetImage(imagePath),
           fit: BoxFit.cover,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 15,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Container(
-         decoration: BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
           ),
-         ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -189,7 +234,7 @@ class HomeScreen extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Stack(
         alignment: Alignment.bottomCenter,
-        clipBehavior: Clip.none, 
+        clipBehavior: Clip.none,
         children: [
           Container(
             height: 65,
@@ -203,15 +248,14 @@ class HomeScreen extends StatelessWidget {
               children: [
                 _buildNavItem(icon: Icons.home, isSelected: true),
                 _buildNavItem(icon: Icons.explore_outlined),
-                const SizedBox(width: 50), 
+                const SizedBox(width: 50),
                 _buildNavItem(icon: Icons.calendar_today_outlined),
                 _buildNavItem(icon: Icons.person_outline),
               ],
             ),
           ),
-        
           Positioned(
-            bottom: 35, 
+            bottom: 35,
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -225,14 +269,14 @@ class HomeScreen extends StatelessWidget {
                   BoxShadow(color: Colors.amber.withOpacity(0.5), blurRadius: 10, spreadRadius: 2),
                 ],
               ),
-              child: const Icon(Icons.flash_on, color: Colors.white, size: 30), 
+              child: const Icon(Icons.flash_on, color: Colors.white, size: 30),
             ),
           ),
         ],
       ),
     );
   }
-  
+
   Widget _buildNavItem({required IconData icon, bool isSelected = false}) {
     return isSelected
         ? Container(
