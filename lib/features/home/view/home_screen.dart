@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(
       viewportFraction: 0.6,
-      initialPage: 1000 * 3 ~/ 2, // Start in middle for infinite scroll
+      initialPage: 1000 * 3 ~/ 2, 
     );
   }
 
