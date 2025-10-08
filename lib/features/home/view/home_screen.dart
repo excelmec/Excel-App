@@ -10,13 +10,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
-  int? _selectedButtonIndex;
+  int? _selectedActionIndex;
+  int _selectedNavIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(
-      viewportFraction: 0.6,
+      viewportFraction: 0.5,
       initialPage: 1000 * 3 ~/ 2,
     );
   }
@@ -128,12 +129,12 @@ class _HomeScreenState extends State<HomeScreen> {
     required VoidCallback onTap,
     bool hasBadge = false,
   }) {
-    final bool isSelected = _selectedButtonIndex == index;
+    final bool isSelected = _selectedActionIndex == index;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedButtonIndex = index;
+          _selectedActionIndex = index;
         });
         onTap();
       },
@@ -149,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   color: isSelected
                       ? const Color(0xFF691701)
-                      : Colors.white.withOpacity(0.25),
+                      : Colors.white.withOpacity(0.15),
                 ),
                 child: Image.asset(
                   imagePath,
@@ -224,12 +225,16 @@ class _HomeScreenState extends State<HomeScreen> {
               if (_pageController.position.haveDimensions) {
                 value = _pageController.page! - index;
                 value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
+              } else {
+              
+                value = (_pageController.initialPage - index).toDouble();
+                value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
               }
 
               return Center(
                 child: SizedBox(
                   height: Curves.easeInOut.transform(value) * 280,
-                  width: Curves.easeInOut.transform(value) * 200,
+                  width: Curves.easeInOut.transform(value) * 205,
                   child: child,
                 ),
               );
@@ -268,29 +273,45 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+            colors: [const Color(0xFF691701).withOpacity(0.4), Colors.black.withOpacity(0.8)],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'HIGHLIGHTS',
-                style: TextStyle(color: Colors.white70, fontSize: 10),
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 20,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'HIGHLIGHTS',
+                      style: GoogleFonts.mulish(
+                        color: Colors.white70,
+                        fontSize: 8,
+                        fontWeight: FontWeight.w400,
+                        height: 1.0,
+                        letterSpacing: 0.15 * 8,
+                      ),
+                    ),
+                    Text(
+                      title[0].toUpperCase() + title.substring(1).toLowerCase(),
+                      style: GoogleFonts.mulish(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        height: 1.0,
+                        letterSpacing: 0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -304,43 +325,74 @@ class _HomeScreenState extends State<HomeScreen> {
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 65,
+            height: 80,
             margin: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(icon: Icons.home, isSelected: true),
-                _buildNavItem(icon: Icons.explore_outlined),
-                const SizedBox(width: 50),
-                _buildNavItem(icon: Icons.calendar_today_outlined),
-                _buildNavItem(icon: Icons.person_outline),
+                Expanded(
+                  child: _buildNavItem(
+                    index: 0,
+                    iconPath: 'assets/icons/home.png',
+                  ),
+                ),
+                Expanded(
+                  child: _buildNavItem(
+                    index: 1,
+                    iconPath: 'assets/icons/discover.png',
+                  ),
+                ),
+                const SizedBox(width: 88),
+                Expanded(
+                  child: _buildNavItem(
+                    index: 2,
+                    iconPath: 'assets/icons/calendar.png',
+                  ),
+                ),
+                Expanded(
+                  child: _buildNavItem(
+                    index: 3,
+                    iconPath: 'assets/icons/user.png',
+                  ),
+                ),
               ],
             ),
           ),
           Positioned(
-            bottom: 35,
+            bottom: 28,
             child: Container(
-              padding: const EdgeInsets.all(16),
+              width: 64,
+              height: 64,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
-                  colors: [Colors.amber, Colors.orange],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromRGBO(247, 184, 63, 1.0), 
+                    Color(0xFFE6D088),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.amber.withOpacity(0.5),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
               ),
-              child: const Icon(Icons.flash_on, color: Colors.white, size: 30),
+              child: Padding(
+                padding: const EdgeInsets.all(1),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/icons/navlogo.png',
+                      width: 28,
+                      height: 28,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -348,19 +400,73 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNavItem({required IconData icon, bool isSelected = false}) {
-    return isSelected
-        ? Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.red.withOpacity(0.8),
-            ),
-            child: Icon(icon, color: Colors.white),
-          )
-        : IconButton(
-            icon: Icon(icon, color: Colors.white70),
-            onPressed: () {},
-          );
+  Widget _buildNavItem({required int index, required String iconPath}) {
+    final bool isSelected = _selectedNavIndex == index;
+
+    final String selectedIconPath = iconPath.replaceFirst(
+      '.png',
+      '_selected.png',
+    );
+
+    final gradient = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color.fromRGBO(247, 184, 63, 0.66), Color(0xFFFCF0A6)],
+    );
+
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _selectedNavIndex = index;
+        });
+      },
+      icon: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: 44,
+          maxWidth: 65,
+          minHeight: 44,
+          maxHeight: 47,
+        ),
+        child: Center(
+          child: isSelected
+              ? SizedBox(
+                  width: 78, 
+                  height: 44, 
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        20,
+                      ), 
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFF691701),
+                          Color.fromRGBO(105, 23, 1, 0.5),
+                        ],
+                      ),
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        selectedIconPath,
+                        width: 19,
+                        height: 19,
+                      ),
+                    ),
+                  ),
+                )
+              : ShaderMask(
+                  shaderCallback: (bounds) => gradient.createShader(bounds),
+                  blendMode: BlendMode.srcIn,
+                  child: Image.asset(
+                    iconPath,
+                    width: 19,
+                    height: 19,
+                    color: Colors.white,
+                  ),
+                ),
+        ),
+      ),
+    );
   }
 }
