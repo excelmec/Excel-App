@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:excelapp2025/features/welcome/view/welcome_screen.dart';
+import 'package:excelapp2025/features/home/view/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }
