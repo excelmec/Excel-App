@@ -1,3 +1,4 @@
+import 'package:excelapp2025/features/profile/data/models/profile_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'profile_event.dart';

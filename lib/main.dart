@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:excelapp2025/features/welcome/view/welcome_screen.dart';
 
+import 'features/profile/view/profile_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Excel 2025',
       theme: ThemeData.dark(),
-      initialRoute: '/',
+      initialRoute: '/profile',
       routes: {
         '/': (context) => const WelcomeScreen(),
+        '/profile': (context) => const ProfileScreen(),
       },
     );
   }
