@@ -171,12 +171,115 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
           child: TabBarView(
             controller: _tabController,
             children: [
-              Center(child: Text('Registered Events')),
+              Center(child: EventCard()),
               Center(child: Text('Favorite Events')),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class EventCard extends StatelessWidget {
+  const EventCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      //TODO : adjust padding in bottom
+      padding: const EdgeInsets.all(15.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xAA691700),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(55.0),
+                    child: Image.network(
+                      'https://picsum.photos/100',
+                      width: 55,
+                      height: 55,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: 12.0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Event Title',
+                          style: GoogleFonts.mulish(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: GoogleFonts.mulish(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Dec 03",
+                    style: GoogleFonts.mulish(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        // TODO : favorite functionality
+                        // Also decide whether to use Icon from material icon or use custom icon for favorite
+                        onPressed: () {},
+                        icon: Icon(Icons.favorite_border_outlined),
+                      ),
+                      TextButton(
+                        // TODO : register functionality
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0x4D691700),
+                        ),
+                        child: Text(
+                          'Register',
+                          style: GoogleFonts.mulish(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
