@@ -3,8 +3,9 @@ class ProfileModel {
   final String name;
   final String email;
   final String role;
+  final String picture;
   final int institutionId;
-  // final String institutionName;
+  final String institutionName;
   final String gender;
   final String mobileNumber;
   final int categoryId;
@@ -14,8 +15,9 @@ class ProfileModel {
     required this.name,
     required this.email,
     required this.role,
+    required this.picture,
     required this.institutionId,
-    // required this.institutionName
+    required this.institutionName,
     required this.gender,
     required this.mobileNumber,
     required this.categoryId,
@@ -27,8 +29,9 @@ class ProfileModel {
       name: json['name'],
       email: json['email'],
       role: json['role'],
+      picture: json['picture'],
       institutionId: json['institution_id'],
-      // institutionName: json['institution
+      institutionName: json['institution'],
       gender: json['gender'],
       mobileNumber: json['mobile_number'],
       categoryId: json['category_id'],
@@ -41,8 +44,9 @@ class ProfileModel {
       'name': name,
       'email': email,
       'role': role,
+      'picture': picture,
       'institution_id': institutionId,
-      // 'institution_name': institutionName
+      'institution_name': institutionName,
       'gender': gender,
       'mobile_number': mobileNumber,
       'category_id': categoryId,
