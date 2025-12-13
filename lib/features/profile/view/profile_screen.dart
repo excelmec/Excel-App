@@ -1,4 +1,5 @@
 import 'package:excelapp2025/features/profile/bloc/profile_bloc.dart';
+import 'package:excelapp2025/features/profile/widgets/dialogue_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -120,7 +121,27 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
           children: [
             IconButton.filledTonal(
               //TODO : logout functionality
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (_) {
+                    return DialogueSheet(
+                      title: 'Confirm Logout',
+                      description: 'Are you sure you want to logout?',
+                      primaryActionText: 'Yes',
+                      secondaryActionText: 'No',
+                      onPrimaryAction: () {
+                        Navigator.of(context).pop();
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
+                      onSecondaryAction: () {
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  },
+                );
+              },
               iconSize: 16.0,
               padding: EdgeInsets.all(10.0),
               icon: const Icon(Icons.logout, color: Colors.black),
