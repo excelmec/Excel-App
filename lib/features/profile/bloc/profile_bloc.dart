@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:excelapp2025/core/api/routes/api_routes.dart';
+import 'package:excelapp2025/core/api/services/api_service.dart';
+import 'package:excelapp2025/core/api/services/auth_service.dart';
 import 'package:excelapp2025/features/profile/data/models/profile_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,27 +12,44 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
     on<LoadProfileData>(_onLoadProfileData);
+    on<LoginProfileRoutine>(_onLoginProfileRoutine);
   }
 
-  void _onLoadProfileData(LoadProfileData event, Emitter<ProfileState> emit) {
+  void _onLoadProfileData(
+    LoadProfileData event,
+    Emitter<ProfileState> emit,
+  ) async {
     emit(ProfileLoading());
-    //TODO : Fetch profile data from API
+    late String token;
     try {
-      final profileModel = ProfileModel(
-        id: 0,
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        role: 'user',
-        picture: 'https://www.gravatar.com/avatar/placeholder',
-        institutionId: 0,
-        institutionName: 'Example Institution',
-        gender: 'male',
-        mobileNumber: '+919876543210',
-        categoryId: 0,
+      token = await AuthService.getToken();
+    } catch (e) {
+      emit(ProfileSignedOut());
+      return;
+    }
+    try {
+      final response = await ApiService.get(
+        ApiRoutes.profile,
+        headers: ApiService.authHeaders(token),
+        baseUrl: ApiService.accountsBaseUrl,
       );
+      final profileModel = ProfileModel.fromJson(response);
       emit(ProfileLoaded(profileModel));
     } catch (e) {
       emit(ProfileError('Failed to load profile data'));
     }
+  }
+
+  void _onLoginProfileRoutine(
+    LoginProfileRoutine event,
+    Emitter<ProfileState> emit,
+  ) {
+    emit(LoginStartedState());
+    try {
+      AuthService.login();
+    } catch (e) {
+      emit(ProfileError('Login routine failed'));
+    }
+    emit(ProfileInitial());
   }
 }
