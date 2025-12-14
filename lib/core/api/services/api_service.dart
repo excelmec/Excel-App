@@ -3,23 +3,39 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String _baseUrl = 'https://baseUrl.com';
+  static const String accountsBaseUrl =
+      'https://excel-accounts-backend-1024858294879.asia-south1.run.app/api';
 
   static Map<String, String> defaultHeaders = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
 
+  static Map<String, String> authHeaders(String token) {
+    return {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+  }
+
   /// GET request
-  static Future<dynamic> get(String endpoint,
-      {Map<String, String>? headers}) async {
-    final uri = Uri.parse(_baseUrl + endpoint);
+  static Future<dynamic> get(
+    String endpoint, {
+    String baseUrl = _baseUrl,
+    Map<String, String>? headers,
+  }) async {
+    final uri = Uri.parse(baseUrl + endpoint);
     final response = await http.get(uri, headers: headers ?? defaultHeaders);
     return _handleResponse(response);
   }
 
   /// POST request
-  static Future<dynamic> post(String endpoint,
-      {Map<String, String>? headers, dynamic body}) async {
+  static Future<dynamic> post(
+    String endpoint, {
+    Map<String, String>? headers,
+    dynamic body,
+  }) async {
     final uri = Uri.parse(_baseUrl + endpoint);
     final response = await http.post(
       uri,
@@ -30,8 +46,11 @@ class ApiService {
   }
 
   /// PUT request
-  static Future<dynamic> put(String endpoint,
-      {Map<String, String>? headers, dynamic body}) async {
+  static Future<dynamic> put(
+    String endpoint, {
+    Map<String, String>? headers,
+    dynamic body,
+  }) async {
     final uri = Uri.parse(_baseUrl + endpoint);
     final response = await http.put(
       uri,
@@ -42,8 +61,11 @@ class ApiService {
   }
 
   /// DELETE request
-  static Future<dynamic> delete(String endpoint,
-      {Map<String, String>? headers, dynamic body}) async {
+  static Future<dynamic> delete(
+    String endpoint, {
+    Map<String, String>? headers,
+    dynamic body,
+  }) async {
     final uri = Uri.parse(_baseUrl + endpoint);
     final request = http.Request('DELETE', uri);
     request.headers.addAll(headers ?? defaultHeaders);
@@ -57,8 +79,11 @@ class ApiService {
   }
 
   /// PATCH request
-  static Future<dynamic> patch(String endpoint,
-      {Map<String, String>? headers, dynamic body}) async {
+  static Future<dynamic> patch(
+    String endpoint, {
+    Map<String, String>? headers,
+    dynamic body,
+  }) async {
     final uri = Uri.parse(_baseUrl + endpoint);
     final response = await http.patch(
       uri,
