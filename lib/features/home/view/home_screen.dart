@@ -1,5 +1,6 @@
 import 'package:excelapp2025/features/home/cubit/index_cubit.dart';
 import 'package:excelapp2025/features/home/widgets/contact_sheet.dart';
+import 'package:excelapp2025/features/home/widgets/excel_sheet.dart';
 import 'package:excelapp2025/features/home/widgets/reach_us_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -444,10 +445,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: Image.asset(
-                      'assets/icons/navlogo.png',
-                      width: 48,
-                      height: 48,
+                    child: InkWell(
+                      onTap: (){
+                        showModalBottomSheet<dynamic>(
+                          isScrollControlled: true,
+                          useRootNavigator: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
+                            ),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: MediaQuery.of(context).size.width,
+                          ),
+                          context: context,
+                          builder: (context) => Wrap(children: <Widget>[AboutExcelPopUp()]),
+                          isDismissible: true,
+                        );
+                      },
+                      child: Image.asset(
+                        'assets/icons/navlogo.png',
+                        width: 48,
+                        height: 48,
+                      ),
                     ),
                   ),
                 ),
