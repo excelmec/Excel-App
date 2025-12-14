@@ -1,4 +1,7 @@
+import 'package:excelapp2025/features/home/cubit/index_cubit.dart';
+import 'package:excelapp2025/features/home/widgets/contact_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
-  int? _selectedActionIndex;
+  int _selectedActionIndex = 0;
   int _selectedNavIndex = 0;
 
   @override
@@ -30,30 +33,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.asset(
-            'assets/images/welcome_background.png',
-            fit: BoxFit.cover,
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  _buildTopHeader(),
-                  const SizedBox(height: 30),
-                  _buildActionButtons(),
-                  const SizedBox(height: 40),
-                  _buildHighlightsCarousel(),
-                ],
+    return BlocListener<IndexCubit, IndexState>(
+      listener: (context, state) {
+        setState(() {
+          _selectedActionIndex = state.quickAccessIndex;
+          _selectedNavIndex = state.navBarIndex;
+        });
+      },
+      child: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/images/welcome_background.png',
+              fit: BoxFit.cover,
+            ),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    _buildTopHeader(),
+                    const SizedBox(height: 30),
+                    _buildActionButtons(),
+                    const SizedBox(height: 40),
+                    _buildHighlightsCarousel(),
+                  ],
+                ),
               ),
             ),
-          ),
-          _buildCustomBottomNavBar(),
-        ],
+            _buildCustomBottomNavBar(),
+          ],
+        ),
       ),
     );
   }
@@ -103,7 +114,26 @@ class _HomeScreenState extends State<HomeScreen> {
           index: 1,
           imagePath: 'assets/icons/contacts.png',
           label: 'Contact Us',
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              useRootNavigator: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+              ),
+              context: context,
+              builder: (context) => Wrap(children: <Widget>[contactUsModal(context)]),
+              isDismissible: true,
+            ).then((_) {
+              context.read<IndexCubit>().updateIndex(0);
+            });
+          },
         ),
         _buildCircleButton(
           index: 2,
@@ -133,9 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _selectedActionIndex = index;
-        });
+        // setState(() {
+        //   _selectedActionIndex = index;
+        // });
+        context.read<IndexCubit>().updateIndex(index);
         onTap();
       },
       child: Column(
@@ -226,7 +257,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 value = _pageController.page! - index;
                 value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
               } else {
-              
                 value = (_pageController.initialPage - index).toDouble();
                 value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
               }
@@ -273,7 +303,10 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [const Color(0xFF691701).withOpacity(0.4), Colors.black.withOpacity(0.8)],
+            colors: [
+              const Color(0xFF691701).withOpacity(0.4),
+              Colors.black.withOpacity(0.8),
+            ],
           ),
         ),
         child: Stack(
@@ -362,19 +395,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned(
-            bottom: 28,
+            bottom: 40,
             child: Container(
-              width: 64,
-              height: 64,
+              width: 75,
+              height: 75,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color.fromRGBO(247, 184, 63, 1.0), 
-                    Color(0xFFE6D088),
+                    Color.fromRGBO(247, 184, 63, 1.0),
+                    Color.fromARGB(255, 235, 215, 148),
+                    Colors.black,
                   ],
+                  stops: [0.0, 0.4, 1.0],
                 ),
               ),
               child: Padding(
@@ -387,8 +422,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Center(
                     child: Image.asset(
                       'assets/icons/navlogo.png',
-                      width: 28,
-                      height: 28,
+                      width: 48,
+                      height: 48,
                     ),
                   ),
                 ),
@@ -416,8 +451,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return IconButton(
       onPressed: () {
+        context.read<IndexCubit>().updateNavIndex(index);
         setState(() {
-          _selectedNavIndex = index;
+          // _selectedNavIndex = index;
+          if (index == 3) {
+            Navigator.pushNamed(context, '/profile').then((_) {
+              context.read<IndexCubit>().updateNavIndex(0);
+            });
+          }
         });
       },
       icon: ConstrainedBox(
@@ -428,43 +469,56 @@ class _HomeScreenState extends State<HomeScreen> {
           maxHeight: 47,
         ),
         child: Center(
-          child: isSelected
-              ? SizedBox(
-                  width: 78, 
-                  height: 44, 
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        20,
-                      ), 
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF691701),
-                          Color.fromRGBO(105, 23, 1, 0.5),
-                        ],
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            transitionBuilder: (child, animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: ScaleTransition(scale: animation, child: child),
+              );
+            },
+            child: isSelected
+                ? SizedBox(
+                    key: ValueKey('selected_$index'),
+                    width: 78,
+                    height: 44,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF691701),
+                            Color.fromRGBO(105, 23, 1, 0.5),
+                          ],
+                        ),
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          selectedIconPath,
+                          width: 19,
+                          height: 19,
+                        ),
                       ),
                     ),
-                    child: Center(
-                      child: Image.asset(
-                        selectedIconPath,
-                        width: 19,
-                        height: 19,
-                      ),
+                  )
+                : ShaderMask(
+                    key: ValueKey('unselected_$index'),
+                    shaderCallback: (bounds) => gradient.createShader(bounds),
+                    blendMode: BlendMode.srcIn,
+                    child: Image.asset(
+                      iconPath,
+                      width: 19,
+                      height: 19,
+                      color: Colors.white,
                     ),
                   ),
-                )
-              : ShaderMask(
-                  shaderCallback: (bounds) => gradient.createShader(bounds),
-                  blendMode: BlendMode.srcIn,
-                  child: Image.asset(
-                    iconPath,
-                    width: 19,
-                    height: 19,
-                    color: Colors.white,
-                  ),
-                ),
+          ),
         ),
       ),
     );
