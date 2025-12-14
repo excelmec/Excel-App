@@ -1,5 +1,6 @@
 import 'package:excelapp2025/features/home/cubit/index_cubit.dart';
 import 'package:excelapp2025/features/home/widgets/contact_sheet.dart';
+import 'package:excelapp2025/features/home/widgets/reach_us_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -139,13 +140,36 @@ class _HomeScreenState extends State<HomeScreen> {
           index: 2,
           imagePath: 'assets/icons/reachus.png',
           label: 'Reach Us',
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              useRootNavigator: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+              ),
+              context: context,
+              builder: (context) => Wrap(children: <Widget>[reachUsModal(context)]),
+              isDismissible: true,
+            ).then((_) {
+              context.read<IndexCubit>().updateIndex(0);
+            });
+          },
         ),
         _buildCircleButton(
           index: 3,
           imagePath: 'assets/icons/noti.png',
           label: 'Notifications',
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, '/notifications').then((_) {
+              context.read<IndexCubit>().updateIndex(0);
+            });
+          },
           hasBadge: true,
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:excelapp2025/features/home/cubit/index_cubit.dart';
+import 'package:excelapp2025/features/home/view/notifications/views/notifications_screen.dart';
 import 'package:excelapp2025/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => const WelcomeScreen(),
           '/profile': (context) => const ProfileScreen(),
           '/home': (context) => const HomeScreen(),
+          '/notifications': (context) => const NotificationsScreen(),
         },
       ),
     );
