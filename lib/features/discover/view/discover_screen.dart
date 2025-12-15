@@ -1,14 +1,32 @@
+import 'package:excelapp2025/features/discover/bloc/discover_bloc.dart';
+import 'package:excelapp2025/features/discover/bloc/discover_event.dart';
+import 'package:excelapp2025/features/discover/bloc/discover_state.dart';
+import 'package:excelapp2025/features/discover/data/repository/event_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DiscoverScreen extends StatefulWidget {
+class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({super.key});
 
   @override
-  State<DiscoverScreen> createState() => _DiscoverScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => DiscoverBloc(eventRepo: EventRepo())
+        ..add(LoadEventsEvent()),
+      child: const DiscoverScreenView(),
+    );
+  }
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
+class DiscoverScreenView extends StatefulWidget {
+  const DiscoverScreenView({super.key});
+
+  @override
+  State<DiscoverScreenView> createState() => _DiscoverScreenViewState();
+}
+
+class _DiscoverScreenViewState extends State<DiscoverScreenView> {
   int _mainTabIndex = 0; // 0 for Events, 1 for Competitions
   int _categoryIndex = 0; // Index for category tabs
   bool _isSearchExpanded = false;
@@ -21,7 +39,26 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       _mainTabIndex == 0 ? _eventCategories : _competitionCategories;
 
   @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    context.read<DiscoverBloc>().add(SearchEventsEvent(query: _searchController.text));
+  }
+
+  void _updateFilter() {
+    final type = _mainTabIndex == 0 ? 'events' : 'competitions';
+    final category = _currentCategories[_categoryIndex];
+    context.read<DiscoverBloc>().add(
+          FilterEventsByCategoryEvent(category: category, type: type),
+        );
+  }
+
+  @override
   void dispose() {
+    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     super.dispose();
   }
@@ -86,6 +123,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             _mainTabIndex = 0;
                             _categoryIndex = 0;
                           });
+                          _updateFilter();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -114,6 +152,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             _mainTabIndex = 1;
                             _categoryIndex = 0;
                           });
+                          _updateFilter();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -257,6 +296,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 setState(() {
                   _categoryIndex = index;
                 });
+                _updateFilter();
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -293,54 +333,246 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   Widget _buildEventsList() {
-    // Placeholder for events list
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 15),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.2),
-              width: 1,
+    return BlocBuilder<DiscoverBloc, DiscoverState>(
+      builder: (context, state) {
+        if (state is DiscoverLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF7B83F)),
             ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${_mainTabIndex == 0 ? "Event" : "Competition"} Title ${index + 1}',
-                style: GoogleFonts.mulish(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
+          );
+        }
+
+        if (state is DiscoverError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white70, size: 48),
+                const SizedBox(height: 16),
+                Text(
+                  'Failed to load events',
+                  style: GoogleFonts.mulish(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white70,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Category: ${_currentCategories[_categoryIndex]}',
-                style: GoogleFonts.mulish(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xFFF7B83F),
+                const SizedBox(height: 8),
+                Text(
+                  state.message,
+                  style: GoogleFonts.mulish(
+                    fontSize: 13,
+                    color: Colors.white54,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
+              ],
+            ),
+          );
+        }
+
+        if (state is DiscoverLoaded) {
+          if (state.filteredEvents.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.search_off, color: Colors.white70, size: 48),
+                  const SizedBox(height: 16),
+                  Text(
+                    'No events found',
+                    style: GoogleFonts.mulish(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Description of the ${_mainTabIndex == 0 ? "event" : "competition"} goes here...',
-                style: GoogleFonts.mulish(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white70,
+            );
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemCount: state.filteredEvents.length,
+            itemBuilder: (context, index) {
+              final event = state.filteredEvents[index];
+              return Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.2),
+                    width: 1,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            event.name,
+                            style: GoogleFonts.mulish(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF7B83F),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            'Day ${event.day}',
+                            style: GoogleFonts.mulish(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.category_outlined,
+                          size: 14,
+                          color: Color(0xFFF7B83F),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          event.category,
+                          style: GoogleFonts.mulish(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFFF7B83F),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        const Icon(
+                          Icons.location_on_outlined,
+                          size: 14,
+                          color: Colors.white70,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            event.venue,
+                            style: GoogleFonts.mulish(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white70,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      event.about,
+                      style: GoogleFonts.mulish(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white70,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (event.prizeMoney != null) ...[
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.emoji_events,
+                            size: 16,
+                            color: Color(0xFFF7B83F),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Prize: ₹${event.prizeMoney}',
+                            style: GoogleFonts.mulish(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFFF7B83F),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Event Heads',
+                                style: GoogleFonts.mulish(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white60,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${event.eventHead1.name} • ${event.eventHead2.name}',
+                                style: GoogleFonts.mulish(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (event.needRegistration == true && event.needRegistration != null)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            child: Text(
+                              'Registration Required',
+                              style: GoogleFonts.mulish(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+return const SizedBox.shrink();
       },
     );
   }

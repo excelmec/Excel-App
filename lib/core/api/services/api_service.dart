@@ -5,6 +5,7 @@ class ApiService {
   static const String _baseUrl = 'https://baseUrl.com';
   static const String accountsBaseUrl =
       'https://excel-accounts-backend-1024858294879.asia-south1.run.app/api';
+  static const String eventsTestingUrl = 'https://excel-events-service-1024858294879.asia-south1.run.app/api';
 
   static Map<String, String> defaultHeaders = {
     'Content-Type': 'application/json',
