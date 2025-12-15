@@ -1,13 +1,12 @@
 import 'package:excelapp2025/features/home/cubit/index_cubit.dart';
 import 'package:excelapp2025/features/home/view/notifications/views/notifications_screen.dart';
+import 'package:excelapp2025/features/navigation/main_navigation_screen.dart';
+import 'package:excelapp2025/features/splash/splash_screen.dart';
 import 'package:excelapp2025/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp2025/features/welcome/view/welcome_screen.dart';
-import 'package:excelapp2025/features/home/view/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'features/profile/view/profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,9 +28,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(),
         initialRoute: '/',
         routes: {
-          '/': (context) => const WelcomeScreen(),
-          '/profile': (context) => const ProfileScreen(),
-          '/home': (context) => const HomeScreen(),
+          '/': (context) => const SplashScreen(),
+          '/welcome': (context) => const WelcomeScreen(),
+          '/home': (context) => const MainNavigationScreen(),
           '/notifications': (context) => const NotificationsScreen(),
         },
       ),
