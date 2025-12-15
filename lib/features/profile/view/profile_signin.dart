@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//TODO : To be refactored with WelcomeScreen
+
 class ProfileSignInScreen extends StatelessWidget {
   const ProfileSignInScreen({super.key});
 
@@ -108,19 +110,20 @@ class ProfileSignInScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            //TODO : Replace with Google logo icon
+                            const Icon(
+                              Icons.login,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 8),
                             Text(
-                              'Get started',
+                              'Sign in with Google',
                               style: GoogleFonts.mulish(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            const Icon(
-                              Icons.arrow_forward_rounded,
-                              color: Colors.white,
-                              size: 16,
                             ),
                           ],
                         ),

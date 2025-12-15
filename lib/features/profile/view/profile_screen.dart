@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Scaffold(
         body: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {},
-          child: ProfileScreenLoader(),
+          child: const ProfileScreenLoader(),
         ),
       ),
     );
@@ -45,10 +45,14 @@ class _ProfileScreenLoaderState extends State<ProfileScreenLoader> {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state is ProfileSignedOut || state is LoginStartedState) {
-          return const ProfileSignInScreen();
-        } else {
+        if (state is ProfileLoaded) {
           return const ProfileScreenMainView();
+        } else if (state is ProfileSignedOut || state is LoginStartedState) {
+          return const ProfileSignInScreen();
+        } else if (state is ProfileError) {
+          return Center(child: Text(state.message));
+        } else {
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );

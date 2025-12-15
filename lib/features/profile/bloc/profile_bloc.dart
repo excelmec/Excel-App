@@ -33,23 +33,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         headers: ApiService.authHeaders(token),
         baseUrl: ApiService.accountsBaseUrl,
       );
+      print("Profile Data: $response");
       final profileModel = ProfileModel.fromJson(response);
+
       emit(ProfileLoaded(profileModel));
     } catch (e) {
-      emit(ProfileError('Failed to load profile data'));
+      emit(ProfileError('Failed to load profile data $e'));
     }
   }
 
   void _onLoginProfileRoutine(
     LoginProfileRoutine event,
     Emitter<ProfileState> emit,
-  ) {
+  ) async {
     emit(LoginStartedState());
     try {
-      AuthService.login();
+      await AuthService.login();
+      emit(ProfileSignedIn());
     } catch (e) {
       emit(ProfileError('Login routine failed'));
     }
-    emit(ProfileInitial());
   }
 }
