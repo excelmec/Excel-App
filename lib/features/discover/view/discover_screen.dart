@@ -47,6 +47,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
 
   void _onSearchChanged() {
     context.read<DiscoverBloc>().add(SearchEventsEvent(query: _searchController.text));
+    setState(() {}); // Rebuild to show/hide clear icon
   }
 
   void _updateFilter() {
