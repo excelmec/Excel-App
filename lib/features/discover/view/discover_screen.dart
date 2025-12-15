@@ -11,12 +11,20 @@ class DiscoverScreen extends StatefulWidget {
 class _DiscoverScreenState extends State<DiscoverScreen> {
   int _mainTabIndex = 0; // 0 for Events, 1 for Competitions
   int _categoryIndex = 0; // Index for category tabs
+  bool _isSearchExpanded = false;
+  final TextEditingController _searchController = TextEditingController();
 
   final List<String> _eventCategories = ['All', 'Workshops', 'Talks', 'General'];
   final List<String> _competitionCategories = ['All', 'CS-Tech', 'Gen-Tech', 'Non-Tech'];
 
   List<String> get _currentCategories =>
       _mainTabIndex == 0 ? _eventCategories : _competitionCategories;
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,82 +60,95 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Expanded(
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.3),
-                  width: 1,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+            width: _isSearchExpanded ? 0 : MediaQuery.of(context).size.width - 112,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: _isSearchExpanded ? 0.0 : 1.0,
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.3),
+                    width: 1,
+                  ),
                 ),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _mainTabIndex = 0;
-                          _categoryIndex = 0;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: _mainTabIndex == 0
-                              ? Colors.white.withOpacity(0.2)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Events',
-                            style: GoogleFonts.mulish(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _mainTabIndex = 0;
+                            _categoryIndex = 0;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _mainTabIndex == 0
+                                ? Colors.white.withOpacity(0.2)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Events',
+                              style: GoogleFonts.mulish(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _mainTabIndex = 1;
-                          _categoryIndex = 0;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: _mainTabIndex == 1
-                              ? Colors.white.withOpacity(0.2)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Competitions',
-                            style: GoogleFonts.mulish(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _mainTabIndex = 1;
+                            _categoryIndex = 0;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _mainTabIndex == 1
+                                ? Colors.white.withOpacity(0.2)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Competitions',
+                              style: GoogleFonts.mulish(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
-          Container(
-            width: 50,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+            width: _isSearchExpanded ? 0 : 12,
+          ),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+            width: _isSearchExpanded ? MediaQuery.of(context).size.width - 40 : 50,
             height: 50,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.15),
@@ -137,10 +158,82 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 width: 1,
               ),
             ),
-            child: const Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 24,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              switchInCurve: Curves.easeIn,
+              switchOutCurve: Curves.easeOut,
+              transitionBuilder: (child, animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+              child: _isSearchExpanded
+                  ? Row(
+                      key: const ValueKey('search_expanded'),
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isSearchExpanded = false;
+                              _searchController.clear();
+                            });
+                          },
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: _searchController,
+                            autofocus: true,
+                            style: GoogleFonts.mulish(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Search...',
+                              hintStyle: GoogleFonts.mulish(
+                                color: Colors.white60,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                            ),
+                          ),
+                        ),
+                        if (_searchController.text.isNotEmpty)
+                          IconButton(
+                            icon: const Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _searchController.clear();
+                              });
+                            },
+                          ),
+                      ],
+                    )
+                  : IconButton(
+                      key: const ValueKey('search_collapsed'),
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isSearchExpanded = true;
+                        });
+                      },
+                    ),
             ),
           ),
         ],
