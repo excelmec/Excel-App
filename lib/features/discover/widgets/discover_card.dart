@@ -1,3 +1,4 @@
+import 'package:excelapp2025/core/services/image_cache_service.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,29 +21,12 @@ class DiscoverCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              ClipRRect(
+              CachedImage(
+                imageUrl: event.icon,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  event.icon,
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        color: Colors.white54,
-                        size: 30,
-                      ),
-                    );
-                  },
-                ),
               ),
               SizedBox(width: 12),
               Expanded(
