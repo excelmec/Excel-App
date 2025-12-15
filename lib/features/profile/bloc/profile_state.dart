@@ -21,3 +21,5 @@ class ProfileError extends ProfileState {
 }
 
 class LoginStartedState extends ProfileState {}
+
+class LogoutStartedState extends ProfileState {}

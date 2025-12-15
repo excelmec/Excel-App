@@ -60,9 +60,6 @@ class AuthService {
   static Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('jwt');
-    if (token == null) {
-      throw Exception('No token found');
-    }
-    return token;
+    return token ?? '';
   }
 }

@@ -43,16 +43,37 @@ class _ProfileScreenLoaderState extends State<ProfileScreenLoader> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc, ProfileState>(
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        if (state is ProfileSignedIn) {
+          context.read<ProfileBloc>().add(LoadProfileData());
+        }
+      },
       builder: (context, state) {
         if (state is ProfileLoaded) {
           return const ProfileScreenMainView();
-        } else if (state is ProfileSignedOut || state is LoginStartedState) {
+        } else if (state is ProfileSignedOut) {
           return const ProfileSignInScreen();
-        } else if (state is ProfileError) {
-          return Center(child: Text(state.message));
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/images/profile_background.png',
+                fit: BoxFit.cover,
+              ),
+              (state is ProfileError)
+                  ? const Center(
+                      child: ElevatedButton(
+                        onPressed: null,
+                        child: Text('Load Profile'),
+                      ),
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+            ],
+          );
         }
       },
     );
