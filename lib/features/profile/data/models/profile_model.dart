@@ -24,17 +24,18 @@ class ProfileModel {
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    //TODO: Handle missing fields appropriately
     return ProfileModel(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      role: json['role'],
-      picture: json['picture'],
-      institutionId: json['institution_id'],
-      institutionName: json['institution'],
-      gender: json['gender'],
-      mobileNumber: json['mobile_number'],
-      categoryId: json['category_id'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "Error",
+      email: json['email'] ?? "Unavailable",
+      role: json['role'] ?? "User",
+      picture: json['picture'] ?? "https://www.gravatar.com/avatar/",
+      institutionId: json['institutionId'] ?? 0,
+      institutionName: json['institution'] ?? 'Unknown Institution',
+      gender: json['gender'] ?? 'Not Specified',
+      mobileNumber: json['mobileNumber'] ?? 'Not Provided',
+      categoryId: json['categoryId'] ?? 0,
     );
   }
 

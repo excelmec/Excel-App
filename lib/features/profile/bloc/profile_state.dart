@@ -6,6 +6,8 @@ class ProfileInitial extends ProfileState {}
 
 class ProfileSignedOut extends ProfileState {}
 
+class ProfileSignedIn extends ProfileState {}
+
 class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
@@ -19,3 +21,5 @@ class ProfileError extends ProfileState {
 }
 
 class LoginStartedState extends ProfileState {}
+
+class LogoutStartedState extends ProfileState {}

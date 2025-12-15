@@ -110,8 +110,8 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                       primaryActionText: 'Yes',
                       secondaryActionText: 'No',
                       onPrimaryAction: () {
+                        context.read<ProfileBloc>().add(LogoutProfileRoutine());
                         Navigator.of(context).pop();
-                        Navigator.pushReplacementNamed(context, '/');
                       },
                       onSecondaryAction: () {
                         Navigator.of(context).pop();
