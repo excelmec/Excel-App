@@ -108,11 +108,11 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.15),
+                  color: Colors.black.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.3),
-                    width: 1,
+                    color: Colors.white,
+                    width: 1.5,
                   ),
                 ),
                 child: Row(
@@ -126,22 +126,32 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                           });
                           _updateFilter();
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: _mainTabIndex == 0
-                                ? Colors.white.withOpacity(0.2)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Events',
-                              style: GoogleFonts.mulish(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Spacer(),
+                              Text(
+                                'Events',
+                                style: GoogleFonts.mulish(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 8),
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                                height: 2,
+                                width: _mainTabIndex == 0 ? 100 : 0,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(1),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -155,22 +165,32 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                           });
                           _updateFilter();
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: _mainTabIndex == 1
-                                ? Colors.white.withOpacity(0.2)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Competitions',
-                              style: GoogleFonts.mulish(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Spacer(),
+                              Text(
+                                'Competitions',
+                                style: GoogleFonts.mulish(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 8),
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                                height: 2,
+                                width: _mainTabIndex == 1 ? 100 : 0,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(1),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -191,11 +211,11 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
             width: _isSearchExpanded ? MediaQuery.of(context).size.width - 40 : 50,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
+              color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
-                color: Colors.white.withOpacity(0.3),
-                width: 1,
+                color: Colors.white,
+                width: 1.5,
               ),
             ),
             child: AnimatedSwitcher(
@@ -235,7 +255,9 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                               fontWeight: FontWeight.w500,
                             ),
                             decoration: InputDecoration(
-                              hintText: 'Search...',
+                              hintText: _mainTabIndex == 0
+                                  ? 'Search for Events'
+                                  : 'Search for Competitions',
                               hintStyle: GoogleFonts.mulish(
                                 color: Colors.white60,
                                 fontSize: 16,
@@ -306,12 +328,12 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xFFF7B83F)
-                      : Colors.transparent,
+                      : Colors.black.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: isSelected
                         ? const Color(0xFFF7B83F)
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withOpacity(0.9),
                     width: 1.5,
                   ),
                 ),
