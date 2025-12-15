@@ -34,17 +34,58 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     if (state is DiscoverLoaded) {
       List<EventModel> filtered = _allEvents;
 
-      // Filter by event type (events or competitions)
-      filtered = filtered
-          .where((e) => e.eventType.toLowerCase() == event.type.toLowerCase())
-          .toList();
-
-      // Filter by category if not "All"
-      if (event.category.toLowerCase() != 'all') {
-        filtered = filtered
-            .where((e) =>
-                e.category.toLowerCase() == event.category.toLowerCase())
-            .toList();
+      if (event.type.toLowerCase() == 'events') {
+        // Events tab logic
+        if (event.category.toLowerCase() == 'all') {
+          // Show everything except competitions
+          filtered = filtered
+              .where((e) => e.eventType.toLowerCase() != 'competition')
+              .toList();
+        } else if (event.category.toLowerCase() == 'workshops') {
+          // Show only workshops
+          filtered = filtered
+              .where((e) => e.eventType.toLowerCase() == 'workshop')
+              .toList();
+        } else if (event.category.toLowerCase() == 'talks') {
+          // Show only talks
+          filtered = filtered
+              .where((e) => e.eventType.toLowerCase() == 'talk')
+              .toList();
+        } else if (event.category.toLowerCase() == 'general') {
+          // Show only general events
+          filtered = filtered
+              .where((e) => e.eventType.toLowerCase() == 'general')
+              .toList();
+        }
+      } else if (event.type.toLowerCase() == 'competitions') {
+        // Competitions tab logic
+        if (event.category.toLowerCase() == 'all') {
+          // Show all competitions
+          filtered = filtered
+              .where((e) => e.eventType.toLowerCase() == 'competition')
+              .toList();
+        } else if (event.category.toLowerCase() == 'cs-tech') {
+          // Show competitions with cs_tech category
+          filtered = filtered
+              .where((e) =>
+                  e.eventType.toLowerCase() == 'competition' &&
+                  e.category.toLowerCase() == 'cs_tech')
+              .toList();
+        } else if (event.category.toLowerCase() == 'gen-tech') {
+          // Show competitions with general_tech category
+          filtered = filtered
+              .where((e) =>
+                  e.eventType.toLowerCase() == 'competition' &&
+                  e.category.toLowerCase() == 'general_tech')
+              .toList();
+        } else if (event.category.toLowerCase() == 'non-tech') {
+          // Show competitions with non_tech category
+          filtered = filtered
+              .where((e) =>
+                  e.eventType.toLowerCase() == 'competition' &&
+                  e.category.toLowerCase() == 'non_tech')
+              .toList();
+        }
       }
 
       emit(DiscoverLoaded(events: _allEvents, filteredEvents: filtered));
