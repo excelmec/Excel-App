@@ -22,6 +22,7 @@ class DiscoverCard extends StatelessWidget {
           Row(
             children: [
               CachedImage(
+                key: ValueKey('${event.id}-${event.icon}'),
                 imageUrl: event.icon,
                 width: 60,
                 height: 60,
