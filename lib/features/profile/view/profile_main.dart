@@ -184,7 +184,9 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
           child: TabBarView(
             controller: _tabController,
             children: [
-              Center(child: EventCard()),
+              //TODO : MAP Events from backend
+              // Center(child: EventCard()),
+              Center(child: Text('Registered Events')),
               Center(child: Text('Favorite Events')),
             ],
           ),
