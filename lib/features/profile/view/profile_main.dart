@@ -1,3 +1,4 @@
+import 'package:excelapp2025/features/profile/view/show_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -129,9 +130,22 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
             ),
           ],
         ),
-        CircleAvatar(
-          radius: 65,
-          backgroundImage: Image.network(widget.picture).image,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => BlocProvider.value(
+                  value: context.read<ProfileBloc>(),
+                  child: ShowProfileView(),
+                ),
+              ),
+            );
+          },
+          child: CircleAvatar(
+            radius: 65,
+            backgroundImage: Image.network(widget.picture).image,
+          ),
         ),
         Text(
           widget.name,
