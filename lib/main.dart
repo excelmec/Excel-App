@@ -20,9 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => IndexCubit()),
-      ],
+      providers: [BlocProvider(create: (_) => IndexCubit())],
       child: MaterialApp(
         title: 'Excel 2025',
         theme: ThemeData.dark(),
