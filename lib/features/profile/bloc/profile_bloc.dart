@@ -27,12 +27,42 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileSignedOut());
         return;
       }
-      final response = await ApiService.get(
+      dynamic response = await ApiService.get(
         ApiRoutes.profile,
         headers: ApiService.authHeaders(token),
         baseUrl: ApiService.accountsBaseUrl,
       );
+
+      response['institutionName'] =
+          await ApiService.get(
+            ApiRoutes.collegeList,
+            headers: ApiService.authHeaders(token),
+            baseUrl: ApiService.accountsBaseUrl,
+          ).then((colleges) {
+            final college = colleges.firstWhere(
+              (college) => college['id'] == response['institutionId'],
+              orElse: () => null,
+            );
+            return college != null ? college['name'] : 'Unknown';
+          });
+
+      if (response['institutionName'] == 'Unknown') {
+        response['institutionName'] =
+            await ApiService.get(
+              ApiRoutes.schoolList,
+              headers: ApiService.authHeaders(token),
+              baseUrl: ApiService.accountsBaseUrl,
+            ).then((colleges) {
+              final college = colleges.firstWhere(
+                (college) => college['id'] == response['institutionId'],
+                orElse: () => null,
+              );
+              return college != null ? college['name'] : 'Unknown';
+            });
+      }
+
       final profileModel = ProfileModel.fromJson(response);
+
       emit(ProfileLoaded(profileModel));
     } catch (e) {
       emit(ProfileError('Failed to load profile data $e'));

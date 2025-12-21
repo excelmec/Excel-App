@@ -30,6 +30,9 @@ class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
                 ).image,
                 fit: BoxFit.cover,
               ),
+              Positioned.fill(
+                child: Container(color: Colors.black.withAlpha(100)),
+              ),
               SafeArea(
                 child: BasicProfileDetails(
                   name: state.profileModel.name,

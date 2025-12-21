@@ -1,4 +1,5 @@
 import 'package:excelapp2025/features/profile/bloc/profile_bloc.dart';
+import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,6 +26,9 @@ class _ShowProfileViewState extends State<ShowProfileView> {
                     'assets/images/profile_background.png',
                   ).image,
                   fit: BoxFit.cover,
+                ),
+                Positioned.fill(
+                  child: Container(color: Colors.black.withAlpha(100)),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -60,12 +64,33 @@ class _ShowProfileViewState extends State<ShowProfileView> {
                                   state.profileModel.picture,
                                 ).image,
                               ),
-                              Text(
-                                state.profileModel.name,
-                                style: GoogleFonts.mulish(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w900,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    state.profileModel.name,
+                                    style: GoogleFonts.mulish(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => BlocProvider.value(
+                                            value: context.read<ProfileBloc>(),
+                                            child: const CreateAccScreen(
+                                              mode: CreateAccMode.UPDATE,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -153,26 +178,31 @@ class DetailChips extends StatelessWidget {
           children: [
             Icon(icon, color: Colors.black, size: 28),
             const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.mulish(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.mulish(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                Text(
-                  detail,
-                  style: GoogleFonts.mulish(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,
+                  Text(
+                    detail,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    style: GoogleFonts.mulish(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

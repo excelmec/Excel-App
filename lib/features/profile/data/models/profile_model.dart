@@ -1,3 +1,7 @@
+import 'package:excelapp2025/core/api/routes/api_routes.dart';
+import 'package:excelapp2025/core/api/services/api_service.dart';
+import 'package:excelapp2025/core/api/services/auth_service.dart';
+
 class ProfileModel {
   final int id;
   final String name;
@@ -32,7 +36,7 @@ class ProfileModel {
       role: json['role'] ?? "User",
       picture: json['picture'] ?? "https://www.gravatar.com/avatar/",
       institutionId: json['institutionId'] ?? 0,
-      institutionName: json['institution'] ?? 'Unknown Institution',
+      institutionName: json['institutionName'] ?? 'Unknown Institution',
       gender: json['gender'] ?? 'Not Specified',
       mobileNumber: json['mobileNumber'] ?? 'Not Provided',
       categoryId: json['categoryId'] ?? 0,
