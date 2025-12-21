@@ -3,6 +3,7 @@ import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ShowProfileView extends StatefulWidget {
   const ShowProfileView({super.key});
@@ -57,6 +58,29 @@ class _ShowProfileViewState extends State<ShowProfileView> {
                               AppBar(
                                 backgroundColor: Colors.transparent,
                                 elevation: 0,
+                                actions: [
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
+                                          backgroundColor: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: QrImageView(
+                                              data: state.profileModel.id
+                                                  .toString(),
+                                              version: QrVersions.auto,
+                                              size: 250.0,
+                                              backgroundColor: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.qr_code),
+                                  ),
+                                ],
                               ),
                               CircleAvatar(
                                 radius: 65,
