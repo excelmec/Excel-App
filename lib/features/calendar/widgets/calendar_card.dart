@@ -1,5 +1,6 @@
 import 'package:excelapp2025/core/services/image_cache_service.dart';
 import 'package:excelapp2025/features/calendar/data/models/calendar_event_model.dart';
+import 'package:excelapp2025/features/event_detail/view/event_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +10,18 @@ class CalendarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EventDetailScreen(
+              eventId: event.id,
+            ),
+          ),
+        );
+      },
+      child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
@@ -62,6 +74,8 @@ class CalendarCard extends StatelessWidget {
           ),
         ],
       ),
+      ),
     );
   }
+
 }
