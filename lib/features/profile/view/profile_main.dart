@@ -1,7 +1,12 @@
+import 'package:excelapp2025/features/discover/data/models/event_model.dart';
+import 'package:excelapp2025/features/profile/data/repository/fetch_reg_events.dart';
+import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
+import 'package:excelapp2025/features/profile/view/profile_signin.dart';
 import 'package:excelapp2025/features/profile/view/show_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../bloc/profile_bloc.dart';
 import '../widgets/dialogue_sheet.dart';
@@ -14,6 +19,8 @@ class ProfileScreenMainView extends StatefulWidget {
 }
 
 class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
+  bool _isCreatingAccount = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -21,6 +28,10 @@ class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
         if (state is ProfileLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is ProfileLoaded) {
+          _isCreatingAccount =
+              state.profileModel.institutionName == 'Unknown' ||
+              state.profileModel.gender == 'Not Specified' ||
+              state.profileModel.mobileNumber == 'Not Provided';
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -30,17 +41,124 @@ class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
                 ).image,
                 fit: BoxFit.cover,
               ),
+              Positioned.fill(
+                child: Container(color: Colors.black.withAlpha(100)),
+              ),
               SafeArea(
-                child: BasicProfileDetails(
-                  name: state.profileModel.name,
-                  institutionName: state.profileModel.institutionName,
-                  picture: state.profileModel.picture,
-                ),
+                child: _isCreatingAccount
+                    ? Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 30.0,
+                          children: [
+                            Text(
+                              "Complete Your Profile",
+                              style: GoogleFonts.mulish(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              "Looks like your profile is incomplete. To get the best experience, please complete your profile by providing the necessary details.",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.mulish(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                height: 1.5,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 5.0,
+                              children: [
+                                ProfileGradientButton(
+                                  icon: Icons.person_outline,
+                                  title: "Complete Your Profile",
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => BlocProvider.value(
+                                          value: context.read<ProfileBloc>(),
+                                          child: CreateAccScreen(
+                                            mode: CreateAccMode.CREATE,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    shape: CircleBorder(
+                                      side: BorderSide(
+                                        color: Colors.white,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.all(10.0),
+                                  ),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (_) {
+                                        return DialogueSheet(
+                                          title: 'Confirm Logout',
+                                          description:
+                                              'Are you sure you want to logout?',
+                                          primaryActionText: 'Yes',
+                                          secondaryActionText: 'No',
+                                          onPrimaryAction: () {
+                                            context.read<ProfileBloc>().add(
+                                              LogoutProfileRoutine(),
+                                            );
+                                            Navigator.of(context).pop();
+                                          },
+                                          onSecondaryAction: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.logout_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    : BasicProfileDetails(
+                        name: state.profileModel.name,
+                        institutionName: state.profileModel.institutionName,
+                        picture: state.profileModel.picture,
+                        registeredEvents: state.profileModel.registeredEvents,
+                      ),
               ),
             ],
           );
         } else if (state is ProfileError) {
-          return Center(child: Text(state.message));
+          return Center(
+            child: Column(
+              children: [
+                Text(state.message),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<ProfileBloc>().add(LoadProfileData());
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
         } else {
           return Center(
             child: ElevatedButton(
@@ -60,12 +178,14 @@ class BasicProfileDetails extends StatefulWidget {
   final String name;
   final String institutionName;
   final String picture;
+  final List<EventModel> registeredEvents;
 
   const BasicProfileDetails({
     super.key,
     required this.name,
     required this.institutionName,
     required this.picture,
+    required this.registeredEvents,
   });
 
   @override
@@ -75,6 +195,7 @@ class BasicProfileDetails extends StatefulWidget {
 class _BasicProfileDetailsState extends State<BasicProfileDetails>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -186,7 +307,18 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
             children: [
               //TODO : MAP Events from backend
               // Center(child: EventCard()),
-              Center(child: Text('Registered Events')),
+              ListView.builder(
+                itemCount: widget.registeredEvents.length,
+                itemBuilder: (context, index) {
+                  final event = widget.registeredEvents[index];
+                  return EventCard(
+                    title: event.name,
+                    description: event.about,
+                    date: DateFormat('MMM dd').format(event.datetime),
+                    imageUrl: event.icon,
+                  );
+                },
+              ),
               Center(child: Text('Favorite Events')),
             ],
           ),
@@ -197,13 +329,24 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
 }
 
 class EventCard extends StatelessWidget {
-  const EventCard({super.key});
+  const EventCard({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.date,
+    required this.imageUrl,
+  });
+
+  final String title;
+  final String description;
+  final String date;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       //TODO : adjust padding in bottom
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Container(
         decoration: BoxDecoration(
           color: Color(0xAA691700),
@@ -219,7 +362,7 @@ class EventCard extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(55.0),
                     child: Image.network(
-                      'https://picsum.photos/100',
+                      imageUrl,
                       width: 55,
                       height: 55,
                       fit: BoxFit.cover,
@@ -231,7 +374,7 @@ class EventCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Event Title',
+                          title,
                           style: GoogleFonts.mulish(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
@@ -239,7 +382,7 @@ class EventCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
+                          description,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: GoogleFonts.mulish(
@@ -257,7 +400,7 @@ class EventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Dec 03",
+                    date,
                     style: GoogleFonts.mulish(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,

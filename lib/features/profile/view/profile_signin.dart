@@ -70,65 +70,12 @@ class ProfileSignInScreen extends StatelessWidget {
                 const SizedBox(height: 40),
 
                 Center(
-                  child: ElevatedButton(
+                  child: ProfileGradientButton(
+                    icon: Icons.login,
+                    title: 'Sign in with Google',
                     onPressed: () {
                       context.read<ProfileBloc>().add(LoginProfileRoutine());
                     },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(
-                              (0.8 * 255).round(),
-                              0xFC,
-                              0xF0,
-                              0xA6,
-                            ),
-                            Color.fromARGB(
-                              (0.8 * 255).round(),
-                              0xF7,
-                              0xB8,
-                              0x3F,
-                            ),
-                          ],
-                        ),
-
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: SizedBox(
-                        width: 221,
-                        height: 45,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            //TODO : Replace with Google logo icon
-                            const Icon(
-                              Icons.login,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Sign in with Google',
-                              style: GoogleFonts.mulish(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ),
                 ),
 
@@ -138,6 +85,65 @@ class ProfileSignInScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ProfileGradientButton extends StatelessWidget {
+  const ProfileGradientButton({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String title;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+      ),
+      child: Ink(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB((0.8 * 255).round(), 0xFC, 0xF0, 0xA6),
+              Color.fromARGB((0.8 * 255).round(), 0xF7, 0xB8, 0x3F),
+            ],
+          ),
+
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: SizedBox(
+          width: 221,
+          height: 45,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //TODO : Replace with Google logo icon
+              Icon(icon, color: Colors.white, size: 16),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: GoogleFonts.mulish(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
