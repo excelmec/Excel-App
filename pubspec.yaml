@@ -3,7 +3,7 @@ description: "Excel 2025 Official App."
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+001
 
 environment:
   sdk: ^3.9.2
