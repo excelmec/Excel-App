@@ -1,15 +1,17 @@
-import 'dart:convert';
-
 import 'package:excelapp2025/core/api/routes/api_routes.dart';
 import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/core/api/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 import '../bloc/profile_bloc.dart';
 
 enum CreateAccMode { CREATE, UPDATE }
+
+//TODO : lot of context calls in async
 
 class CreateAccScreen extends StatefulWidget {
   const CreateAccScreen({super.key, required this.mode});
@@ -64,6 +66,76 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
     int statusCode;
     response['id'] != -1 ? statusCode = 200 : statusCode = 500;
     return statusCode;
+  }
+
+  //TODO (IMPORTANT): Sometimes image not getting reflected at all
+  // gets uploaded cuz console print new link
+  // but even if uninstall and reinstall app still old image shown ( so likely not caching issue )
+
+  Future<int> _pickAndUploadImage() async {
+    final ImagePicker picker = ImagePicker();
+
+    if (!context.mounted) return -1;
+
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) return -1;
+
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+          '${ApiService.accountsBaseUrl}${ApiRoutes.profilePictureUpload}',
+        ),
+      );
+      var multipartFile = await http.MultipartFile.fromPath(
+        'Image',
+        image.path,
+      );
+      request.files.add(multipartFile);
+
+      String token = await AuthService.getToken();
+
+      request.headers.addAll({
+        'accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token',
+      });
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+        final currentState = context.read<ProfileBloc>().state;
+        if (currentState is ProfileLoaded) {
+          await NetworkImage(currentState.profileModel.picture).evict();
+        }
+        context.read<ProfileBloc>().add(LoadProfileData());
+        setState(() {});
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Profile picture updated successfully!'),
+          ),
+        );
+        return 200;
+      } else {
+        // Error from server
+        debugPrint('Upload failed: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Upload failed: ${response.statusCode}')),
+        );
+
+        return response.statusCode;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('An error occurred')));
+    } finally {
+      return -1;
+    }
   }
 
   @override
@@ -260,6 +332,9 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
           _emailController.text = state.profileModel.email;
           _institutionNameController.text = state.profileModel.institutionName;
         }
+        if (state is ProfileLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
         if (state is ProfileLoaded) {
           return Scaffold(
             body: Stack(
@@ -359,8 +434,10 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                         top: 4,
                                         right: 4,
                                         child: GestureDetector(
-                                          onTap: () {
-                                            //TODO : Change profile picture
+                                          onTap: () async {
+                                            print("Picking image...");
+                                            await _pickAndUploadImage();
+                                            print("Image pick process done.");
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(8),
