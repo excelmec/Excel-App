@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:excelapp2025/features/home/widgets/developer_credits_sheet.dart';
 
 class AboutExcelPopUp extends StatelessWidget {
   const AboutExcelPopUp({super.key});
@@ -103,12 +104,28 @@ class AboutExcelPopUp extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                          // return DevCredits();
-                      //   },
-                      // );
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        if (context.mounted) {
+                          showModalBottomSheet<dynamic>(
+                            isScrollControlled: true,
+                            useRootNavigator: true,
+                            backgroundColor: Colors.transparent,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(32),
+                                topRight: Radius.circular(32),
+                              ),
+                            ),
+                            constraints: BoxConstraints(
+                              minWidth: MediaQuery.of(context).size.width,
+                              maxHeight: MediaQuery.of(context).size.height * 0.9,
+                            ),
+                            context: context,
+                            builder: (context) => const DeveloperCreditsSheet(),
+                            isDismissible: true,
+                          );
+                        }
+                      });
                     },
                     child: Container(
                       decoration: BoxDecoration(
