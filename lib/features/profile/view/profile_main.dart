@@ -1,9 +1,12 @@
+import 'package:excelapp2025/features/discover/data/models/event_model.dart';
+import 'package:excelapp2025/features/profile/data/repository/fetch_reg_events.dart';
 import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
 import 'package:excelapp2025/features/profile/view/profile_signin.dart';
 import 'package:excelapp2025/features/profile/view/show_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../bloc/profile_bloc.dart';
 import '../widgets/dialogue_sheet.dart';
@@ -17,6 +20,7 @@ class ProfileScreenMainView extends StatefulWidget {
 
 class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
   bool _isCreatingAccount = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -136,6 +140,7 @@ class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
                         name: state.profileModel.name,
                         institutionName: state.profileModel.institutionName,
                         picture: state.profileModel.picture,
+                        registeredEvents: state.profileModel.registeredEvents,
                       ),
               ),
             ],
@@ -173,12 +178,14 @@ class BasicProfileDetails extends StatefulWidget {
   final String name;
   final String institutionName;
   final String picture;
+  final List<EventModel> registeredEvents;
 
   const BasicProfileDetails({
     super.key,
     required this.name,
     required this.institutionName,
     required this.picture,
+    required this.registeredEvents,
   });
 
   @override
@@ -188,6 +195,7 @@ class BasicProfileDetails extends StatefulWidget {
 class _BasicProfileDetailsState extends State<BasicProfileDetails>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -299,7 +307,18 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
             children: [
               //TODO : MAP Events from backend
               // Center(child: EventCard()),
-              Center(child: Text('Registered Events')),
+              ListView.builder(
+                itemCount: widget.registeredEvents.length,
+                itemBuilder: (context, index) {
+                  final event = widget.registeredEvents[index];
+                  return EventCard(
+                    title: event.name,
+                    description: event.about,
+                    date: DateFormat('MMM dd').format(event.datetime),
+                    imageUrl: event.icon,
+                  );
+                },
+              ),
               Center(child: Text('Favorite Events')),
             ],
           ),
@@ -310,13 +329,24 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
 }
 
 class EventCard extends StatelessWidget {
-  const EventCard({super.key});
+  const EventCard({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.date,
+    required this.imageUrl,
+  });
+
+  final String title;
+  final String description;
+  final String date;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       //TODO : adjust padding in bottom
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Container(
         decoration: BoxDecoration(
           color: Color(0xAA691700),
@@ -332,7 +362,7 @@ class EventCard extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(55.0),
                     child: Image.network(
-                      'https://picsum.photos/100',
+                      imageUrl,
                       width: 55,
                       height: 55,
                       fit: BoxFit.cover,
@@ -344,7 +374,7 @@ class EventCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Event Title',
+                          title,
                           style: GoogleFonts.mulish(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
@@ -352,7 +382,7 @@ class EventCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Lorem ipsum dolor sit amet, conse ctetur adi piscing elit.',
+                          description,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: GoogleFonts.mulish(
@@ -370,7 +400,7 @@ class EventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Dec 03",
+                    date,
                     style: GoogleFonts.mulish(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,

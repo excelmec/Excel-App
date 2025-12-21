@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:excelapp2025/core/api/routes/api_routes.dart';
 import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/core/api/services/auth_service.dart';
+import 'package:excelapp2025/features/discover/data/models/event_model.dart';
 import 'package:excelapp2025/features/profile/data/models/profile_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../data/repository/fetch_reg_events.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -62,6 +65,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
 
       final profileModel = ProfileModel.fromJson(response);
+
+      List<EventModel> registeredEvents =
+          await FetchRegisteredEvents.returnRegisteredEvents();
+
+      profileModel.registeredEvents = registeredEvents;
 
       emit(ProfileLoaded(profileModel));
     } catch (e) {

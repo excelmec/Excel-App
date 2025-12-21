@@ -63,7 +63,22 @@ class _ProfileScreenLoaderState extends State<ProfileScreenLoader> {
                 fit: BoxFit.cover,
               ),
               (state is ProfileError)
-                  ? const Center(child: Text("Error loading profile data."))
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(state.message),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<ProfileBloc>().add(
+                                LoadProfileData(),
+                              );
+                            },
+                            child: const Text('Retry'),
+                          ),
+                        ],
+                      ),
+                    )
                   : const Center(
                       child: CircularProgressIndicator(color: Colors.white),
                     ),

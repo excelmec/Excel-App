@@ -1,6 +1,7 @@
 import 'package:excelapp2025/core/api/routes/api_routes.dart';
 import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/core/api/services/auth_service.dart';
+import 'package:excelapp2025/features/discover/data/models/event_model.dart';
 
 class ProfileModel {
   final int id;
@@ -13,6 +14,7 @@ class ProfileModel {
   final String gender;
   final String mobileNumber;
   final int categoryId;
+  late List<EventModel> registeredEvents;
 
   ProfileModel({
     required this.id,

@@ -6,4 +6,6 @@ class ApiRoutes {
 
   static String collegeList = '/Institution/college/list';
   static String schoolList = '/Institution/school/list';
+
+  static String registeredEvents = '/registration';
 }
