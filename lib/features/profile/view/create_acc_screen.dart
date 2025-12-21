@@ -338,7 +338,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                           children: [
                             widget.mode == CreateAccMode.CREATE
                                 ? Text(
-                                    "Create Account",
+                                    "Complete Your Profile",
                                     style: const TextStyle(
                                       fontSize: 28,
                                       color: Colors.white,
@@ -549,18 +549,37 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                                     vertical: 16,
                                                   ),
                                             ),
-                                            onPressed: () {
+                                            onPressed: () async {
                                               if (_formKey.currentState!
-                                                  .validate()) {
-                                                ScaffoldMessenger.of(
-                                                  context,
-                                                ).showSnackBar(
-                                                  const SnackBar(
-                                                    content: Text(
-                                                      "Account Created!",
+                                                      .validate() &&
+                                                  context.mounted) {
+                                                int response =
+                                                    await updateProfile();
+                                                if (response == 200) {
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text(
+                                                        "Profile Updated!",
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
+                                                  );
+                                                  context
+                                                      .read<ProfileBloc>()
+                                                      .add(LoadProfileData());
+                                                } else {
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text(
+                                                        "Failed to update profile.",
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                Navigator.pop(context);
                                               }
                                             },
                                             child: Row(
@@ -568,7 +587,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                                   MainAxisAlignment.center,
                                               children: const [
                                                 Text(
-                                                  "Create Account  ",
+                                                  "Update Profile",
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w600,
@@ -576,11 +595,11 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                                     fontFamily: 'Mulish',
                                                   ),
                                                 ),
-                                                Icon(
-                                                  Icons.arrow_forward,
-                                                  size: 20,
-                                                  color: Colors.white,
-                                                ),
+                                                // Icon(
+                                                //   Icons.arrow_forward,
+                                                //   size: 20,
+                                                //   color: Colors.white,
+                                                // ),
                                               ],
                                             ),
                                           ),

@@ -1,3 +1,5 @@
+import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
+import 'package:excelapp2025/features/profile/view/profile_signin.dart';
 import 'package:excelapp2025/features/profile/view/show_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,7 @@ class ProfileScreenMainView extends StatefulWidget {
 }
 
 class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
+  bool _isCreatingAccount = false;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -21,6 +24,10 @@ class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
         if (state is ProfileLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is ProfileLoaded) {
+          _isCreatingAccount =
+              state.profileModel.institutionName == 'Unknown' ||
+              state.profileModel.gender == 'Not Specified' ||
+              state.profileModel.mobileNumber == 'Not Provided';
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -34,16 +41,119 @@ class _ProfileScreenMainViewState extends State<ProfileScreenMainView> {
                 child: Container(color: Colors.black.withAlpha(100)),
               ),
               SafeArea(
-                child: BasicProfileDetails(
-                  name: state.profileModel.name,
-                  institutionName: state.profileModel.institutionName,
-                  picture: state.profileModel.picture,
-                ),
+                child: _isCreatingAccount
+                    ? Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 30.0,
+                          children: [
+                            Text(
+                              "Complete Your Profile",
+                              style: GoogleFonts.mulish(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              "Looks like your profile is incomplete. To get the best experience, please complete your profile by providing the necessary details.",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.mulish(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                height: 1.5,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 5.0,
+                              children: [
+                                ProfileGradientButton(
+                                  icon: Icons.person_outline,
+                                  title: "Complete Your Profile",
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => BlocProvider.value(
+                                          value: context.read<ProfileBloc>(),
+                                          child: CreateAccScreen(
+                                            mode: CreateAccMode.CREATE,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    shape: CircleBorder(
+                                      side: BorderSide(
+                                        color: Colors.white,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.all(10.0),
+                                  ),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (_) {
+                                        return DialogueSheet(
+                                          title: 'Confirm Logout',
+                                          description:
+                                              'Are you sure you want to logout?',
+                                          primaryActionText: 'Yes',
+                                          secondaryActionText: 'No',
+                                          onPrimaryAction: () {
+                                            context.read<ProfileBloc>().add(
+                                              LogoutProfileRoutine(),
+                                            );
+                                            Navigator.of(context).pop();
+                                          },
+                                          onSecondaryAction: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.logout_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    : BasicProfileDetails(
+                        name: state.profileModel.name,
+                        institutionName: state.profileModel.institutionName,
+                        picture: state.profileModel.picture,
+                      ),
               ),
             ],
           );
         } else if (state is ProfileError) {
-          return Center(child: Text(state.message));
+          return Center(
+            child: Column(
+              children: [
+                Text(state.message),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<ProfileBloc>().add(LoadProfileData());
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
         } else {
           return Center(
             child: ElevatedButton(

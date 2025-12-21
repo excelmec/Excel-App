@@ -63,12 +63,7 @@ class _ProfileScreenLoaderState extends State<ProfileScreenLoader> {
                 fit: BoxFit.cover,
               ),
               (state is ProfileError)
-                  ? const Center(
-                      child: ElevatedButton(
-                        onPressed: null,
-                        child: Text('Load Profile'),
-                      ),
-                    )
+                  ? const Center(child: Text("Error loading profile data."))
                   : const Center(
                       child: CircularProgressIndicator(color: Colors.white),
                     ),
