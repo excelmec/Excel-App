@@ -51,9 +51,12 @@ class EventDetailsGrid extends StatelessWidget {
 
     final isOdd = cards.length % 2 == 1;
     final pairs = cards.length - (isOdd ? 1 : 0);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final horizontalPadding = screenWidth > 600 ? 54.0 : 48.0;
+    final cardSpacing = screenWidth > 600 ? 40.0 : 16.0;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 54),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(
         children: [
           for (int i = 0; i < pairs; i += 2)
@@ -62,21 +65,27 @@ class EventDetailsGrid extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(child: cards[i]),
-                  const SizedBox(width: 40),
+                  SizedBox(width: cardSpacing),
                   Expanded(child: cards[i + 1]),
                 ],
               ),
             ),
           if (isOdd)
-            Row(
-              children: [
-                const Expanded(child: SizedBox()),
-                SizedBox(
-                  width: (MediaQuery.of(context).size.width - 108 - 40) / 2,
-                  child: cards.last,
-                ),
-                const Expanded(child: SizedBox()),
-              ],
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final availableWidth = constraints.maxWidth;
+                final cardWidth = (availableWidth - cardSpacing) / 2;
+                return Row(
+                  children: [
+                    const Expanded(child: SizedBox()),
+                    SizedBox(
+                      width: cardWidth.clamp(100.0, double.infinity),
+                      child: cards.last,
+                    ),
+                    const Expanded(child: SizedBox()),
+                  ],
+                );
+              },
             ),
         ],
       ),

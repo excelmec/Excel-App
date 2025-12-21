@@ -20,7 +20,7 @@ class EventDetailCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => DetailPopup.show(context, iconPath, label, value),
       child: Container(
-        height: 57.0,
+        height: MediaQuery.of(context).size.width > 600 ? 80 : 60,
         decoration: BoxDecoration(
           color: const Color(0xFF691701),
           borderRadius: BorderRadius.circular(15),
@@ -48,15 +48,17 @@ class EventDetailCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    value,
-                    style: GoogleFonts.mulish(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    child: Text(
+                      value,
+                      style: GoogleFonts.mulish(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
