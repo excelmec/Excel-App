@@ -63,10 +63,20 @@ class _ProfileScreenLoaderState extends State<ProfileScreenLoader> {
                 fit: BoxFit.cover,
               ),
               (state is ProfileError)
-                  ? const Center(
-                      child: ElevatedButton(
-                        onPressed: null,
-                        child: Text('Load Profile'),
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(state.message),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<ProfileBloc>().add(
+                                LoadProfileData(),
+                              );
+                            },
+                            child: const Text('Retry'),
+                          ),
+                        ],
                       ),
                     )
                   : const Center(

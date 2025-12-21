@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String _baseUrl = 'https://baseUrl.com';
   static const String accountsBaseUrl =
       'https://excel-accounts-backend-1024858294879.asia-south1.run.app/api';
-  static const String eventsTestingUrl = 'https://excel-events-service-1024858294879.asia-south1.run.app/api';
+  static const String eventsTestingUrl =
+      'https://excel-events-service-1024858294879.asia-south1.run.app/api';
 
   static Map<String, String> defaultHeaders = {
     'Content-Type': 'application/json',
@@ -27,6 +29,7 @@ class ApiService {
     Map<String, String>? headers,
   }) async {
     final uri = Uri.parse(baseUrl + endpoint);
+    print(uri);
     final response = await http.get(uri, headers: headers ?? defaultHeaders);
     return _handleResponse(response);
   }
@@ -34,10 +37,11 @@ class ApiService {
   /// POST request
   static Future<dynamic> post(
     String endpoint, {
+    String baseUrl = _baseUrl,
     Map<String, String>? headers,
     dynamic body,
   }) async {
-    final uri = Uri.parse(_baseUrl + endpoint);
+    final uri = Uri.parse(baseUrl + endpoint);
     final response = await http.post(
       uri,
       headers: headers ?? defaultHeaders,
