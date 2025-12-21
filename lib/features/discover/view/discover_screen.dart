@@ -68,6 +68,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -146,7 +147,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                                 height: 2,
-                                width: _mainTabIndex == 0 ? 100 : 0,
+                                width: _mainTabIndex == 0 ? 80 : 0,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(1),
@@ -185,7 +186,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                                 height: 2,
-                                width: _mainTabIndex == 1 ? 100 : 0,
+                                width: _mainTabIndex == 1 ? 80 : 0,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(1),

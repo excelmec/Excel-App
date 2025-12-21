@@ -21,7 +21,7 @@ class HtmlTextWidget extends StatelessWidget {
         fontWeight: FontWeight.w500,
         height: 2,
       ),
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.justify,
     );
   }
 }

@@ -189,6 +189,7 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
         fontWeight: FontWeight.w700,
         letterSpacing: 0.5,
       ),
+      textAlign: TextAlign.center,
     );
   }
 
