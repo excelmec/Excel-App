@@ -14,6 +14,50 @@
       },
       "oauth_client": [
         {
+          "client_id": "602359993946-6ch8gnkk9npe6d9ab4h3dqfnlfsiovn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.excelapp2025",
+            "certificate_hash": "1a9d420f09565be22895889d9ec2ffe265551913"
+          }
+        },
+        {
+          "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX_91EyrsxB353OxoE5ek1my1pwe8AE2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "602359993946-mg5gu6ii548njtq394r823cobphkh6pu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.excel2022"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602359993946:android:7ec9a853f3e92eface6a63",
+        "android_client_info": {
+          "package_name": "com.excelmec.app"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
           "client_type": 3
         }
