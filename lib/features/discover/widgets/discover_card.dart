@@ -1,5 +1,6 @@
 import 'package:excelapp2025/core/services/image_cache_service.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
+import 'package:excelapp2025/features/event_detail/view/event_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,18 @@ class DiscoverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EventDetailScreen(
+              eventId: event.id,
+            ),
+          ),
+        );
+      },
+      child: Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
       margin: EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
@@ -22,6 +34,7 @@ class DiscoverCard extends StatelessWidget {
           Row(
             children: [
               CachedImage(
+                key: ValueKey('${event.id}-${event.icon}'),
                 imageUrl: event.icon,
                 width: 60,
                 height: 60,
@@ -103,6 +116,8 @@ class DiscoverCard extends StatelessWidget {
           )
         ],
       ),
+      ),
     );
   }
+
 }

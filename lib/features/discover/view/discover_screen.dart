@@ -68,6 +68,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -146,7 +147,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                                 height: 2,
-                                width: _mainTabIndex == 0 ? 100 : 0,
+                                width: _mainTabIndex == 0 ? 80 : 0,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(1),
@@ -185,7 +186,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.easeInOut,
                                 height: 2,
-                                width: _mainTabIndex == 1 ? 100 : 0,
+                                width: _mainTabIndex == 1 ? 80 : 0,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(1),
@@ -306,7 +307,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
 
   Widget _buildCategoryTabs() {
     return SizedBox(
-      height: 45,
+      height: 40,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -325,7 +326,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xFFF7B83F)
