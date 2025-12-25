@@ -60,17 +60,17 @@ class _AboutExcelPopUpState extends State<AboutExcelPopUp> with TickerProviderSt
     
     // Animation timings that accelerate then decelerate
     final delays = [
-      800,  // 2014 - slow start
+      800,  // 2014
       750,  // 2015
       700,  // 2016
-      600,  // 2017 - speeding up
+      600,  // 2017
       500,  // 2018
       400,  // 2019
-      350,  // 2020 - fastest
+      350,  // 2020
       350,  // 2021
-      400,  // 2022 - slowing down
-      500,  // 2023
-      700,  // 2024
+      300,  // 2022
+      250,  // 2023
+      300,  // 2024
       0,    // 2025 - final (stays forever)
     ];
     
