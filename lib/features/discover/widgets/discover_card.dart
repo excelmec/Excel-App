@@ -1,7 +1,11 @@
 import 'package:excelapp2025/core/services/image_cache_service.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
 import 'package:excelapp2025/features/event_detail/view/event_detail_screen.dart';
+import 'package:excelapp2025/core/favorites/favorites_bloc.dart';
+import 'package:excelapp2025/core/favorites/favorites_event.dart';
+import 'package:excelapp2025/core/favorites/favorites_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -90,9 +94,19 @@ class DiscoverCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.favorite_rounded,
-                    color: const Color(0xFFD56807),
+                  BlocBuilder<FavoritesBloc, FavoritesState>(
+                    builder: (context, favState) {
+                      final isFavorite = favState.isFavorite(event.id);
+                      return IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.favorite_rounded : Icons.favorite_border,
+                          color: const Color(0xFFD56807),
+                        ),
+                        onPressed: () {
+                          context.read<FavoritesBloc>().add(ToggleFavoriteEvent(event.id));
+                        },
+                      );
+                    },
                   ),
                   SizedBox(width: 10),
                   Container(

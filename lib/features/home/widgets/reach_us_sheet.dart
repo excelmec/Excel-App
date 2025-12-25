@@ -42,8 +42,6 @@ Widget reachUsModal(context) {
                     borderRadius: BorderRadius.circular(24),
                     child: Image.asset(
                       "assets/images/MapsicleMap.png",
-                      width: 320,
-                      height: 266,
                       fit: BoxFit.cover,
                     ),
                   ),

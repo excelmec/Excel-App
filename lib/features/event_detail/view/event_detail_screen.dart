@@ -1,4 +1,7 @@
 import 'package:excelapp2025/core/services/image_cache_service.dart';
+import 'package:excelapp2025/core/favorites/favorites_bloc.dart';
+import 'package:excelapp2025/core/favorites/favorites_event.dart';
+import 'package:excelapp2025/core/favorites/favorites_state.dart';
 import 'package:excelapp2025/features/event_detail/bloc/event_detail_bloc.dart';
 import 'package:excelapp2025/features/event_detail/bloc/event_detail_event.dart';
 import 'package:excelapp2025/features/event_detail/bloc/event_detail_state.dart';
@@ -43,7 +46,6 @@ class EventDetailScreenView extends StatefulWidget {
 
 class _EventDetailScreenViewState extends State<EventDetailScreenView> {
   int _selectedTabIndex = 0;
-  bool _isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -136,25 +138,38 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
 
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
+    return BlocBuilder<EventDetailBloc, EventDetailState>(
+      builder: (context, state) {
+        final eventId = (state is EventDetailLoaded) ? state.event.id : 0;
+        
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
+              BlocBuilder<FavoritesBloc, FavoritesState>(
+                builder: (context, favState) {
+                  final isFavorite = favState.isFavorite(eventId);
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite_rounded : Icons.favorite_border,
+                      color: isFavorite ? const Color(0xFFD56807) : Colors.white,
+                      size: 28,
+                    ),
+                    onPressed: eventId > 0 ? () {
+                      context.read<FavoritesBloc>().add(ToggleFavoriteEvent(eventId));
+                    } : null,
+                  );
+                },
+              ),
+            ],
           ),
-          IconButton(
-            icon: Icon(
-              _isFavorited ? Icons.favorite_rounded : Icons.favorite_border,
-              color: _isFavorited ? const Color(0xFFD56807) : Colors.white,
-              size: 28,
-            ),
-            onPressed: () => setState(() => _isFavorited = !_isFavorited),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

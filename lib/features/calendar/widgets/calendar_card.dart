@@ -1,7 +1,11 @@
 import 'package:excelapp2025/core/services/image_cache_service.dart';
+import 'package:excelapp2025/core/favorites/favorites_bloc.dart';
+import 'package:excelapp2025/core/favorites/favorites_event.dart';
+import 'package:excelapp2025/core/favorites/favorites_state.dart';
 import 'package:excelapp2025/features/calendar/data/models/calendar_event_model.dart';
 import 'package:excelapp2025/features/event_detail/view/event_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CalendarCard extends StatelessWidget {
@@ -71,6 +75,21 @@ class CalendarCard extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          BlocBuilder<FavoritesBloc, FavoritesState>(
+            builder: (context, favState) {
+              final isFavorite = favState.isFavorite(event.id);
+              return IconButton(
+                icon: Icon(
+                  isFavorite ? Icons.favorite_rounded : Icons.favorite_border,
+                  color: const Color(0xFFD56807),
+                  size: 24,
+                ),
+                onPressed: () {
+                  context.read<FavoritesBloc>().add(ToggleFavoriteEvent(event.id));
+                },
+              );
+            },
           ),
         ],
       ),

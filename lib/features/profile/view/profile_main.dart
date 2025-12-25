@@ -1,8 +1,14 @@
+import 'package:excelapp2025/features/discover/bloc/discover_bloc.dart';
+import 'package:excelapp2025/features/discover/bloc/discover_state.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
-import 'package:excelapp2025/features/profile/data/repository/fetch_reg_events.dart';
+import 'package:excelapp2025/features/event_detail/view/event_detail_screen.dart';
 import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
 import 'package:excelapp2025/features/profile/view/profile_signin.dart';
 import 'package:excelapp2025/features/profile/view/show_profile.dart';
+import 'package:excelapp2025/core/favorites/favorites_bloc.dart';
+import 'package:excelapp2025/core/favorites/favorites_event.dart';
+import 'package:excelapp2025/core/favorites/favorites_state.dart';
+import 'package:excelapp2025/core/services/image_cache_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -316,10 +322,111 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                     description: event.about,
                     date: DateFormat('MMM dd').format(event.datetime),
                     imageUrl: event.icon,
+                    eventId: event.id,
+                    isRegistered: true,
                   );
                 },
               ),
-              Center(child: Text('Favorite Events')),
+              BlocBuilder<FavoritesBloc, FavoritesState>(
+                builder: (context, favState) {
+                  final favoriteIds = favState.favoriteIds;
+                  
+                  if (favoriteIds.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.favorite_border,
+                            size: 64,
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'No Favorite Events',
+                            style: GoogleFonts.mulish(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white.withOpacity(0.7),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Text(
+                              'Start adding events to your favorites from Discover or Calendar screens',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.mulish(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  
+                  // Filter registered events that are in favorites
+                  final favoriteEvents = (context.read<DiscoverBloc>().state as DiscoverLoaded).events
+                      .where((event) => favoriteIds.contains(event.id))
+                      .toList();
+                  
+                  if (favoriteEvents.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.favorite_border,
+                            size: 64,
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'No Favorite Events',
+                            style: GoogleFonts.mulish(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white.withOpacity(0.7),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Text(
+                              'Start adding events to your favorites from Discover or Calendar screens',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.mulish(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  
+                  return ListView.builder(
+                    itemCount: favoriteEvents.length,
+                    itemBuilder: (context, index) {
+                      final event = favoriteEvents[index];
+                      return EventCard(
+                        title: event.name,
+                        description: event.about,
+                        date: DateFormat('MMM dd').format(event.datetime),
+                        imageUrl: event.icon,
+                        eventId: event.id,
+                        isRegistered: widget.registeredEvents
+                            .any((e) => e.id == event.id),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -335,12 +442,16 @@ class EventCard extends StatelessWidget {
     required this.description,
     required this.date,
     required this.imageUrl,
+    required this.eventId,
+    required this.isRegistered
   });
 
   final String title;
   final String description;
   final String date;
   final String imageUrl;
+  final int eventId;
+  final bool isRegistered;
 
   @override
   Widget build(BuildContext context) {
@@ -359,14 +470,13 @@ class EventCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  ClipRRect(
+                  CachedImage(
+                    key: ValueKey('$eventId-$imageUrl'),
+                    imageUrl: imageUrl,
+                    width: 55,
+                    height: 55,
+                    fit: BoxFit.cover,
                     borderRadius: BorderRadius.circular(55.0),
-                    child: Image.network(
-                      imageUrl,
-                      width: 55,
-                      height: 55,
-                      fit: BoxFit.cover,
-                    ),
                   ),
                   SizedBox(width: 12.0),
                   Expanded(
@@ -409,20 +519,43 @@ class EventCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        // TODO : favorite functionality
-                        // Also decide whether to use Icon from material icon or use custom icon for favorite
-                        onPressed: () {},
-                        icon: Icon(Icons.favorite_border_outlined),
+                      BlocBuilder<FavoritesBloc, FavoritesState>(
+                        builder: (context, favState) {
+                          final isFavorite = favState.isFavorite(eventId);
+                          return IconButton(
+                            // TODO : favorite functionality
+                            // Also decide whether to use Icon from material icon or use custom icon for favorite
+                            onPressed: () {
+                              context.read<FavoritesBloc>().add(
+                                context.read<FavoritesBloc>().state.isFavorite(eventId)
+                                  ? RemoveFavoriteEvent(eventId)
+                                  : AddFavoriteEvent(eventId),
+                              );
+                            },
+                            icon: Icon(
+                              isFavorite ? Icons.favorite_rounded : Icons.favorite_border_outlined,
+                              color: isFavorite ? const Color(0xFFD56807) : Colors.white,
+                            ),
+                          );
+                        },
                       ),
                       TextButton(
                         // TODO : register functionality
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventDetailScreen(
+                                eventId: eventId,
+                              ),
+                            ),
+                          );
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0x4D691700),
                         ),
                         child: Text(
-                          'Register',
+                          isRegistered ? 'Registered' : 'Register',
                           style: GoogleFonts.mulish(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
