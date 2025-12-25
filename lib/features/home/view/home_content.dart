@@ -15,6 +15,9 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   late PageController _pageController;
   int _selectedActionIndex = 0;
+  DateTime? _targetDateTime;
+  Duration? _timeRemaining;
+  late Stream<Duration> _timerStream;
 
   @override
   void initState() {
@@ -23,6 +26,35 @@ class _HomeContentState extends State<HomeContent> {
       viewportFraction: 0.5,
       initialPage: 1000 * 3 ~/ 2,
     );
+    
+    // Set target date to Jan 9, 2025
+    _targetDateTime = DateTime(2026, 1, 9, 0, 0, 0);
+    _updateTimeRemaining();
+    
+    // Create a stream that updates every second
+    _timerStream = Stream.periodic(
+      const Duration(seconds: 1),
+      (_) => _calculateTimeRemaining(),
+    );
+  }
+
+  Duration _calculateTimeRemaining() {
+    final now = DateTime.now().toLocal();
+    if (_targetDateTime == null || now.isAfter(_targetDateTime!)) {
+      // Check if event is ongoing (between Jan 9 and Jan 11)
+      final endDate = DateTime(2026, 1, 11, 23, 59, 59);
+      if (now.isBefore(endDate)) {
+        return Duration.zero; // Event is ongoing
+      }
+      return Duration.zero; // Event has ended
+    }
+    return _targetDateTime!.difference(now);
+  }
+
+  void _updateTimeRemaining() {
+    setState(() {
+      _timeRemaining = _calculateTimeRemaining();
+    });
   }
 
   @override
@@ -57,6 +89,8 @@ class _HomeContentState extends State<HomeContent> {
                     _buildActionButtons(),
                     const SizedBox(height: 40),
                     _buildHighlightsCarousel(),
+                    const SizedBox(height: 40),
+                    _buildEventCountdown(),
                     const SizedBox(height: 100),
                   ],
                 ),
@@ -361,6 +395,251 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+  Widget _buildEventCountdown() {
+    return StreamBuilder<Duration>(
+      stream: _timerStream,
+      builder: (context, snapshot) {
+        final duration = snapshot.data ?? _calculateTimeRemaining();
+        final now = DateTime.now().toLocal();
+        final endDate = DateTime(2026, 1, 11, 23, 59, 59);
+        
+        // Check if event has ended
+        if (now.isAfter(endDate)) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(20),
+            // decoration: BoxDecoration(
+            //   borderRadius: BorderRadius.circular(20),
+            //   gradient: LinearGradient(
+            //     begin: Alignment.topLeft,
+            //     end: Alignment.bottomRight,
+            //     colors: [
+            //       Color(0xFF691701).withOpacity(0.8),
+            //       Colors.black.withOpacity(0.9),
+            //     ],
+            //   ),
+            //   boxShadow: [
+            //     BoxShadow(
+            //       color: Color(0xFF691701).withOpacity(0.3),
+            //       blurRadius: 20,
+            //       spreadRadius: 2,
+            //     ),
+            //   ],
+            // ),
+            child: Center(
+              child: Text(
+                'EXCEL 2025 HAS CONCLUDED',
+                style: GoogleFonts.nixieOne(
+                  fontSize: 34,
+                  fontWeight: FontWeight.normal,
+                  color: Color(0xFFFCF0A6),
+                  letterSpacing: 3,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+        
+        // Check if event is ongoing
+        if (duration.inSeconds <= 0) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 50),
+            padding: const EdgeInsets.all(20),
+            // decoration: BoxDecoration(
+            //   borderRadius: BorderRadius.circular(20),
+            //   gradient: LinearGradient(
+            //     begin: Alignment.topLeft,
+            //     end: Alignment.bottomRight,
+            //     colors: [
+            //       Color(0xFFF7B83F).withOpacity(0.9),
+            //       Color(0xFF691701).withOpacity(0.9),
+            //     ],
+            //   ),
+            //   boxShadow: [
+            //     BoxShadow(
+            //       color: Color(0xFFF7B83F).withOpacity(0.4),
+            //       blurRadius: 25,
+            //       spreadRadius: 3,
+            //     ),
+            //   ],
+            // ),
+            child: Column(
+              children: [
+                Text(
+                  'EXCEL 2025 IS LIVE!',
+                  style: GoogleFonts.nixieOne(
+                    fontSize: 36,
+                    fontWeight: FontWeight.normal,
+                    color: Color(0xFFFCF0A6),
+                    letterSpacing: 3,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                // const SizedBox(height: 8),
+                // Text(
+                //   'EXCEL 2025 IN PROGRESS',
+                //   style: GoogleFonts.mulish(
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.w600,
+                //     color: Colors.white.withOpacity(0.9),
+                //     letterSpacing: 1,
+                //   ),
+                // ),
+              ],
+            ),
+          );
+        }
+        
+        final days = duration.inDays;
+        final hours = duration.inHours % 24;
+        final minutes = duration.inMinutes % 60;
+        final seconds = duration.inSeconds % 60;
+        
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF691701).withOpacity(0.6),
+                Colors.black.withOpacity(0.8),
+              ],
+            ),
+            border: Border.all(
+              color: Color(0xFFF7B83F).withOpacity(0.3),
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0xFF691701).withOpacity(0.3),
+                blurRadius: 20,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              ShaderMask(
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: [
+                    Color(0xFFFCF0A6),
+                    Color(0xFFF7B83F),
+                  ],
+                ).createShader(bounds),
+                child: Text(
+                  'EXCEL 2025 IN',
+                  style: GoogleFonts.aldrich(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    letterSpacing: 3,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 5,
+                children: [
+                  _buildTimeUnit(days.toString().padLeft(2, '0'), 'DAYS'),
+                  _buildTimeDivider(),
+                  _buildTimeUnit(hours.toString().padLeft(2, '0'), 'HOURS'),
+                  _buildTimeDivider(),
+                  _buildTimeUnit(minutes.toString().padLeft(2, '0'), 'MINS'),
+                  _buildTimeDivider(),
+                  _buildTimeUnit(seconds.toString().padLeft(2, '0'), 'SECS'),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'JAN 9 - JAN 11, 2026',
+                      style: GoogleFonts.mulish(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFFCF0A6),
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTimeUnit(String value, String label) {
+    return SizedBox(
+      width: 65,
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Color(0xFFF7B83F).withOpacity(0.3),
+                width: 1,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                value,
+                style: GoogleFonts.aldrich(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFFFCF0A6),
+                  height: 1.0,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: GoogleFonts.mulish(
+              fontSize: 9,
+              fontWeight: FontWeight.w600,
+              color: Colors.white.withOpacity(0.7),
+              letterSpacing: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimeDivider() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Text(
+        ':',
+        style: GoogleFonts.montserrat(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: Color(0xFFF7B83F).withOpacity(0.6),
+          height: 1.0,
         ),
       ),
     );
