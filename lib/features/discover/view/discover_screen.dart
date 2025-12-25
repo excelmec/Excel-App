@@ -1,7 +1,6 @@
 import 'package:excelapp2025/features/discover/bloc/discover_bloc.dart';
 import 'package:excelapp2025/features/discover/bloc/discover_event.dart';
 import 'package:excelapp2025/features/discover/bloc/discover_state.dart';
-import 'package:excelapp2025/features/discover/data/repository/event_repo.dart';
 import 'package:excelapp2025/features/discover/widgets/discover_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,11 +11,8 @@ class DiscoverScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DiscoverBloc(eventRepo: EventRepo())
-        ..add(LoadEventsEvent()),
-      child: const DiscoverScreenView(),
-    );
+    context.read<DiscoverBloc>().add(LoadEventsEvent());
+    return const DiscoverScreenView();
   }
 }
 

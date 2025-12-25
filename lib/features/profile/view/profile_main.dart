@@ -1,3 +1,5 @@
+import 'package:excelapp2025/features/discover/bloc/discover_bloc.dart';
+import 'package:excelapp2025/features/discover/bloc/discover_state.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
 import 'package:excelapp2025/features/event_detail/view/event_detail_screen.dart';
 import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
@@ -367,7 +369,7 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                   }
                   
                   // Filter registered events that are in favorites
-                  final favoriteEvents = widget.registeredEvents
+                  final favoriteEvents = (context.read<DiscoverBloc>().state as DiscoverLoaded).events
                       .where((event) => favoriteIds.contains(event.id))
                       .toList();
                   

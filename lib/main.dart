@@ -1,3 +1,5 @@
+import 'package:excelapp2025/features/discover/bloc/discover_bloc.dart';
+import 'package:excelapp2025/features/discover/data/repository/event_repo.dart';
 import 'package:excelapp2025/features/home/cubit/index_cubit.dart';
 import 'package:excelapp2025/features/home/view/notifications/views/notifications_screen.dart';
 import 'package:excelapp2025/features/navigation/main_navigation_screen.dart';
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => IndexCubit()),
+        BlocProvider(create: (_) => DiscoverBloc(eventRepo: EventRepo())),
         BlocProvider(
           create: (_) => FavoritesBloc()..add(LoadFavoritesEvent()),
         ),
