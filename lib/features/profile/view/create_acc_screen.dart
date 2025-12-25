@@ -701,7 +701,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                           height: 54,
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.black,
+                                              backgroundColor: Colors.white,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(30),
@@ -716,28 +716,45 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                               if (_formKey.currentState!
                                                       .validate() &&
                                                   context.mounted) {
-                                                int response =
-                                                    await updateProfile();
-                                                if (response == 200) {
-                                                  ScaffoldMessenger.of(
-                                                    context,
-                                                  ).showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                        "Profile Updated!",
+                                                try {
+                                                  int response =
+                                                      await updateProfile();
+                                                  if (response == 200) {
+                                                    ScaffoldMessenger.of(
+                                                      context,
+                                                    ).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                          "Profile Updated!",
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
-                                                  context
-                                                      .read<ProfileBloc>()
-                                                      .add(LoadProfileData());
-                                                } else {
+                                                    );
+                                                    context
+                                                        .read<ProfileBloc>()
+                                                        .add(LoadProfileData());
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                      context,
+                                                    ).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                          "Failed to update profile.",
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                } catch (e) {
                                                   ScaffoldMessenger.of(
                                                     context,
                                                   ).showSnackBar(
-                                                    const SnackBar(
+                                                    SnackBar(
                                                       content: Text(
-                                                        "Failed to update profile.",
+                                                        //TODO : better error handling
+                                                        e.toString().contains(
+                                                              "(Status code: 422)",
+                                                            )
+                                                            ? "No changes found to update."
+                                                            : "Failed to update profile.",
                                                       ),
                                                     ),
                                                   );
@@ -754,7 +771,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w600,
-                                                    color: Colors.white,
+                                                    color: Colors.black,
                                                     fontFamily: 'Mulish',
                                                   ),
                                                 ),
