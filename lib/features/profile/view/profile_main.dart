@@ -385,7 +385,7 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                           ),
                           SizedBox(height: 16),
                           Text(
-                            'No Favorite Events Available',
+                            'No Favorite Events',
                             style: GoogleFonts.mulish(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -396,7 +396,7 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: Text(
-                              'Your favorite events will appear here once they are loaded',
+                              'Start adding events to your favorites from Discover or Calendar screens',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.mulish(
                                 fontSize: 14,
