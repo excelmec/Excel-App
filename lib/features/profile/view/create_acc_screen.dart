@@ -1,6 +1,10 @@
+import 'dart:math';
+
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:excelapp2025/core/api/routes/api_routes.dart';
 import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/core/api/services/auth_service.dart';
+import 'package:excelapp2025/features/profile/widgets/dialogue_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -121,7 +125,6 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
         return 200;
       } else {
         // Error from server
-        debugPrint('Upload failed: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Upload failed: ${response.statusCode}')),
         );
@@ -129,7 +132,6 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
         return response.statusCode;
       }
     } catch (e) {
-      debugPrint('Error: $e');
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('An error occurred')));
@@ -224,42 +226,59 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
     required String? value,
     required List<String> items,
     required ValueChanged<String?> onChanged,
+    bool searchable = false,
   }) {
-    return DropdownButtonFormField<String>(
-      value: value,
-      isExpanded: true,
-      dropdownColor: Colors.black,
-      icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
-      style: const TextStyle(color: Colors.white, fontFamily: 'Mulish'),
-      decoration: InputDecoration(
-        labelText: hint,
-        hintMaxLines: 1,
-
-        labelStyle: const TextStyle(
-          color: Colors.white,
-          fontFamily: 'Mulish',
-          overflow: TextOverflow.ellipsis,
+    return DropdownSearch<String>(
+      selectedItem: value,
+      items: (f, cs) => items,
+      popupProps: PopupProps.menu(
+        fit: FlexFit.loose,
+        showSearchBox: searchable,
+        searchFieldProps: TextFieldProps(
+          style: const TextStyle(color: Colors.white, fontFamily: 'Mulish'),
+          decoration: const InputDecoration(
+            hintText: "Search...",
+            hintStyle: TextStyle(color: Colors.white54),
+            border: OutlineInputBorder(),
+          ),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
+        menuProps: const MenuProps(backgroundColor: Colors.black),
+      ),
+      decoratorProps: DropDownDecoratorProps(
+        decoration: InputDecoration(
+          labelText: hint,
+          labelStyle: const TextStyle(
+            color: Colors.white,
+            fontFamily: 'Mulish',
+            overflow: TextOverflow.ellipsis,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.white),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.white),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.white),
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.white),
-        ),
+      ),
+      dropdownBuilder: (context, selectedItem) => Text(
+        selectedItem ?? "",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(color: Colors.white, fontFamily: 'Mulish'),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -267,18 +286,6 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
         }
         return null;
       },
-      items: items.map((item) {
-        return DropdownMenuItem<String>(
-          value: item,
-          child: Text(
-            item,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            softWrap: false,
-            style: const TextStyle(color: Colors.white, fontFamily: 'Mulish'),
-          ),
-        );
-      }).toList(),
       onChanged: onChanged,
     );
   }
@@ -290,7 +297,14 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
         if (state is ProfileLoaded && !isInitialized) {
           isInitialized = true;
 
+          //TODO : solution feels hacky, use better state management and logic
           void initializeCollegeOptions() async {
+            _selectedInstitutionType = state.profileModel.institutionId >= 2300
+                ? 'School'
+                : state.profileModel.institutionId >= 400
+                ? 'College'
+                : 'Other Institution';
+
             String token = await AuthService.getToken();
             ApiService.get(
               ApiRoutes.collegeList,
@@ -302,6 +316,12 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                 collegeOptions = data
                     .map((item) => "${item['id']} ${item['name']}")
                     .toList();
+                if (_selectedInstitutionType == 'College') {
+                  _selectedInstitution = collegeOptions.firstWhere(
+                    (inst) => inst.contains(state.profileModel.institutionName),
+                    orElse: () => 'Other',
+                  );
+                }
               });
             });
             ApiService.get(
@@ -314,8 +334,20 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                 schoolOptions = data
                     .map((item) => "${item['id']} ${item['name']}")
                     .toList();
+                if (_selectedInstitutionType == 'School') {
+                  schoolOptions.firstWhere(
+                    (inst) => inst.startsWith(
+                      state.profileModel.institutionId.toString(),
+                    ),
+                    orElse: () => 'Other',
+                  );
+                }
               });
             });
+
+            if (_selectedInstitutionType == 'Other Institution') {
+              _selectedInstitution = 'Other';
+            }
           }
 
           try {
@@ -364,6 +396,38 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                               ),
                             ),
                             centerTitle: true,
+                            leading: IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (_) {
+                                    return DialogueSheet(
+                                      title: "Discard Changes?",
+                                      description:
+                                          "Are you sure you want to discard the changes made to your profile?",
+                                      primaryActionText: "Discard",
+                                      secondaryActionText: "Cancel",
+                                      onPrimaryAction: () {
+                                        Navigator.pop(
+                                          context,
+                                        ); // Close the bottom sheet
+                                        Navigator.pop(context); // Navigate back
+                                      },
+                                      onSecondaryAction: () {
+                                        Navigator.pop(
+                                          context,
+                                        ); // Just close the bottom sheet
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                             actions: [
                               IconButton(
                                 icon: const Icon(
@@ -373,25 +437,42 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate() &&
                                       context.mounted) {
-                                    int response = await updateProfile();
-                                    if (response == 200) {
+                                    try {
+                                      int response = await updateProfile();
+                                      if (response == 200) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text("Profile Updated!"),
+                                          ),
+                                        );
+                                        context.read<ProfileBloc>().add(
+                                          LoadProfileData(),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              "Failed to update profile.",
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } catch (e) {
                                       ScaffoldMessenger.of(
                                         context,
                                       ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text("Profile Updated!"),
-                                        ),
-                                      );
-                                      context.read<ProfileBloc>().add(
-                                        LoadProfileData(),
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content: Text(
-                                            "Failed to update profile.",
+                                            //TODO : better error handling
+                                            e.toString().contains(
+                                                  "(Status code: 422)",
+                                                )
+                                                ? "No changes found to update."
+                                                : "Failed to update profile.",
                                           ),
                                         ),
                                       );
@@ -551,6 +632,10 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                               setState(() {
                                                 _selectedInstitutionType =
                                                     value;
+                                                _selectedInstitution = "Other";
+                                                _institutionNameController
+                                                        .text =
+                                                    "";
                                               });
                                             },
                                           ),
@@ -590,6 +675,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                                 _selectedInstitution = value;
                                               });
                                             },
+                                            searchable: true,
                                           ),
                                         ),
                                       ],
