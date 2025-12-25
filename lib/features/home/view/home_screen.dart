@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(
       viewportFraction: 0.5,
-      initialPage: 1000 * 3 ~/ 2,
+      initialPage: 1000 * 5 ~/ 2,
     );
   }
 
@@ -203,9 +203,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildHighlightsCarousel() {
     final List<Map<String, String>> highlights = [
-      {'title': 'Tug Of War', 'image': 'assets/images/tow.png'},
       {'title': 'Behind the Scenes', 'image': 'assets/images/bts.png'},
       {'title': 'Logo Launch', 'image': 'assets/images/lol.png'},
+      {'title': 'Blinding Lights', 'image': 'assets/images/blindinglights.png'},
+      {'title': 'CyberQuest', 'image': 'assets/images/cyberquest.png'},
+      {'title': 'Remap 2.0', 'image': 'assets/images/remap.png'},
     ];
 
     return SizedBox(
@@ -226,7 +228,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 value = _pageController.page! - index;
                 value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
               } else {
-              
                 value = (_pageController.initialPage - index).toDouble();
                 value = (1 - (value.abs() * 0.3)).clamp(0.7, 1.0);
               }
@@ -273,7 +274,10 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [const Color(0xFF691701).withOpacity(0.4), Colors.black.withOpacity(0.8)],
+            colors: [
+              const Color(0xFF691701).withOpacity(0.4),
+              Colors.black.withOpacity(0.8),
+            ],
           ),
         ),
         child: Stack(
@@ -372,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color.fromRGBO(247, 184, 63, 1.0), 
+                    Color.fromRGBO(247, 184, 63, 1.0),
                     Color(0xFFE6D088),
                   ],
                 ),
@@ -430,13 +434,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
           child: isSelected
               ? SizedBox(
-                  width: 78, 
-                  height: 44, 
+                  width: 78,
+                  height: 44,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        20,
-                      ), 
+                      borderRadius: BorderRadius.circular(20),
                       gradient: const LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
