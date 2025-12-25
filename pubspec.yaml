@@ -3,7 +3,7 @@ description: "Excel 2025 Official App."
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+001
 
 environment:
   sdk: ^3.9.2
@@ -16,10 +16,20 @@ dependencies:
   flutter_bloc: ^9.1.1
   http: ^1.5.0
   google_fonts: ^6.3.2
+  shared_preferences: ^2.5.4
+  google_sign_in: ^7.2.0
+  firebase_core: ^4.2.1
+  url_launcher: ^6.3.2
+  in_app_update: ^4.2.3
+  intl: ^0.20.2
+  flutter_svg: ^2.0.10+1
+  qr_flutter: ^4.1.0
+  image_picker: ^1.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
 
   flutter_lints: ^5.0.0
 
@@ -28,3 +38,10 @@ flutter:
   assets:
   - assets/images/
   - assets/icons/
+  - assets/logos/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logos/logo2025.png"
+  adaptive_icon_background: "F7B83F"

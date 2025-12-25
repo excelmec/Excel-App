@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "602359993946",
+    "project_id": "excel-notification",
+    "storage_bucket": "excel-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602359993946:android:687dc4967a9e16dfce6a63",
+        "android_client_info": {
+          "package_name": "com.example.excelapp2025"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602359993946-6ch8gnkk9npe6d9ab4h3dqfnlfsiovn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.excelapp2025",
+            "certificate_hash": "1a9d420f09565be22895889d9ec2ffe265551913"
+          }
+        },
+        {
+          "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX_91EyrsxB353OxoE5ek1my1pwe8AE2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "602359993946-mg5gu6ii548njtq394r823cobphkh6pu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.excel2022"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602359993946:android:7ec9a853f3e92eface6a63",
+        "android_client_info": {
+          "package_name": "com.excelmec.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX_91EyrsxB353OxoE5ek1my1pwe8AE2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "602359993946-mg5gu6ii548njtq394r823cobphkh6pu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.excel2022"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602359993946:android:e138f22cdbd10256ce6a63",
+        "android_client_info": {
+          "package_name": "org.excelmec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602359993946-rfdoth1139o41euk8vqr2r0q0j24j4h9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.excelmec",
+            "certificate_hash": "97603e2ab2802964d03b675860f7be5ad3462a71"
+          }
+        },
+        {
+          "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX_91EyrsxB353OxoE5ek1my1pwe8AE2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602359993946-0odk8k1je9e32khnkhek4bhcvfr7bjlk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "602359993946-mg5gu6ii548njtq394r823cobphkh6pu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.excel2022"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
