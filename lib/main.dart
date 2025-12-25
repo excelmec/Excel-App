@@ -3,6 +3,8 @@ import 'package:excelapp2025/features/home/view/notifications/views/notification
 import 'package:excelapp2025/features/navigation/main_navigation_screen.dart';
 import 'package:excelapp2025/features/splash/splash_screen.dart';
 import 'package:excelapp2025/firebase_options.dart';
+import 'package:excelapp2025/core/favorites/favorites_bloc.dart';
+import 'package:excelapp2025/core/favorites/favorites_event.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:excelapp2025/features/welcome/view/welcome_screen.dart';
@@ -20,7 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => IndexCubit())],
+      providers: [
+        BlocProvider(create: (_) => IndexCubit()),
+        BlocProvider(
+          create: (_) => FavoritesBloc()..add(LoadFavoritesEvent()),
+        ),
+      ],
       child: MaterialApp(
         title: 'Excel 2025',
         theme: ThemeData.dark(),
