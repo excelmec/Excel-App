@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:excelapp2025/core/api/routes/api_routes.dart';
 import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/core/api/services/auth_service.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
-import 'package:flutter/cupertino.dart';
 
 class FetchRegisteredEvents {
   static Future<List<EventModel>> returnRegisteredEvents() async {
@@ -18,7 +15,7 @@ class FetchRegisteredEvents {
       final data = response as List<dynamic>;
 
       final ndata = data.map((e) => EventModel.fromJson(e)).toList();
-      log(ndata[0].toString());
+      // log(ndata[0].toString());
       return ndata;
     } else {
       return [];

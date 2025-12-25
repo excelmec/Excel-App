@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
 
@@ -11,7 +9,6 @@ class EventRepo {
         baseUrl: ApiService.eventsTestingUrl
       );
       final data = response as List<dynamic>;
-      log(data.toString());
       return data.map((e) => EventModel.fromJson(e)).toList();
     } catch (e) {
       rethrow;

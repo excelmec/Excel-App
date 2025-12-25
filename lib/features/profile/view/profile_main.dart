@@ -1,5 +1,4 @@
 import 'package:excelapp2025/features/discover/data/models/event_model.dart';
-import 'package:excelapp2025/features/profile/data/repository/fetch_reg_events.dart';
 import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
 import 'package:excelapp2025/features/profile/view/profile_signin.dart';
 import 'package:excelapp2025/features/profile/view/show_profile.dart';

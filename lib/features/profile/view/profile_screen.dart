@@ -3,7 +3,6 @@ import 'package:excelapp2025/features/profile/view/profile_signin.dart';
 import 'package:excelapp2025/features/profile/view/profile_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
