@@ -16,6 +16,7 @@ class _HomeContentState extends State<HomeContent> {
   late PageController _pageController;
   int _selectedActionIndex = 0;
   DateTime? _targetDateTime;
+  // ignore: unused_field
   Duration? _timeRemaining;
   late Stream<Duration> _timerStream;
 
@@ -500,9 +501,13 @@ class _HomeContentState extends State<HomeContent> {
         final minutes = duration.inMinutes % 60;
         final seconds = duration.inSeconds % 60;
         
+        final screenWidth = MediaQuery.of(context).size.width;
+        final isSmallScreen = screenWidth < 360;
+        final containerPadding = screenWidth * 0.05;
+        
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(24),
+          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+          padding: EdgeInsets.all(containerPadding),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
@@ -537,30 +542,33 @@ class _HomeContentState extends State<HomeContent> {
                 child: Text(
                   'EXCEL 2025 IN',
                   style: GoogleFonts.aldrich(
-                    fontSize: 12,
+                    fontSize: isSmallScreen ? 10 : 12,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
-                    letterSpacing: 3,
+                    letterSpacing: isSmallScreen ? 2 : 3,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: containerPadding * 0.8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 5,
+                spacing: isSmallScreen ? 2 : 5,
                 children: [
-                  _buildTimeUnit(days.toString().padLeft(2, '0'), 'DAYS'),
-                  _buildTimeDivider(),
-                  _buildTimeUnit(hours.toString().padLeft(2, '0'), 'HOURS'),
-                  _buildTimeDivider(),
-                  _buildTimeUnit(minutes.toString().padLeft(2, '0'), 'MINS'),
-                  _buildTimeDivider(),
-                  _buildTimeUnit(seconds.toString().padLeft(2, '0'), 'SECS'),
+                  _buildTimeUnit(days.toString().padLeft(2, '0'), 'DAYS', screenWidth, isSmallScreen),
+                  _buildTimeDivider(isSmallScreen),
+                  _buildTimeUnit(hours.toString().padLeft(2, '0'), 'HOURS', screenWidth, isSmallScreen),
+                  _buildTimeDivider(isSmallScreen),
+                  _buildTimeUnit(minutes.toString().padLeft(2, '0'), 'MINS', screenWidth, isSmallScreen),
+                  _buildTimeDivider(isSmallScreen),
+                  _buildTimeUnit(seconds.toString().padLeft(2, '0'), 'SECS', screenWidth, isSmallScreen),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: containerPadding * 0.6),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.04,
+                  vertical: screenWidth * 0.02,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12),
@@ -571,10 +579,10 @@ class _HomeContentState extends State<HomeContent> {
                     Text(
                       'JAN 9 - JAN 11, 2026',
                       style: GoogleFonts.mulish(
-                        fontSize: 12,
+                        fontSize: isSmallScreen ? 10 : 12,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFFFCF0A6),
-                        letterSpacing: 1,
+                        letterSpacing: isSmallScreen ? 0.5 : 1,
                       ),
                     ),
                   ],
@@ -587,14 +595,21 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  Widget _buildTimeUnit(String value, String label) {
+  Widget _buildTimeUnit(String value, String label, double screenWidth, bool isSmallScreen) {
+    final unitWidth = screenWidth * (isSmallScreen ? 0.14 : 0.16);
+    final fontSize = isSmallScreen ? 18.0 : 22.0;
+    final labelFontSize = isSmallScreen ? 7.0 : 9.0;
+    
     return SizedBox(
-      width: 65,
+      width: unitWidth,
       child: Column(
         children: [
           Container(
-            width: 60,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            width: unitWidth,
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.02,
+              vertical: screenWidth * 0.02,
+            ),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.circular(8),
@@ -607,7 +622,7 @@ class _HomeContentState extends State<HomeContent> {
               child: Text(
                 value,
                 style: GoogleFonts.aldrich(
-                  fontSize: 22,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w900,
                   color: Color(0xFFFCF0A6),
                   height: 1.0,
@@ -615,14 +630,14 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: screenWidth * 0.015),
           Text(
             label,
             style: GoogleFonts.mulish(
-              fontSize: 9,
+              fontSize: labelFontSize,
               fontWeight: FontWeight.w600,
               color: Colors.white.withOpacity(0.7),
-              letterSpacing: 1,
+              letterSpacing: isSmallScreen ? 0.5 : 1,
             ),
           ),
         ],
@@ -630,13 +645,13 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  Widget _buildTimeDivider() {
+  Widget _buildTimeDivider(bool isSmallScreen) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: isSmallScreen ? 15 : 20),
       child: Text(
         ':',
         style: GoogleFonts.montserrat(
-          fontSize: 20,
+          fontSize: isSmallScreen ? 16 : 20,
           fontWeight: FontWeight.w700,
           color: Color(0xFFF7B83F).withOpacity(0.6),
           height: 1.0,
