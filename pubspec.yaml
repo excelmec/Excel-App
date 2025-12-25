@@ -29,6 +29,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
 
   flutter_lints: ^5.0.0
 
@@ -38,3 +39,8 @@ flutter:
   - assets/images/
   - assets/icons/
   - assets/logos/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logos/logo2025.png"
