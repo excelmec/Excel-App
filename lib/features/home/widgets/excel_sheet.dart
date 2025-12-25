@@ -26,12 +26,12 @@ class AboutExcelPopUp extends StatelessWidget {
             "assets/icons/divider.png",
             width: 340,
           ),
-          Image.asset(
-            "assets/icons/college.png",
-            width: 340,
-            height: 160,
-          ),
-          SizedBox(height: 10),
+          // Image.asset(
+          //   "assets/icons/college.png",
+          //   width: 340,
+          //   height: 160,
+          // ),
+          // SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.fromLTRB(32, 7, 32, 10),
             child: Center(
