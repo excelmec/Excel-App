@@ -14,14 +14,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc(),
-      child: Scaffold(
-        body: BlocListener<ProfileBloc, ProfileState>(
-          listener: (context, state) {},
-          child: const ProfileScreenLoader(),
-        ),
-      ),
+    return Scaffold(
+      body: const ProfileScreenLoader(),
     );
   }
 }

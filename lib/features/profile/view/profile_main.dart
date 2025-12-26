@@ -281,6 +281,7 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
             fontWeight: FontWeight.w800,
             color: Colors.white,
           ),
+          textAlign: TextAlign.center,
         ),
         Text(
           widget.institutionName,
@@ -290,6 +291,7 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
             color: Colors.white,
             height: 1.5,
           ),
+          textAlign: TextAlign.center,
         ),
         TabBar(
           controller: _tabController,
