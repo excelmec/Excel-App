@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Excel 2025',
         theme: ThemeData.dark(),
         initialRoute: '/',
