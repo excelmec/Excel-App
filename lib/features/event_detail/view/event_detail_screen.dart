@@ -90,7 +90,7 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
                 } else if (state is RegistrationFailed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Registration failed: ${state.message}'),
+                      content: Text(state.message),
                       backgroundColor: Colors.red,
                     ),
                   );

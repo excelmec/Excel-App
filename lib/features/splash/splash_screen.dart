@@ -61,8 +61,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<bool> _checkInternetConnection() async {
     try {
-      final connectivityResult = await Connectivity().checkConnectivity();
-      return connectivityResult != ConnectivityResult.none;
+      final connectivityResults = await Connectivity().checkConnectivity();
+      // Check if any connection type is available (WiFi, Mobile, Ethernet, etc.)
+      return connectivityResults.isNotEmpty &&
+          !connectivityResults.contains(ConnectivityResult.none);
     } catch (e) {
       return false;
     }
