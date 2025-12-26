@@ -128,6 +128,6 @@ class DeveloperCreditsSheet extends StatelessWidget {
     {'name': 'Anet Davis', 'email': 'anetndavis@gmail.com'},
     {'name': 'Isha Paulin I B', 'email': 'ishapaulinib246@gmail.com'},
     {'name': 'Niranjana A', 'email': 'niranjana6002@gmail.com'},
-    {'name': 'Anjana', 'email': 'anjanaanoop60@gmail.com'},
+    {'name': 'Anjana Anoop', 'email': 'anjanaanoop60@gmail.com'},
   ];
 }

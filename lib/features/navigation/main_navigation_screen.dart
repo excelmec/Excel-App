@@ -50,7 +50,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Container(
             height: 80,
-            margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.only(
