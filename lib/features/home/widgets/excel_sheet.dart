@@ -126,10 +126,10 @@ class _AboutExcelPopUpState extends State<AboutExcelPopUp> with TickerProviderSt
             "assets/icons/divider.png",
             width: 340,
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 16),
           // Animated Logo Showcase
           SizedBox(
-            height: 300,
+            height: 280,
             child: AnimatedBuilder(
               animation: Listenable.merge([_fadeController, _scaleController, _rotateController]),
               builder: (context, child) {
@@ -294,7 +294,7 @@ class _AboutExcelPopUpState extends State<AboutExcelPopUp> with TickerProviderSt
                       style: GoogleFonts.mulish(
                         color: Color(0xFFE4EDEF),
                         fontWeight: FontWeight.w400,
-                        fontSize: 14,
+                        fontSize: 12,
                       ),
                     ),
                   ],
