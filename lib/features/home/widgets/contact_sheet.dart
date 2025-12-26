@@ -36,7 +36,7 @@ Widget contactUsModal(context) {
                 children: [
                   InkWell(
                     onTap: () {
-                      launchUrl(Uri.parse('tel:+919744872696'));
+                      launchUrl(Uri.parse('tel:+919961343102'));
                     },
                     child: Container(
                       decoration: BoxDecoration(
