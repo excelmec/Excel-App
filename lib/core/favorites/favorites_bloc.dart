@@ -7,8 +7,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final FavoritesService _favoritesService;
 
   FavoritesBloc({FavoritesService? favoritesService})
-      : _favoritesService = favoritesService ?? FavoritesService.instance,
-        super(FavoritesInitial()) {
+    : _favoritesService = favoritesService ?? FavoritesService.instance,
+      super(FavoritesInitial()) {
     on<LoadFavoritesEvent>(_onLoadFavorites);
     on<ToggleFavoriteEvent>(_onToggleFavorite);
     on<AddFavoriteEvent>(_onAddFavorite);
@@ -25,7 +25,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       final favorites = await _favoritesService.getFavorites();
       emit(FavoritesLoaded(favorites));
     } catch (e) {
-      emit(FavoritesError(state.favoriteIds, 'Failed to load favorites: $e'));
+      emit(FavoritesError(state.favoriteIds, 'Failed to load favorites'));
     }
   }
 
@@ -36,19 +36,19 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     try {
       final currentFavorites = Set<int>.from(state.favoriteIds);
       final isCurrentlyFavorite = currentFavorites.contains(event.eventId);
-      
+
       if (isCurrentlyFavorite) {
         currentFavorites.remove(event.eventId);
       } else {
         currentFavorites.add(event.eventId);
       }
-      
+
       emit(FavoritesLoaded(currentFavorites));
-      
+
       // Persist in background
       await _favoritesService.toggleFavorite(event.eventId);
     } catch (e) {
-      emit(FavoritesError(state.favoriteIds, 'Failed to toggle favorite: $e'));
+      emit(FavoritesError(state.favoriteIds, 'Failed to update favorite'));
     }
   }
 
@@ -59,13 +59,13 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     try {
       final currentFavorites = Set<int>.from(state.favoriteIds);
       currentFavorites.add(event.eventId);
-      
+
       emit(FavoritesLoaded(currentFavorites));
-      
+
       // Persist in background
       await _favoritesService.addFavorite(event.eventId);
     } catch (e) {
-      emit(FavoritesError(state.favoriteIds, 'Failed to add favorite: $e'));
+      emit(FavoritesError(state.favoriteIds, 'Failed to add favorite'));
     }
   }
 
@@ -76,13 +76,13 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     try {
       final currentFavorites = Set<int>.from(state.favoriteIds);
       currentFavorites.remove(event.eventId);
-      
+
       emit(FavoritesLoaded(currentFavorites));
-      
+
       // Persist in background
       await _favoritesService.removeFavorite(event.eventId);
     } catch (e) {
-      emit(FavoritesError(state.favoriteIds, 'Failed to remove favorite: $e'));
+      emit(FavoritesError(state.favoriteIds, 'Failed to remove favorite'));
     }
   }
 
@@ -94,7 +94,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       emit(FavoritesLoaded({}));
       await _favoritesService.clearFavorites();
     } catch (e) {
-      emit(FavoritesError(state.favoriteIds, 'Failed to clear favorites: $e'));
+      emit(FavoritesError(state.favoriteIds, 'Failed to clear favorites'));
     }
   }
 }

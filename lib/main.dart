@@ -18,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
+    DeviceOrientation.portraitDown,
   ]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
@@ -33,9 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => IndexCubit()),
         BlocProvider(create: (_) => DiscoverBloc(eventRepo: EventRepo())),
-        BlocProvider(
-          create: (_) => FavoritesBloc()..add(LoadFavoritesEvent()),
-        ),
+        BlocProvider(create: (_) => FavoritesBloc()..add(LoadFavoritesEvent())),
         BlocProvider(create: (_) => ProfileBloc()),
       ],
       child: MaterialApp(

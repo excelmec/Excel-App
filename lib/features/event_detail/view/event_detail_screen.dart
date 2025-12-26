@@ -69,9 +69,7 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
                   );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => const ProfileScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const ProfileScreen()),
                   );
                 } else if (state is RegistrationRequiresProfile) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +83,8 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => CreateAccScreen(mode: CreateAccMode.UPDATE),
+                      builder: (_) =>
+                          CreateAccScreen(mode: CreateAccMode.UPDATE),
                     ),
                   );
                 } else if (state is RegistrationFailed) {

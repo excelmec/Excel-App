@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:excelapp2025/core/api/routes/api_routes.dart';
 import 'package:excelapp2025/core/api/services/api_service.dart';
@@ -110,7 +108,6 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
       var response = await http.Response.fromStream(streamedResponse);
 
       if (response.statusCode == 200) {
-        debugPrint(response.body);
         final currentState = context.read<ProfileBloc>().state;
         if (currentState is ProfileLoaded) {
           await NetworkImage(currentState.profileModel.picture).evict();
@@ -516,9 +513,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                         right: 4,
                                         child: GestureDetector(
                                           onTap: () async {
-                                            print("Picking image...");
                                             await _pickAndUploadImage();
-                                            print("Image pick process done.");
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(8),

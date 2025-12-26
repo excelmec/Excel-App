@@ -29,7 +29,11 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
       final eventDetail = await eventDetailRepo.fetchEventDetail(event.eventId);
       emit(EventDetailLoaded(eventDetail));
     } catch (e) {
-      emit(EventDetailError(e.toString()));
+      emit(
+        EventDetailError(
+          'Failed to load event details. Please check your connection and try again.',
+        ),
+      );
     }
   }
 
@@ -131,16 +135,27 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
             return;
           }
 
-          emit(RegistrationFailed(event: eventDetail, message: e.message));
+          emit(
+            RegistrationFailed(
+              event: eventDetail,
+              message: 'Registration failed. Please try again.',
+            ),
+          );
         } else {
-          emit(RegistrationFailed(event: eventDetail, message: e.toString()));
+          emit(
+            RegistrationFailed(
+              event: eventDetail,
+              message: 'Registration failed. Please try again.',
+            ),
+          );
         }
       }
     } catch (e) {
       emit(
         RegistrationFailed(
           event: eventDetail,
-          message: 'An error occurred: ${e.toString()}',
+          message:
+              'Registration failed. Please check your connection and try again.',
         ),
       );
     }

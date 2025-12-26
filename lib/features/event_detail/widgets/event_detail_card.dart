@@ -74,9 +74,18 @@ class EventDetailCard extends StatelessWidget {
     return iconPath.endsWith('.png')
         ? ColorFiltered(
             colorFilter: colorFilter,
-            child: Image.asset(iconPath, width: 24, height: 24, fit: BoxFit.contain),
+            child: Image.asset(
+              iconPath,
+              width: 24,
+              height: 24,
+              fit: BoxFit.contain,
+            ),
           )
-        : SvgPicture.asset(iconPath, width: 24, height: 24, colorFilter: colorFilter);
+        : SvgPicture.asset(
+            iconPath,
+            width: 24,
+            height: 24,
+            colorFilter: colorFilter,
+          );
   }
 }
-

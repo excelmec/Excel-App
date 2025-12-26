@@ -3,7 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailPopup {
-  static void show(BuildContext context, String iconPath, String label, String value) {
+  static void show(
+    BuildContext context,
+    String iconPath,
+    String label,
+    String value,
+  ) {
     showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.7),
@@ -59,7 +64,9 @@ class DetailPopup {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white.withOpacity(0.85),
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   child: Text(
                     'OK',
@@ -83,9 +90,18 @@ class DetailPopup {
     return iconPath.endsWith('.png')
         ? ColorFiltered(
             colorFilter: colorFilter,
-            child: Image.asset(iconPath, width: 24, height: 24, fit: BoxFit.contain),
+            child: Image.asset(
+              iconPath,
+              width: 24,
+              height: 24,
+              fit: BoxFit.contain,
+            ),
           )
-        : SvgPicture.asset(iconPath, width: 24, height: 24, colorFilter: colorFilter);
+        : SvgPicture.asset(
+            iconPath,
+            width: 24,
+            height: 24,
+            colorFilter: colorFilter,
+          );
   }
 }
-

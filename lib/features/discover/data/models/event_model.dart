@@ -5,10 +5,10 @@ class EventModel {
   final String eventType;
   final String category;
   final String venue;
-  final bool? needRegistration;   // nullable
-  final int? day;                 // nullable
+  final bool? needRegistration; // nullable
+  final int? day; // nullable
   final DateTime datetime;
-  final int? prizeMoney;          // nullable
+  final int? prizeMoney; // nullable
   final String about;
   final int? eventHead1Id;
   final EventHead? eventHead1;
@@ -107,11 +107,6 @@ class EventHead {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phoneNumber': phoneNumber,
-    };
+    return {'id': id, 'name': name, 'email': email, 'phoneNumber': phoneNumber};
   }
 }

@@ -16,7 +16,11 @@ class FormatTab extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.description_outlined, color: Colors.white70, size: 36),
+            const Icon(
+              Icons.description_outlined,
+              color: Colors.white70,
+              size: 36,
+            ),
             const SizedBox(height: 16),
             Text(
               'No format applicable',
@@ -36,4 +40,3 @@ class FormatTab extends StatelessWidget {
     );
   }
 }
-

@@ -4,9 +4,9 @@ import 'dart:convert';
 class FavoritesService {
   static const String _favoritesKey = 'favorite_events';
   static FavoritesService? _instance;
-  
+
   FavoritesService._();
-  
+
   static FavoritesService get instance {
     _instance ??= FavoritesService._();
     return _instance!;
@@ -17,15 +17,14 @@ class FavoritesService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final favoritesJson = prefs.getString(_favoritesKey);
-      
+
       if (favoritesJson == null || favoritesJson.isEmpty) {
         return {};
       }
-      
+
       final List<dynamic> favoritesList = json.decode(favoritesJson);
       return favoritesList.map((e) => e as int).toSet();
     } catch (e) {
-      print('Error loading favorites: $e');
       return {};
     }
   }
@@ -37,7 +36,6 @@ class FavoritesService {
       favorites.add(eventId);
       return await _saveFavorites(favorites);
     } catch (e) {
-      print('Error adding favorite: $e');
       return false;
     }
   }
@@ -49,7 +47,6 @@ class FavoritesService {
       favorites.remove(eventId);
       return await _saveFavorites(favorites);
     } catch (e) {
-      print('Error removing favorite: $e');
       return false;
     }
   }
@@ -76,7 +73,6 @@ class FavoritesService {
       final prefs = await SharedPreferences.getInstance();
       return await prefs.remove(_favoritesKey);
     } catch (e) {
-      print('Error clearing favorites: $e');
       return false;
     }
   }
@@ -88,7 +84,6 @@ class FavoritesService {
       final favoritesJson = json.encode(favorites.toList());
       return await prefs.setString(_favoritesKey, favoritesJson);
     } catch (e) {
-      print('Error saving favorites: $e');
       return false;
     }
   }

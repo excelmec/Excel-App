@@ -25,28 +25,34 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
           ? availableDates.first
           : DateTime.now();
       final events = _filterEventsByDate(initialDate);
-      emit(CalendarLoaded(
-        events: events,
-        selectedDate: initialDate,
-        availableDates: availableDates,
-      ));
+      emit(
+        CalendarLoaded(
+          events: events,
+          selectedDate: initialDate,
+          availableDates: availableDates,
+        ),
+      );
     } catch (e) {
-      emit(CalendarError(message: e.toString()));
+      emit(
+        CalendarError(
+          message:
+              'Failed to load calendar. Please check your connection and try again.',
+        ),
+      );
     }
   }
 
-  void _onSelectDate(
-    SelectDateEvent event,
-    Emitter<CalendarState> emit,
-  ) {
+  void _onSelectDate(SelectDateEvent event, Emitter<CalendarState> emit) {
     if (state is CalendarLoaded) {
       final currentState = state as CalendarLoaded;
       final events = _filterEventsByDate(event.date);
-      emit(CalendarLoaded(
-        events: events,
-        selectedDate: event.date,
-        availableDates: currentState.availableDates,
-      ));
+      emit(
+        CalendarLoaded(
+          events: events,
+          selectedDate: event.date,
+          availableDates: currentState.availableDates,
+        ),
+      );
     }
   }
 
@@ -67,11 +73,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
   List<DateTime> _getAvailableDates() {
     final dates = _allEvents
-        .map((e) => DateTime(
-              e.datetime.year,
-              e.datetime.month,
-              e.datetime.day,
-            ))
+        .map((e) => DateTime(e.datetime.year, e.datetime.month, e.datetime.day))
         .toSet()
         .toList();
     dates.sort();

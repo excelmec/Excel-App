@@ -23,7 +23,12 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
       _allEvents = await eventRepo.fetchEvents();
       emit(DiscoverLoaded(events: _allEvents, filteredEvents: _allEvents));
     } catch (e) {
-      emit(DiscoverError(message: e.toString()));
+      emit(
+        DiscoverError(
+          message:
+              'Failed to load events. Please check your connection and try again.',
+        ),
+      );
     }
   }
 
@@ -67,23 +72,29 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
         } else if (event.category.toLowerCase() == 'cs-tech') {
           // Show competitions with cs_tech category
           filtered = filtered
-              .where((e) =>
-                  e.eventType.toLowerCase() == 'competition' &&
-                  e.category.toLowerCase() == 'cs_tech')
+              .where(
+                (e) =>
+                    e.eventType.toLowerCase() == 'competition' &&
+                    e.category.toLowerCase() == 'cs_tech',
+              )
               .toList();
         } else if (event.category.toLowerCase() == 'gen-tech') {
           // Show competitions with general_tech category
           filtered = filtered
-              .where((e) =>
-                  e.eventType.toLowerCase() == 'competition' &&
-                  e.category.toLowerCase() == 'general_tech')
+              .where(
+                (e) =>
+                    e.eventType.toLowerCase() == 'competition' &&
+                    e.category.toLowerCase() == 'general_tech',
+              )
               .toList();
         } else if (event.category.toLowerCase() == 'non-tech') {
           // Show competitions with non_tech category
           filtered = filtered
-              .where((e) =>
-                  e.eventType.toLowerCase() == 'competition' &&
-                  e.category.toLowerCase() == 'non_tech')
+              .where(
+                (e) =>
+                    e.eventType.toLowerCase() == 'competition' &&
+                    e.category.toLowerCase() == 'non_tech',
+              )
               .toList();
         }
       }
@@ -92,20 +103,18 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     }
   }
 
-  void _onSearchEvents(
-    SearchEventsEvent event,
-    Emitter<DiscoverState> emit,
-  ) {
+  void _onSearchEvents(SearchEventsEvent event, Emitter<DiscoverState> emit) {
     if (state is DiscoverLoaded) {
       final currentState = state as DiscoverLoaded;
       if (event.query.isEmpty) {
-        emit(DiscoverLoaded(
-            events: _allEvents, filteredEvents: _allEvents));
+        emit(DiscoverLoaded(events: _allEvents, filteredEvents: _allEvents));
       } else {
         final filtered = currentState.events
-            .where((e) =>
-                e.name.toLowerCase().contains(event.query.toLowerCase()) ||
-                e.about.toLowerCase().contains(event.query.toLowerCase()))
+            .where(
+              (e) =>
+                  e.name.toLowerCase().contains(event.query.toLowerCase()) ||
+                  e.about.toLowerCase().contains(event.query.toLowerCase()),
+            )
             .toList();
         emit(DiscoverLoaded(events: _allEvents, filteredEvents: filtered));
       }

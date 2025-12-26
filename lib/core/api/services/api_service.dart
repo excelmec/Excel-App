@@ -3,10 +3,8 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String _baseUrl = 'https://baseUrl.com';
-  static const String accountsBaseUrl =
-      'https://accounts-api.excelmec.org/api';
-  static const String eventsTestingUrl =
-      'https://events-api.excelmec.org/api';
+  static const String accountsBaseUrl = 'https://accounts-api.excelmec.org/api';
+  static const String eventsTestingUrl = 'https://events-api.excelmec.org/api';
 
   static Map<String, String> defaultHeaders = {
     'Content-Type': 'application/json',
@@ -28,7 +26,6 @@ class ApiService {
     Map<String, String>? headers,
   }) async {
     final uri = Uri.parse(baseUrl + endpoint);
-    print(uri);
     final response = await http.get(uri, headers: headers ?? defaultHeaders);
     return _handleResponse(response);
   }
@@ -40,7 +37,6 @@ class ApiService {
     Map<String, String>? headers,
     dynamic body,
   }) async {
-    print(jsonEncode(body));
     final uri = Uri.parse(baseUrl + endpoint);
     final response = await http.post(
       uri,
@@ -114,7 +110,8 @@ class ApiService {
       }
       // For error responses, throw with the raw body
       throw HttpException(
-        message: 'Invalid JSON response: ${body.isNotEmpty ? body : "empty body"}',
+        message:
+            'Invalid JSON response: ${body.isNotEmpty ? body : "empty body"}',
         statusCode: statusCode,
       );
     }
@@ -124,7 +121,8 @@ class ApiService {
       return decoded;
     } else {
       throw HttpException(
-        message: decoded?['message'] ?? 'Request failed with status $statusCode',
+        message:
+            decoded?['message'] ?? 'Request failed with status $statusCode',
         statusCode: statusCode,
       );
     }

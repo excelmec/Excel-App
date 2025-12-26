@@ -19,7 +19,9 @@ class EventDetailsGrid extends StatelessWidget {
       EventDetailCard(
         iconPath: 'assets/icons/time.svg',
         label: 'Time',
-        value: DateFormat('h:mm a').format(event.datetime.toLocal()).toLowerCase(),
+        value: DateFormat(
+          'h:mm a',
+        ).format(event.datetime.toLocal()).toLowerCase(),
       ),
       if (event.venue.isNotEmpty)
         EventDetailCard(
@@ -61,7 +63,9 @@ class EventDetailsGrid extends StatelessWidget {
         children: [
           for (int i = 0; i < pairs; i += 2)
             Padding(
-              padding: EdgeInsets.only(bottom: i + 2 < pairs ? 28 : (isOdd ? 28 : 0)),
+              padding: EdgeInsets.only(
+                bottom: i + 2 < pairs ? 28 : (isOdd ? 28 : 0),
+              ),
               child: Row(
                 children: [
                   Expanded(child: cards[i]),
@@ -92,4 +96,3 @@ class EventDetailsGrid extends StatelessWidget {
     );
   }
 }
-

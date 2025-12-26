@@ -19,82 +19,77 @@ class CalendarCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EventDetailScreen(
-              eventId: event.id,
-            ),
+            builder: (context) => EventDetailScreen(eventId: event.id),
           ),
         );
       },
       child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.only(bottom: 24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xFF691701),
-            Color(0xFF000000),
-            Color(0xFF000000),
-          ],
-          stops: [0.0, 0.7, 1.0],
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: const EdgeInsets.only(bottom: 24),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [Color(0xFF691701), Color(0xFF000000), Color(0xFF000000)],
+            stops: [0.0, 0.7, 1.0],
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          CachedImage(
-            key: ValueKey('${event.id}-${event.icon}'),
-            imageUrl: event.icon,
-            width: 60,
-            height: 60,
-            fit: BoxFit.cover,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  event.name,
-                  style: GoogleFonts.mulish(
-                    color: Colors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${event.time} | ${event.venue}',
-                  style: GoogleFonts.mulish(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+        child: Row(
+          children: [
+            CachedImage(
+              key: ValueKey('${event.id}-${event.icon}'),
+              imageUrl: event.icon,
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+              borderRadius: BorderRadius.circular(30),
             ),
-          ),
-          BlocBuilder<FavoritesBloc, FavoritesState>(
-            builder: (context, favState) {
-              final isFavorite = favState.isFavorite(event.id);
-              return IconButton(
-                icon: Icon(
-                  isFavorite ? Icons.favorite_rounded : Icons.favorite_border,
-                  color: const Color(0xFFD56807),
-                  size: 24,
-                ),
-                onPressed: () {
-                  context.read<FavoritesBloc>().add(ToggleFavoriteEvent(event.id));
-                },
-              );
-            },
-          ),
-        ],
-      ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    event.name,
+                    style: GoogleFonts.mulish(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${event.time} | ${event.venue}',
+                    style: GoogleFonts.mulish(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            BlocBuilder<FavoritesBloc, FavoritesState>(
+              builder: (context, favState) {
+                final isFavorite = favState.isFavorite(event.id);
+                return IconButton(
+                  icon: Icon(
+                    isFavorite ? Icons.favorite_rounded : Icons.favorite_border,
+                    color: const Color(0xFFD56807),
+                    size: 24,
+                  ),
+                  onPressed: () {
+                    context.read<FavoritesBloc>().add(
+                      ToggleFavoriteEvent(event.id),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }

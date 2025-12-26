@@ -58,10 +58,7 @@ class WelcomeScreenView extends StatelessWidget {
               children: [
                 const Spacer(flex: 1),
                 Transform.translate(
-                  offset: const Offset(
-                    0,
-                    -20,
-                  ), 
+                  offset: const Offset(0, -20),
                   child: Center(
                     child: Text(
                       'Welcome to\nExcel 2025',
@@ -103,9 +100,8 @@ class WelcomeScreenView extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      backgroundColor: Colors.transparent, 
-                      shadowColor:
-                          Colors.transparent, 
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
                     ),
                     child: Ink(
                       decoration: BoxDecoration(
@@ -116,13 +112,13 @@ class WelcomeScreenView extends StatelessWidget {
                               0xFC,
                               0xF0,
                               0xA6,
-                            ), 
+                            ),
                             Color.fromARGB(
                               (0.8 * 255).round(),
                               0xF7,
                               0xB8,
                               0x3F,
-                            ), 
+                            ),
                           ],
                         ),
 
@@ -140,7 +136,7 @@ class WelcomeScreenView extends StatelessWidget {
                               style: GoogleFonts.mulish(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.white, 
+                                color: Colors.white,
                               ),
                             ),
                             const SizedBox(width: 8),

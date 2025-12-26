@@ -1,8 +1,8 @@
 abstract class FavoritesState {
   final Set<int> favoriteIds;
-  
+
   FavoritesState(this.favoriteIds);
-  
+
   bool isFavorite(int eventId) => favoriteIds.contains(eventId);
 }
 
@@ -20,6 +20,6 @@ class FavoritesLoaded extends FavoritesState {
 
 class FavoritesError extends FavoritesState {
   final String message;
-  
+
   FavoritesError(Set<int> favoriteIds, this.message) : super(favoriteIds);
 }

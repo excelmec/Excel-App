@@ -24,4 +24,3 @@ class AboutTab extends StatelessWidget {
     );
   }
 }
-

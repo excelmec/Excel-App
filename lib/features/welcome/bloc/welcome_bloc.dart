@@ -5,7 +5,6 @@ part 'welcome_state.dart';
 
 class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
   WelcomeBloc() : super(WelcomeInitial()) {
-
     on<GetStartedButtonClickedEvent>(handleGetStartedButtonClickedEvent);
   }
 

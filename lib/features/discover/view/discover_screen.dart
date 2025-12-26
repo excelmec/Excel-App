@@ -29,8 +29,18 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
   bool _isSearchExpanded = false;
   final TextEditingController _searchController = TextEditingController();
 
-  final List<String> _eventCategories = ['All', 'Workshops', 'Talks', 'General'];
-  final List<String> _competitionCategories = ['All', 'CS-Tech', 'Gen-Tech', 'Non-Tech'];
+  final List<String> _eventCategories = [
+    'All',
+    'Workshops',
+    'Talks',
+    'General',
+  ];
+  final List<String> _competitionCategories = [
+    'All',
+    'CS-Tech',
+    'Gen-Tech',
+    'Non-Tech',
+  ];
 
   List<String> get _currentCategories =>
       _mainTabIndex == 0 ? _eventCategories : _competitionCategories;
@@ -42,7 +52,9 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
   }
 
   void _onSearchChanged() {
-    context.read<DiscoverBloc>().add(SearchEventsEvent(query: _searchController.text));
+    context.read<DiscoverBloc>().add(
+      SearchEventsEvent(query: _searchController.text),
+    );
     setState(() {}); // Rebuild to show/hide clear icon
   }
 
@@ -50,8 +62,8 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
     final type = _mainTabIndex == 0 ? 'events' : 'competitions';
     final category = _currentCategories[_categoryIndex];
     context.read<DiscoverBloc>().add(
-          FilterEventsByCategoryEvent(category: category, type: type),
-        );
+      FilterEventsByCategoryEvent(category: category, type: type),
+    );
   }
 
   @override
@@ -68,10 +80,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/images/discover_bg.png',
-            fit: BoxFit.cover,
-          ),
+          Image.asset('assets/images/discover_bg.png', fit: BoxFit.cover),
           SafeArea(
             child: Column(
               children: [
@@ -80,9 +89,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                 const SizedBox(height: 15),
                 _buildCategoryTabs(),
                 const SizedBox(height: 20),
-                Expanded(
-                  child: _buildEventsList(),
-                ),
+                Expanded(child: _buildEventsList()),
               ],
             ),
           ),
@@ -99,7 +106,9 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeInOut,
-            width: _isSearchExpanded ? 0 : MediaQuery.of(context).size.width - 112,
+            width: _isSearchExpanded
+                ? 0
+                : MediaQuery.of(context).size.width - 112,
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 300),
               opacity: _isSearchExpanded ? 0.0 : 1.0,
@@ -108,10 +117,7 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(25),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1.5,
-                  ),
+                  border: Border.all(color: Colors.white, width: 1.5),
                 ),
                 child: Row(
                   children: [
@@ -206,25 +212,21 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeInOut,
-            width: _isSearchExpanded ? MediaQuery.of(context).size.width - 40 : 50,
+            width: _isSearchExpanded
+                ? MediaQuery.of(context).size.width - 40
+                : 50,
             height: 50,
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.circular(25),
-              border: Border.all(
-                color: Colors.white,
-                width: 1.5,
-              ),
+              border: Border.all(color: Colors.white, width: 1.5),
             ),
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               switchInCurve: Curves.easeIn,
               switchOutCurve: Curves.easeOut,
               transitionBuilder: (child, animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: child,
-                );
+                return FadeTransition(opacity: animation, child: child);
               },
               child: _isSearchExpanded
                   ? Row(
@@ -262,7 +264,9 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
                                 fontWeight: FontWeight.w500,
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                              ),
                             ),
                           ),
                         ),
@@ -322,7 +326,10 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xFFF7B83F)
@@ -369,7 +376,11 @@ class _DiscoverScreenViewState extends State<DiscoverScreenView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, color: Colors.white70, size: 48),
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.white70,
+                  size: 48,
+                ),
                 const SizedBox(height: 16),
                 Text(
                   'Failed to load events',
