@@ -312,25 +312,59 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
             controller: _tabController,
             children: [
               //TODO : MAP Events from backend
-              // Center(child: EventCard()),
-              ListView.builder(
-                itemCount: widget.registeredEvents.length,
-                itemBuilder: (context, index) {
-                  final event = widget.registeredEvents[index];
-                  return EventCard(
-                    title: event.name,
-                    description: event.about,
-                    date: DateFormat('MMM dd').format(event.datetime),
-                    imageUrl: event.icon,
-                    eventId: event.id,
-                    isRegistered: true,
-                  );
-                },
-              ),
+              widget.registeredEvents.length == 0
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person_outline,
+                            size: 64,
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'No Registered Events',
+                            style: GoogleFonts.mulish(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white.withOpacity(0.7),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Text(
+                              'Register for events from the Discover or Calendar screens to see them here',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.mulish(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: widget.registeredEvents.length,
+                      itemBuilder: (context, index) {
+                        final event = widget.registeredEvents[index];
+                        return EventCard(
+                          title: event.name,
+                          description: event.about,
+                          date: DateFormat('MMM dd').format(event.datetime),
+                          imageUrl: event.icon,
+                          eventId: event.id,
+                          isRegistered: true,
+                        );
+                      },
+                    ),
               BlocBuilder<FavoritesBloc, FavoritesState>(
                 builder: (context, favState) {
                   final favoriteIds = favState.favoriteIds;
-                  
+
                   if (favoriteIds.isEmpty) {
                     return Center(
                       child: Column(
@@ -367,12 +401,14 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                       ),
                     );
                   }
-                  
+
                   // Filter registered events that are in favorites
-                  final favoriteEvents = (context.read<DiscoverBloc>().state as DiscoverLoaded).events
-                      .where((event) => favoriteIds.contains(event.id))
-                      .toList();
-                  
+                  final favoriteEvents =
+                      (context.read<DiscoverBloc>().state as DiscoverLoaded)
+                          .events
+                          .where((event) => favoriteIds.contains(event.id))
+                          .toList();
+
                   if (favoriteEvents.isEmpty) {
                     return Center(
                       child: Column(
@@ -409,7 +445,7 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                       ),
                     );
                   }
-                  
+
                   return ListView.builder(
                     itemCount: favoriteEvents.length,
                     itemBuilder: (context, index) {
@@ -420,8 +456,9 @@ class _BasicProfileDetailsState extends State<BasicProfileDetails>
                         date: DateFormat('MMM dd').format(event.datetime),
                         imageUrl: event.icon,
                         eventId: event.id,
-                        isRegistered: widget.registeredEvents
-                            .any((e) => e.id == event.id),
+                        isRegistered: widget.registeredEvents.any(
+                          (e) => e.id == event.id,
+                        ),
                       );
                     },
                   );
@@ -443,7 +480,7 @@ class EventCard extends StatelessWidget {
     required this.date,
     required this.imageUrl,
     required this.eventId,
-    required this.isRegistered
+    required this.isRegistered,
   });
 
   final String title;
@@ -527,14 +564,20 @@ class EventCard extends StatelessWidget {
                             // Also decide whether to use Icon from material icon or use custom icon for favorite
                             onPressed: () {
                               context.read<FavoritesBloc>().add(
-                                context.read<FavoritesBloc>().state.isFavorite(eventId)
-                                  ? RemoveFavoriteEvent(eventId)
-                                  : AddFavoriteEvent(eventId),
+                                context.read<FavoritesBloc>().state.isFavorite(
+                                      eventId,
+                                    )
+                                    ? RemoveFavoriteEvent(eventId)
+                                    : AddFavoriteEvent(eventId),
                               );
                             },
                             icon: Icon(
-                              isFavorite ? Icons.favorite_rounded : Icons.favorite_border_outlined,
-                              color: isFavorite ? const Color(0xFFD56807) : Colors.white,
+                              isFavorite
+                                  ? Icons.favorite_rounded
+                                  : Icons.favorite_border_outlined,
+                              color: isFavorite
+                                  ? const Color(0xFFD56807)
+                                  : Colors.white,
                             ),
                           );
                         },
@@ -545,9 +588,8 @@ class EventCard extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EventDetailScreen(
-                                eventId: eventId,
-                              ),
+                              builder: (context) =>
+                                  EventDetailScreen(eventId: eventId),
                             ),
                           );
                         },
