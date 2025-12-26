@@ -112,6 +112,7 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
                               EventDetailsGrid(event: state.event),
                               const SizedBox(height: 24),
                               _buildRegisterButton(state.event),
+                              _buildRegistrationStatus(state.event),
                               const SizedBox(height: 24),
                               _buildTabContent(state.event),
                               const SizedBox(height: 24),
@@ -210,8 +211,28 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
 
   Widget _buildRegisterButton(EventDetailModel event) {
     final link = event.registrationLink?.trim();
+    
+    // Hide button if registration link is empty or null
     if (link == null || link.isEmpty || link == 'string' || link == 'null') {
       return const SizedBox.shrink();
+    }
+    
+    // Hide button if registration is not needed
+    if (!event.needRegistration) {
+      return const SizedBox.shrink();
+    }
+    
+    // Hide button if registration is closed
+    if (event.registrationOpen == false) {
+      return const SizedBox.shrink();
+    }
+    
+    // Hide button if registration end date is in the past
+    if (event.registrationEndDate != null) {
+      final now = DateTime.now();
+      if (event.registrationEndDate!.isBefore(now)) {
+        return const SizedBox.shrink();
+      }
     }
 
     return Padding(
@@ -229,15 +250,23 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
           child: InkWell(
             onTap: () async {
               try {
-                final uri = Uri.parse(link);
-                if (await canLaunchUrl(uri)) {
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                final uri = Uri.tryParse(link);
+                if (uri == null) {
+                  throw 'Invalid URL format';
                 }
+                await launchUrl(
+                  uri,
+                  mode: LaunchMode.externalApplication,
+                );
               } catch (e) {
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Invalid registration link'),
+                    SnackBar(
+                      content: Text(
+                        e.toString().contains('Invalid URL')
+                            ? 'Invalid registration link'
+                            : 'Unable to open registration link',
+                      ),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -245,29 +274,60 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
               }
             },
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 60),
-                  child: Text(
-                    'Register',
-                    style: GoogleFonts.mulish(
-                      color: const Color(0xFF691701),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                Text(
+                  'Register',
+                  style: GoogleFonts.mulish(
+                    color: const Color(0xFF691701),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 30),
-                  child: Icon(Icons.arrow_forward, color: Color(0xFF691701), size: 20),
-                ),
+                const SizedBox(width: 8),
+                const Icon(Icons.arrow_forward, color: Color(0xFF691701), size: 20),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildRegistrationStatus(EventDetailModel event) {
+    final link = event.registrationLink?.trim();
+    final hasValidLink = link != null && link.isNotEmpty && link != 'string' && link != 'null';
+    
+    // Show "Registration closes on [date]" below button if button is visible and date is available
+    final buttonVisible = hasValidLink && 
+                          event.needRegistration && 
+                          event.registrationOpen == true &&
+                          (event.registrationEndDate == null || event.registrationEndDate!.isAfter(DateTime.now()));
+    
+    if (buttonVisible && event.registrationEndDate != null) {
+      final formattedDate = _formatDate(event.registrationEndDate!);
+      return Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Text(
+          'Registration closes on $formattedDate',
+          style: GoogleFonts.mulish(
+            color: Colors.white70,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
+    }
+    
+    return const SizedBox.shrink();
+  }
+
+  String _formatDate(DateTime date) {
+    final months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 
   Widget _buildTabContent(EventDetailModel event) {
