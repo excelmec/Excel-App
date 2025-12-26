@@ -23,8 +23,8 @@ class RegistrationRepo {
 
     if (response == null) {
       return {
-        'success': false,
-        'statusCode': 500,
+        'success': true,
+        'statusCode': 200,
         'message': 'Complete Profile to register',
       };
     }

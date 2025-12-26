@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -121,8 +120,7 @@ class ApiService {
     }
 
     // Handle based on status code
-    if (statusCode >= 200 && statusCode <= 500) {
-      print('API Response [$statusCode]: $decoded');
+    if (statusCode >= 200 && statusCode <= 300) {
       return decoded;
     } else {
       throw HttpException(

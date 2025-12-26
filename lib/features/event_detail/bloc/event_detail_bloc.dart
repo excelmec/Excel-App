@@ -46,6 +46,18 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
     emit(RegistrationLoading(eventDetail));
 
     try {
+      // If it's a team event, directly open the team registration URL
+      if (eventDetail.isTeam) {
+        emit(
+          RegistrationSuccess(
+            event: eventDetail,
+            registrationLink:
+                'https://excelmec.org/competitions/${eventDetail.id}',
+          ),
+        );
+        return;
+      }
+
       // Step 1: Check if user is logged in
       final prefs = await SharedPreferences.getInstance();
       final isLoggedIn = prefs.getBool('isLogged') ?? false;
