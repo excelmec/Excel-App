@@ -10,9 +10,7 @@ class RegistrationRepo {
     final body = {'eventId': eventId, 'ambassadorId': ambassadorId};
 
     // Only include teamId if it's provided (for team events)
-    if (teamId != null) {
-      body['teamId'] = teamId;
-    }
+
 
     final response = await ApiService.post(
       '/registration',
