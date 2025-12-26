@@ -27,10 +27,15 @@ class FooterTabs extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => onTabSelected(index),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: selectedIndex == index ? Colors.white : Colors.transparent,
+                      color: selectedIndex == index
+                          ? Colors.white
+                          : Colors.transparent,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(20),
@@ -54,4 +59,3 @@ class FooterTabs extends StatelessWidget {
     );
   }
 }
-

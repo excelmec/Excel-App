@@ -26,9 +26,7 @@ class AuthService {
     try {
       Map<String, String> token = {"accessToken": accessToken};
       var response = await http.post(
-        Uri.parse(
-          "https://excel-accounts-backend-1024858294879.asia-south1.run.app/api/Auth/login",
-        ),
+        Uri.parse("https://accounts-api.excelmec.org/api/Auth/login"),
         headers: {"Content-Type": "application/json"},
         body: json.encode(token),
       );

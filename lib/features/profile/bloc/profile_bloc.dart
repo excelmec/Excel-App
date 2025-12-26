@@ -73,7 +73,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(ProfileLoaded(profileModel));
     } catch (e) {
-      emit(ProfileError('Failed to load profile data $e'));
+      emit(
+        ProfileError(
+          'Failed to load profile. Please check your connection and try again.',
+        ),
+      );
     }
   }
 
@@ -86,7 +90,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       await AuthService.login();
       emit(ProfileSignedIn());
     } catch (e) {
-      emit(ProfileError('Login routine failed'));
+      emit(ProfileError('Login failed. Please try again.'));
     }
   }
 
@@ -95,12 +99,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     emit(LogoutStartedState());
-    print('Logout routine started');
     try {
       await AuthService.logout();
       emit(ProfileSignedOut());
     } catch (e) {
-      emit(ProfileError('Logout routine failed'));
+      emit(ProfileError('Logout failed. Please try again.'));
     }
   }
 }

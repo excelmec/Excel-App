@@ -5,13 +5,14 @@ class EventModel {
   final String eventType;
   final String category;
   final String venue;
-  final bool? needRegistration;   // nullable
-  final int? day;                 // nullable
+  final bool? needRegistration; // nullable
+  final int? day; // nullable
   final DateTime datetime;
-  final int? prizeMoney;          // nullable
+  final int? prizeMoney; // nullable
   final String about;
   final int? eventHead1Id;
   final EventHead? eventHead1;
+  final bool isTeam;
   final int? eventHead2Id;
   final EventHead? eventHead2;
 
@@ -29,6 +30,7 @@ class EventModel {
     required this.about,
     required this.eventHead1Id,
     required this.eventHead1,
+    required this.isTeam,
     required this.eventHead2Id,
     required this.eventHead2,
   });
@@ -52,6 +54,7 @@ class EventModel {
       eventHead1: json['eventHead1'] != null
           ? EventHead.fromJson(json['eventHead1'] as Map<String, dynamic>)
           : null,
+      isTeam: json['isTeam'] as bool? ?? false,
       eventHead2Id: json['eventHead2Id'] as int?,
       eventHead2: json['eventHead2'] != null
           ? EventHead.fromJson(json['eventHead2'] as Map<String, dynamic>)
@@ -74,6 +77,7 @@ class EventModel {
       'about': about,
       'eventHead1Id': eventHead1Id,
       'eventHead1': eventHead1?.toJson(),
+      'isTeam': isTeam,
       'eventHead2Id': eventHead2Id,
       'eventHead2': eventHead2?.toJson(),
     };
@@ -103,11 +107,6 @@ class EventHead {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phoneNumber': phoneNumber,
-    };
+    return {'id': id, 'name': name, 'email': email, 'phoneNumber': phoneNumber};
   }
 }

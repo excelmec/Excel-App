@@ -6,7 +6,7 @@ class EventRepo {
     try {
       final response = await ApiService.get(
         '/events/',
-        baseUrl: ApiService.eventsTestingUrl
+        baseUrl: ApiService.eventsTestingUrl,
       );
       final data = response as List<dynamic>;
       return data.map((e) => EventModel.fromJson(e)).toList();

@@ -5,16 +5,10 @@ class HomeModel {
   HomeModel({required this.title, required this.description});
 
   factory HomeModel.fromJson(Map<String, dynamic> json) {
-    return HomeModel(
-      title: json['title'],
-      description: json['description'],
-    );
+    return HomeModel(title: json['title'], description: json['description']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'description': description,
-    };
+    return {'title': title, 'description': description};
   }
 }

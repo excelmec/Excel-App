@@ -10,7 +10,10 @@ class ContactTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contacts = [event.eventHead1, event.eventHead2].whereType<EventHead>().toList();
+    final contacts = [
+      event.eventHead1,
+      event.eventHead2,
+    ].whereType<EventHead>().toList();
     if (contacts.isEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -27,9 +30,10 @@ class ContactTab extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 55),
       child: Column(
-        children: contacts.map((contact) => ContactCard(contact: contact)).toList(),
+        children: contacts
+            .map((contact) => ContactCard(contact: contact))
+            .toList(),
       ),
     );
   }
 }
-

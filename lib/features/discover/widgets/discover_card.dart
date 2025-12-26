@@ -20,118 +20,122 @@ class DiscoverCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EventDetailScreen(
-              eventId: event.id,
-            ),
+            builder: (context) => EventDetailScreen(eventId: event.id),
           ),
         );
       },
       child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-      margin: EdgeInsets.only(bottom: 14),
-      decoration: BoxDecoration(
-        color: const Color(0xFFB23B02).withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              CachedImage(
-                key: ValueKey('${event.id}-${event.icon}'),
-                imageUrl: event.icon,
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      event.name,
-                      style: GoogleFonts.mulish(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700
-                      ),
-                    ),
-                    Text(
-                      event.about,
-                      style: GoogleFonts.mulish(
-                        color: Colors.white70,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600
-                      ),
-                      softWrap: true,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis
-                    ),
-                  ],
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+        margin: EdgeInsets.only(bottom: 14),
+        decoration: BoxDecoration(
+          color: const Color(0xFFB23B02).withOpacity(0.2),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                CachedImage(
+                  key: ValueKey('${event.id}-${event.icon}'),
+                  imageUrl: event.icon,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              )
-            ],
-          ),
-          SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(width: 6),
-                  Text(
-                    DateFormat("MMM dd").format(event.datetime.toLocal()),
-                    style: GoogleFonts.mulish(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  BlocBuilder<FavoritesBloc, FavoritesState>(
-                    builder: (context, favState) {
-                      final isFavorite = favState.isFavorite(event.id);
-                      return IconButton(
-                        icon: Icon(
-                          isFavorite ? Icons.favorite_rounded : Icons.favorite_border,
-                          color: const Color(0xFFD56807),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        event.name,
+                        style: GoogleFonts.mulish(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
                         ),
-                        onPressed: () {
-                          context.read<FavoritesBloc>().add(ToggleFavoriteEvent(event.id));
-                        },
-                      );
-                    },
+                      ),
+                      Text(
+                        event.about,
+                        style: GoogleFonts.mulish(
+                          color: Colors.white70,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        softWrap: true,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 10),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color(0xFFF7B83F).withOpacity(0.4),
-                    ),
-                    child: Text(
-                      'Register',
+                ),
+              ],
+            ),
+            SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 6),
+                    Text(
+                      DateFormat("MMM dd").format(event.datetime.toLocal()),
                       style: GoogleFonts.mulish(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w600
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  )
-                ],
-              )
-            ],
-          )
-        ],
-      ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    BlocBuilder<FavoritesBloc, FavoritesState>(
+                      builder: (context, favState) {
+                        final isFavorite = favState.isFavorite(event.id);
+                        return IconButton(
+                          icon: Icon(
+                            isFavorite
+                                ? Icons.favorite_rounded
+                                : Icons.favorite_border,
+                            color: const Color(0xFFD56807),
+                          ),
+                          onPressed: () {
+                            context.read<FavoritesBloc>().add(
+                              ToggleFavoriteEvent(event.id),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: const Color(0xFFF7B83F).withOpacity(0.4),
+                      ),
+                      child: Text(
+                        'Register',
+                        style: GoogleFonts.mulish(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }

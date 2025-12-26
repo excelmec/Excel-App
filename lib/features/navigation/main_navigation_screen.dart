@@ -29,10 +29,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         return Scaffold(
           body: Stack(
             children: [
-              IndexedStack(
-                index: state.navBarIndex,
-                children: _screens,
-              ),
+              IndexedStack(index: state.navBarIndex, children: _screens),
               _buildCustomBottomNavBar(state.navBarIndex),
             ],
           ),
@@ -132,7 +129,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                             minWidth: MediaQuery.of(context).size.width,
                           ),
                           context: context,
-                          builder: (context) => Wrap(children: const <Widget>[AboutExcelPopUp()]),
+                          builder: (context) =>
+                              Wrap(children: const <Widget>[AboutExcelPopUp()]),
                           isDismissible: true,
                         );
                       },

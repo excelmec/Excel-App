@@ -6,3 +6,12 @@ class LoadEventDetailEvent extends EventDetailEvent {
   LoadEventDetailEvent(this.eventId);
 }
 
+class RegisterForEventEvent extends EventDetailEvent {
+  final int eventId;
+  final String registrationLink;
+
+  RegisterForEventEvent({
+    required this.eventId,
+    required this.registrationLink,
+  });
+}

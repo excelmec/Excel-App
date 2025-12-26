@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,7 +12,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -18,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-    
+
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -40,13 +43,166 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     _animationController.forward();
 
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    // First check internet connectivity
+    final hasInternet = await _checkInternetConnection();
+
+    if (!hasInternet) {
+      _showNoInternetDialog();
+      return;
+    }
+
+    // If internet is available, proceed with update check
     _checkForUpdate();
+  }
+
+  Future<bool> _checkInternetConnection() async {
+    try {
+      final connectivityResults = await Connectivity().checkConnectivity();
+      // Check if any connection type is available (WiFi, Mobile, Ethernet, etc.)
+      return connectivityResults.isNotEmpty &&
+          !connectivityResults.contains(ConnectivityResult.none);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void _showNoInternetDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [const Color(0xFF1A1A1A), const Color(0xFF2D2D2D)],
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: const Color(0xFFD56807).withOpacity(0.3),
+              width: 1.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFD56807).withOpacity(0.2),
+                blurRadius: 20,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFD56807).withOpacity(0.1),
+                ),
+                child: const Icon(
+                  Icons.wifi_off_rounded,
+                  color: Color(0xFFD56807),
+                  size: 48,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'No Internet Connection',
+                style: GoogleFonts.montserrat(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Please check your internet connection and try again.',
+                style: GoogleFonts.mulish(
+                  color: Colors.white70,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        SystemNavigator.pop();
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(
+                          color: Color(0xFFD56807),
+                          width: 1.5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: Text(
+                        'Exit',
+                        style: GoogleFonts.mulish(
+                          color: const Color(0xFFD56807),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        final hasInternet = await _checkInternetConnection();
+                        if (hasInternet) {
+                          _checkForUpdate();
+                        } else {
+                          _showNoInternetDialog();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFD56807),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        elevation: 4,
+                      ),
+                      child: Text(
+                        'Retry',
+                        style: GoogleFonts.mulish(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _checkForUpdate() async {
     try {
       final updateInfo = await InAppUpdate.checkForUpdate();
-      
+
       if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
         // Force immediate update - user must update to continue
         await InAppUpdate.performImmediateUpdate();

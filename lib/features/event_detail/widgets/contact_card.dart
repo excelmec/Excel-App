@@ -13,7 +13,9 @@ class ContactCard extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (contact.phoneNumber.isNotEmpty) {
-          final uri = Uri.parse('tel:${contact.phoneNumber.trim().replaceAll(' ', '')}');
+          final uri = Uri.parse(
+            'tel:${contact.phoneNumber.trim().replaceAll(' ', '')}',
+          );
           if (await canLaunchUrl(uri)) await launchUrl(uri);
         }
       },
@@ -45,7 +47,10 @@ class ContactCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       contact.email,
-                      style: GoogleFonts.mulish(color: Colors.white, fontSize: 14),
+                      style: GoogleFonts.mulish(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ],
@@ -60,7 +65,10 @@ class ContactCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       contact.phoneNumber.trim(),
-                      style: GoogleFonts.mulish(color: Colors.white, fontSize: 14),
+                      style: GoogleFonts.mulish(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ],
@@ -72,4 +80,3 @@ class ContactCard extends StatelessWidget {
     );
   }
 }
-

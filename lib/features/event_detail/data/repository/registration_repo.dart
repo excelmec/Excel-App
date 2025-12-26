@@ -4,30 +4,31 @@ class RegistrationRepo {
   Future<Map<String, dynamic>> registerForEvent({
     required int eventId,
     required String jwtToken,
-    int teamId = 0,
+    int? teamId,
     int ambassadorId = 0,
   }) async {
+    final body = {'eventId': eventId, 'ambassadorId': ambassadorId};
+
+    // Only include teamId if it's provided (for team events)
+
+
     final response = await ApiService.post(
       '/registration',
       headers: ApiService.authHeaders(jwtToken),
       baseUrl: ApiService.eventsTestingUrl,
-      body: {
-        'eventId': eventId,
-        'teamId': teamId,
-        'ambassadorId': ambassadorId,
-      },
+      body: body,
     );
 
     if (response == null) {
-      return {'success': true, 'statusCode': 200, 'message': 'Registration successful'};
+      return {
+        'success': true,
+        'statusCode': 200,
+        'message': 'Complete Profile to register',
+      };
     }
 
     if (response is Map<String, dynamic>) {
-      return {
-        ...response,
-        'success': true,
-        'statusCode': 200,
-      };
+      return {...response, 'success': true, 'statusCode': 200};
     }
 
     if (response is String) {
@@ -47,4 +48,3 @@ class RegistrationRepo {
     };
   }
 }
-

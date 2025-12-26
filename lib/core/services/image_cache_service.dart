@@ -57,7 +57,7 @@ class ImageCacheService {
         return bytes;
       }
     } catch (e) {
-      debugPrint('Error downloading image: $e');
+      // Silently fail for production
     }
 
     return null;
@@ -157,7 +157,8 @@ class _CachedImageState extends State<CachedImage> {
     Widget child;
 
     if (_isLoading) {
-      child = widget.placeholder ??
+      child =
+          widget.placeholder ??
           Container(
             width: widget.width,
             height: widget.height,
@@ -174,7 +175,8 @@ class _CachedImageState extends State<CachedImage> {
             ),
           );
     } else if (_hasError || _imageBytes == null) {
-      child = widget.errorWidget ??
+      child =
+          widget.errorWidget ??
           Container(
             width: widget.width,
             height: widget.height,
@@ -198,10 +200,7 @@ class _CachedImageState extends State<CachedImage> {
     }
 
     if (widget.borderRadius != null) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius!,
-        child: child,
-      );
+      return ClipRRect(borderRadius: widget.borderRadius!, child: child);
     }
 
     return child;

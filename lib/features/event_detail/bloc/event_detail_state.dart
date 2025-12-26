@@ -18,3 +18,35 @@ class EventDetailError extends EventDetailState {
   EventDetailError(this.message);
 }
 
+// Registration states
+class RegistrationLoading extends EventDetailState {
+  final EventDetailModel event;
+
+  RegistrationLoading(this.event);
+}
+
+class RegistrationSuccess extends EventDetailState {
+  final EventDetailModel event;
+  final String registrationLink;
+
+  RegistrationSuccess({required this.event, required this.registrationLink});
+}
+
+class RegistrationRequiresLogin extends EventDetailState {
+  final EventDetailModel event;
+
+  RegistrationRequiresLogin(this.event);
+}
+
+class RegistrationRequiresProfile extends EventDetailState {
+  final EventDetailModel event;
+
+  RegistrationRequiresProfile(this.event);
+}
+
+class RegistrationFailed extends EventDetailState {
+  final EventDetailModel event;
+  final String message;
+
+  RegistrationFailed({required this.event, required this.message});
+}

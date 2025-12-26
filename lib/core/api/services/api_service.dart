@@ -3,10 +3,8 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String _baseUrl = 'https://baseUrl.com';
-  static const String accountsBaseUrl =
-      'https://excel-accounts-backend-1024858294879.asia-south1.run.app/api';
-  static const String eventsTestingUrl =
-      'https://excel-events-service-1024858294879.asia-south1.run.app/api';
+  static const String accountsBaseUrl = 'https://accounts-api.excelmec.org/api';
+  static const String eventsTestingUrl = 'https://events-api.excelmec.org/api';
 
   static Map<String, String> defaultHeaders = {
     'Content-Type': 'application/json',
@@ -28,7 +26,6 @@ class ApiService {
     Map<String, String>? headers,
   }) async {
     final uri = Uri.parse(baseUrl + endpoint);
-    print(uri);
     final response = await http.get(uri, headers: headers ?? defaultHeaders);
     return _handleResponse(response);
   }
@@ -102,20 +99,30 @@ class ApiService {
     final statusCode = response.statusCode;
     final body = response.body;
 
+    // Try to decode JSON response
+    dynamic decoded;
     try {
-      final decoded = body.isNotEmpty ? jsonDecode(body) : null;
-
-      if (statusCode >= 200 && statusCode < 300) {
-        return decoded;
-      } else {
-        throw HttpException(
-          message: decoded?['message'] ?? 'Unknown error',
-          statusCode: statusCode,
-        );
-      }
+      decoded = body.isNotEmpty ? jsonDecode(body) : null;
     } catch (e) {
+      // JSON parsing failed - return raw body for successful responses
+      if (statusCode >= 200 && statusCode < 300) {
+        return body.isNotEmpty ? body : null;
+      }
+      // For error responses, throw with the raw body
       throw HttpException(
-        message: 'Failed to parse response',
+        message:
+            'Invalid JSON response: ${body.isNotEmpty ? body : "empty body"}',
+        statusCode: statusCode,
+      );
+    }
+
+    // Handle based on status code
+    if (statusCode >= 200 && statusCode <= 300) {
+      return decoded;
+    } else {
+      throw HttpException(
+        message:
+            decoded?['message'] ?? 'Request failed with status $statusCode',
         statusCode: statusCode,
       );
     }

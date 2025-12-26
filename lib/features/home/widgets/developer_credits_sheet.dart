@@ -51,68 +51,65 @@ class DeveloperCreditsSheet extends StatelessWidget {
           ),
           // Content on top
           Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 8),
-          Image.asset(
-            "assets/icons/divider.png",
-            width: 340,
-          ),
-          const SizedBox(height: 36),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Core Developers & Designers',
-                style: GoogleFonts.mulish(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900, // ExtraBlack (1000)
-                  fontSize: 22.0,
-                  height: 1.0, // line-height: 100%
-                  letterSpacing: 0.0, // letter-spacing: 0%
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 8),
+              Image.asset("assets/icons/divider.png", width: 340),
+              const SizedBox(height: 36),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Core Developers & Designers',
+                    style: GoogleFonts.mulish(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900, // ExtraBlack (1000)
+                      fontSize: 22.0,
+                      height: 1.0, // line-height: 100%
+                      letterSpacing: 0.0, // letter-spacing: 0%
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          const SizedBox(height: 36),
-          Flexible(
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              itemCount: _developers.length,
-              itemBuilder: (context, index) {
-                final developer = _developers[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        developer['name']!,
-                        style: GoogleFonts.mulish(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18.0,
-                        ),
+              const SizedBox(height: 36),
+              Flexible(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  itemCount: _developers.length,
+                  itemBuilder: (context, index) {
+                    final developer = _developers[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            developer['name']!,
+                            style: GoogleFonts.mulish(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            developer['email']!,
+                            style: GoogleFonts.mulish(
+                              color: Colors.white.withOpacity(0.7),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        developer['email']!,
-                        style: GoogleFonts.mulish(
-                          color: Colors.white.withOpacity(0.7),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 48),
-        ],
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 48),
+            ],
           ),
         ],
       ),

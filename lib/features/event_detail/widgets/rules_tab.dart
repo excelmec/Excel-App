@@ -36,4 +36,3 @@ class RulesTab extends StatelessWidget {
     );
   }
 }
-

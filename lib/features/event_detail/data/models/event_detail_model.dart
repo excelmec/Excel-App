@@ -109,8 +109,8 @@ class EventDetailModel {
       registrationLink: json['registrationLink'] as String?,
       rounds: json['rounds'] != null && json['rounds'] is List
           ? (json['rounds'] as List)
-              .map((e) => Round.fromJson(e as Map<String, dynamic>))
-              .toList()
+                .map((e) => Round.fromJson(e as Map<String, dynamic>))
+                .toList()
           : [],
       registration: json['registration'],
     );
@@ -164,4 +164,3 @@ class Round {
     );
   }
 }
-

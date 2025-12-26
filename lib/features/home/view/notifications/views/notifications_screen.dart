@@ -16,7 +16,7 @@ class NotificationsScreen extends StatelessWidget {
           style: GoogleFonts.mulish(
             fontSize: 20,
             fontWeight: FontWeight.w700,
-            color: Colors.white
+            color: Colors.white,
           ),
         ),
       ),
@@ -33,7 +33,7 @@ class NotificationsScreen extends StatelessWidget {
             style: GoogleFonts.mulish(
               fontSize: 15,
               color: Colors.white70,
-              fontWeight: FontWeight.w600
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

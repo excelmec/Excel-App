@@ -10,10 +10,10 @@ class CalendarRepo {
         '/schedule',
         baseUrl: ApiService.eventsTestingUrl,
       );
-      
+
       final data = response as List<dynamic>;
       final allEvents = <CalendarEventModel>[];
-      
+
       for (final dayData in data) {
         final events = dayData['events'] as List<dynamic>? ?? [];
         for (final eventJson in events) {
@@ -24,7 +24,7 @@ class CalendarRepo {
           }
         }
       }
-      
+
       return allEvents;
     } catch (e) {
       log('Error fetching schedule: $e');
