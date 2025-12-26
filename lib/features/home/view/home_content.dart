@@ -25,13 +25,13 @@ class _HomeContentState extends State<HomeContent> {
     super.initState();
     _pageController = PageController(
       viewportFraction: 0.5,
-      initialPage: 1000 * 3 ~/ 2,
+      initialPage: 1000 * 5 ~/ 2,
     );
-    
+
     // Set target date to Jan 9, 2025
     _targetDateTime = DateTime(2026, 1, 9, 0, 0, 0);
     _updateTimeRemaining();
-    
+
     // Create a stream that updates every second
     _timerStream = Stream.periodic(
       const Duration(seconds: 1),
@@ -162,7 +162,8 @@ class _HomeContentState extends State<HomeContent> {
                 minWidth: MediaQuery.of(context).size.width,
               ),
               context: context,
-              builder: (context) => Wrap(children: <Widget>[contactUsModal(context)]),
+              builder: (context) =>
+                  Wrap(children: <Widget>[contactUsModal(context)]),
               isDismissible: true,
             ).then((_) {
               context.read<IndexCubit>().updateIndex(0);
@@ -187,7 +188,8 @@ class _HomeContentState extends State<HomeContent> {
                 minWidth: MediaQuery.of(context).size.width,
               ),
               context: context,
-              builder: (context) => Wrap(children: <Widget>[reachUsModal(context)]),
+              builder: (context) =>
+                  Wrap(children: <Widget>[reachUsModal(context)]),
               isDismissible: true,
             ).then((_) {
               context.read<IndexCubit>().updateIndex(0);
@@ -285,9 +287,11 @@ class _HomeContentState extends State<HomeContent> {
 
   Widget _buildHighlightsCarousel() {
     final List<Map<String, String>> highlights = [
-      {'title': 'Tug Of War', 'image': 'assets/images/tow.png'},
       {'title': 'Behind the Scenes', 'image': 'assets/images/bts.png'},
       {'title': 'Logo Launch', 'image': 'assets/images/lol.png'},
+      {'title': 'Blinding Lights', 'image': 'assets/images/blindinglights.png'},
+      {'title': 'CyberQuest', 'image': 'assets/images/cyberquest.png'},
+      {'title': 'Remap 2.0', 'image': 'assets/images/remap.png'},
     ];
 
     return SizedBox(
@@ -400,6 +404,7 @@ class _HomeContentState extends State<HomeContent> {
       ),
     );
   }
+
   Widget _buildEventCountdown() {
     return StreamBuilder<Duration>(
       stream: _timerStream,
@@ -407,7 +412,7 @@ class _HomeContentState extends State<HomeContent> {
         final duration = snapshot.data ?? _calculateTimeRemaining();
         final now = DateTime.now().toLocal();
         final endDate = DateTime(2026, 1, 11, 23, 59, 59);
-        
+
         // Check if event has ended
         if (now.isAfter(endDate)) {
           return Container(
@@ -445,7 +450,7 @@ class _HomeContentState extends State<HomeContent> {
             ),
           );
         }
-        
+
         // Check if event is ongoing
         if (duration.inSeconds <= 0) {
           return Container(
@@ -495,16 +500,16 @@ class _HomeContentState extends State<HomeContent> {
             ),
           );
         }
-        
+
         final days = duration.inDays;
         final hours = duration.inHours % 24;
         final minutes = duration.inMinutes % 60;
         final seconds = duration.inSeconds % 60;
-        
+
         final screenWidth = MediaQuery.of(context).size.width;
         final isSmallScreen = screenWidth < 360;
         final containerPadding = screenWidth * 0.05;
-        
+
         return Container(
           margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
           padding: EdgeInsets.all(containerPadding),
@@ -534,10 +539,7 @@ class _HomeContentState extends State<HomeContent> {
             children: [
               ShaderMask(
                 shaderCallback: (bounds) => LinearGradient(
-                  colors: [
-                    Color(0xFFFCF0A6),
-                    Color(0xFFF7B83F),
-                  ],
+                  colors: [Color(0xFFFCF0A6), Color(0xFFF7B83F)],
                 ).createShader(bounds),
                 child: Text(
                   'EXCEL 2025 IN',
@@ -554,13 +556,33 @@ class _HomeContentState extends State<HomeContent> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: isSmallScreen ? 2 : 5,
                 children: [
-                  _buildTimeUnit(days.toString().padLeft(2, '0'), 'DAYS', screenWidth, isSmallScreen),
+                  _buildTimeUnit(
+                    days.toString().padLeft(2, '0'),
+                    'DAYS',
+                    screenWidth,
+                    isSmallScreen,
+                  ),
                   _buildTimeDivider(isSmallScreen),
-                  _buildTimeUnit(hours.toString().padLeft(2, '0'), 'HOURS', screenWidth, isSmallScreen),
+                  _buildTimeUnit(
+                    hours.toString().padLeft(2, '0'),
+                    'HOURS',
+                    screenWidth,
+                    isSmallScreen,
+                  ),
                   _buildTimeDivider(isSmallScreen),
-                  _buildTimeUnit(minutes.toString().padLeft(2, '0'), 'MINS', screenWidth, isSmallScreen),
+                  _buildTimeUnit(
+                    minutes.toString().padLeft(2, '0'),
+                    'MINS',
+                    screenWidth,
+                    isSmallScreen,
+                  ),
                   _buildTimeDivider(isSmallScreen),
-                  _buildTimeUnit(seconds.toString().padLeft(2, '0'), 'SECS', screenWidth, isSmallScreen),
+                  _buildTimeUnit(
+                    seconds.toString().padLeft(2, '0'),
+                    'SECS',
+                    screenWidth,
+                    isSmallScreen,
+                  ),
                 ],
               ),
               SizedBox(height: containerPadding * 0.6),
@@ -595,11 +617,16 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  Widget _buildTimeUnit(String value, String label, double screenWidth, bool isSmallScreen) {
+  Widget _buildTimeUnit(
+    String value,
+    String label,
+    double screenWidth,
+    bool isSmallScreen,
+  ) {
     final unitWidth = screenWidth * (isSmallScreen ? 0.14 : 0.16);
     final fontSize = isSmallScreen ? 18.0 : 22.0;
     final labelFontSize = isSmallScreen ? 7.0 : 9.0;
-    
+
     return SizedBox(
       width: unitWidth,
       child: Column(
