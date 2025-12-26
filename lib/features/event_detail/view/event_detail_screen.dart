@@ -1,3 +1,5 @@
+import 'package:excelapp2025/core/api/services/auth_service.dart';
+import 'package:excelapp2025/core/api/services/api_service.dart';
 import 'package:excelapp2025/core/services/image_cache_service.dart';
 import 'package:excelapp2025/core/favorites/favorites_bloc.dart';
 import 'package:excelapp2025/core/favorites/favorites_event.dart';
@@ -7,15 +9,20 @@ import 'package:excelapp2025/features/event_detail/bloc/event_detail_event.dart'
 import 'package:excelapp2025/features/event_detail/bloc/event_detail_state.dart';
 import 'package:excelapp2025/features/event_detail/data/models/event_detail_model.dart';
 import 'package:excelapp2025/features/event_detail/data/repository/event_detail_repo.dart';
+import 'package:excelapp2025/features/event_detail/data/repository/registration_repo.dart';
 import 'package:excelapp2025/features/event_detail/widgets/event_details_grid.dart';
 import 'package:excelapp2025/features/event_detail/widgets/footer_tabs.dart';
 import 'package:excelapp2025/features/event_detail/widgets/about_tab.dart';
 import 'package:excelapp2025/features/event_detail/widgets/format_tab.dart';
 import 'package:excelapp2025/features/event_detail/widgets/rules_tab.dart';
 import 'package:excelapp2025/features/event_detail/widgets/contact_tab.dart';
+import 'package:excelapp2025/features/profile/view/profile_screen.dart';
+import 'package:excelapp2025/features/profile/view/create_acc_screen.dart';
+import 'package:excelapp2025/features/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EventDetailScreen extends StatelessWidget {
@@ -342,6 +349,197 @@ class _EventDetailScreenViewState extends State<EventDetailScreenView> {
         return ContactTab(event: event);
       default:
         return AboutTab(event: event);
+    }
+  }
+
+  Future<void> _handleRegisterButtonTap(
+    BuildContext context,
+    EventDetailModel event,
+    String link,
+  ) async {
+    try {
+      // Step 1: Check if user is logged in
+      final prefs = await SharedPreferences.getInstance();
+      final isLoggedIn = prefs.getBool('isLogged') ?? false;
+      
+      if (!isLoggedIn) {
+        // Navigate to profile screen (which will show login screen)
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (context) => ProfileBloc(),
+                child: const ProfileScreen(),
+              ),
+            ),
+          );
+        }
+        return;
+      }
+      
+      // Step 2: Get JWT token
+      final jwtToken = await AuthService.getToken();
+      
+      if (jwtToken.isEmpty) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please login to continue'),
+              backgroundColor: Colors.orange,
+            ),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (context) => ProfileBloc(),
+                child: const ProfileScreen(),
+              ),
+            ),
+          );
+        }
+        return;
+      }
+      
+      // Step 3: Call registration API
+      final registrationRepo = RegistrationRepo();
+      
+      try {
+        final response = await registrationRepo.registerForEvent(
+          eventId: event.id,
+          jwtToken: jwtToken,
+          teamId: 0,
+          ambassadorId: 0,
+        );
+        
+        // Step 4: Verify success (status code 200-299)
+        // If we reach here without exception, status code was 200-299
+        final isSuccess = response['success'] == true || response['statusCode'] != null;
+        
+        // Step 5: Check response for "update profile" message
+        final responseString = response.toString().toLowerCase();
+        final responseMessage = response['message']?.toString().toLowerCase() ?? '';
+        
+        // Check if backend says to update profile
+        if (responseMessage.contains('update profile') || 
+            responseMessage.contains('profile') ||
+            responseString.contains('update profile') ||
+            responseString.contains('profile')) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Please complete your profile to register'),
+                backgroundColor: Colors.orange,
+              ),
+            );
+            
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => BlocProvider(
+                    create: (context) {
+                      final bloc = ProfileBloc();
+                      bloc.add(LoadProfileData());
+                      return bloc;
+                    },
+                    child: CreateAccScreen(mode: CreateAccMode.UPDATE),
+                  ),
+              ),
+            );
+          }
+          return;
+        }
+        
+        // Step 6: If registration successful (status 200-299), open external link
+        if (!isSuccess) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Registration was not successful'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          return;
+        }
+        
+        final uri = Uri.tryParse(link);
+        if (uri == null) {
+          throw 'Invalid URL format';
+        }
+        
+        if (context.mounted) {
+          await launchUrl(
+            uri,
+            mode: LaunchMode.externalApplication,
+          );
+        }
+        
+      } catch (e) {
+        if (e is HttpException) {
+          final errorMessage = e.message.toLowerCase();
+          
+          // Check if error says to update profile
+          if (errorMessage.contains('update profile') || 
+              errorMessage.contains('profile') ||
+              errorMessage.contains('complete profile')) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Please complete your profile to register'),
+                  backgroundColor: Colors.orange,
+                ),
+              );
+              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider(
+                    create: (context) {
+                      final bloc = ProfileBloc();
+                      bloc.add(LoadProfileData());
+                      return bloc;
+                    },
+                    child: CreateAccScreen(mode: CreateAccMode.UPDATE),
+                  ),
+                ),
+              );
+            }
+            return;
+          }
+          
+          // Show error message
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Registration failed: ${e.message}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        } else {
+          // Generic error
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Registration failed: ${e.toString()}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      }
+      
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('An error occurred: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 }
