@@ -182,6 +182,12 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                 if (value == null || value.isEmpty) {
                   return "Enter $label";
                 }
+                //Phone Specific validation
+                if (label == "Contact" &&
+                    (value.length != 10 ||
+                        !RegExp(r'^[0-9]+$').hasMatch(value))) {
+                  return "Enter valid contact number";
+                }
                 return null;
               },
               decoration: InputDecoration(
@@ -300,50 +306,56 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                 ? 'School'
                 : state.profileModel.institutionId >= 400
                 ? 'College'
-                : 'Other Institution';
-
-            String token = await AuthService.getToken();
-            ApiService.get(
-              ApiRoutes.collegeList,
-              baseUrl: ApiService.accountsBaseUrl,
-              headers: ApiService.authHeaders(token),
-            ).then((response) {
-              final List<dynamic> data = response;
-              setState(() {
-                collegeOptions = data
-                    .map((item) => "${item['id']} ${item['name']}")
-                    .toList();
-                if (_selectedInstitutionType == 'College') {
-                  _selectedInstitution = collegeOptions.firstWhere(
-                    (inst) => inst.contains(state.profileModel.institutionName),
-                    orElse: () => 'Other',
-                  );
-                }
+                : null;
+            try {
+              String token = await AuthService.getToken();
+              ApiService.get(
+                ApiRoutes.collegeList,
+                baseUrl: ApiService.accountsBaseUrl,
+                headers: ApiService.authHeaders(token),
+              ).then((response) {
+                final List<dynamic> data = response;
+                setState(() {
+                  collegeOptions = data
+                      .map((item) => "${item['id']} ${item['name']}")
+                      .toList();
+                  if (_selectedInstitutionType == 'College') {
+                    _selectedInstitution = collegeOptions.firstWhere(
+                      (inst) =>
+                          inst.contains(state.profileModel.institutionName),
+                      orElse: () => 'Other',
+                    );
+                  }
+                });
               });
-            });
-            ApiService.get(
-              ApiRoutes.schoolList,
-              baseUrl: ApiService.accountsBaseUrl,
-              headers: ApiService.authHeaders(token),
-            ).then((response) {
-              final List<dynamic> data = response;
-              setState(() {
-                schoolOptions = data
-                    .map((item) => "${item['id']} ${item['name']}")
-                    .toList();
-                if (_selectedInstitutionType == 'School') {
-                  schoolOptions.firstWhere(
-                    (inst) => inst.startsWith(
-                      state.profileModel.institutionId.toString(),
-                    ),
-                    orElse: () => 'Other',
-                  );
-                }
+              ApiService.get(
+                ApiRoutes.schoolList,
+                baseUrl: ApiService.accountsBaseUrl,
+                headers: ApiService.authHeaders(token),
+              ).then((response) {
+                final List<dynamic> data = response;
+                setState(() {
+                  schoolOptions = data
+                      .map((item) => "${item['id']} ${item['name']}")
+                      .toList();
+                  if (_selectedInstitutionType == 'School') {
+                    schoolOptions.firstWhere(
+                      (inst) => inst.startsWith(
+                        state.profileModel.institutionId.toString(),
+                      ),
+                      orElse: () => 'Other',
+                    );
+                  }
+                });
               });
-            });
+            } catch (e) {
+              throw Exception('Failed to load institution options: $e');
+            }
 
             if (_selectedInstitutionType == 'Other Institution') {
-              _selectedInstitution = 'Other';
+              setState(() {
+                _selectedInstitution = null;
+              });
             }
           }
 
@@ -627,7 +639,7 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                               setState(() {
                                                 _selectedInstitutionType =
                                                     value;
-                                                _selectedInstitution = "Other";
+                                                _selectedInstitution = null;
                                                 _institutionNameController
                                                         .text =
                                                     "";
@@ -638,44 +650,50 @@ class _CreateAccScreenState extends State<CreateAccScreen> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        const SizedBox(width: 24),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: _buildDropdownField(
-                                            hint:
-                                                _selectedInstitutionType ==
-                                                    'College'
-                                                ? 'College Name'
-                                                : _selectedInstitutionType ==
-                                                      'School'
-                                                ? 'School Name'
-                                                : 'Institution Name',
-                                            value: _selectedInstitution,
-                                            items:
-                                                _selectedInstitutionType ==
-                                                    'College'
-                                                ? collegeOptions
-                                                : _selectedInstitutionType ==
-                                                      'School'
-                                                ? schoolOptions
-                                                : ['Other'],
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _selectedInstitution = value;
-                                              });
-                                            },
-                                            searchable: true,
+                                  _selectedInstitutionType == 'College' ||
+                                          _selectedInstitutionType == 'School'
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 16,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const SizedBox(width: 24),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: _buildDropdownField(
+                                                  hint:
+                                                      _selectedInstitutionType ==
+                                                          'College'
+                                                      ? 'College Name'
+                                                      : _selectedInstitutionType ==
+                                                            'School'
+                                                      ? 'School Name'
+                                                      : 'Institution Name',
+                                                  value: _selectedInstitution,
+                                                  items:
+                                                      _selectedInstitutionType ==
+                                                          'College'
+                                                      ? collegeOptions
+                                                      : _selectedInstitutionType ==
+                                                            'School'
+                                                      ? schoolOptions
+                                                      : ['Other'],
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      _selectedInstitution =
+                                                          value;
+                                                    });
+                                                  },
+                                                  searchable: true,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
                                   _selectedInstitution == 'Other' ||
                                           _selectedInstitutionType ==
                                               'Other Institution'
